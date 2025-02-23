@@ -42,7 +42,7 @@
               "bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "bootstrap/dist/css/bootstrap.min.js"
+              "bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
