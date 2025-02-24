@@ -8,7 +8,17 @@
   <input class="form-control" id="exampleInput" placeholder="Enter your name">
   <p class="text-primary fw-medium">Text primary</p>
   <p class="text-secondary fw-medium">Text secondary</p>
-</div>
+  <div class="container">
+    <label class="card d-flex p-3 checked">
+      <div>
+        <input type="radio" name="option" class="form-check-input me-3" checked>
+        <span class="text-primary col-md-4">Box checked</span><br>
+        <span class="text-info p-4">Box unchecked</span>
+      </div>
+    </label>
+  </div>
+  <br>
+  <p class="text-bg-danger">Text danger</p>
 
 <!-- Form example -->
 <form class="row g-3 needs-validation" novalidate>
@@ -29,7 +39,7 @@
   <div class="col-md-4">
     <label for="validationCustomUsername" class="form-label">Username</label>
     <div class="input-group has-validation">
-      <span class="input-group-text" id="inputGroupPrepend">@</span>
+      <span class="input-group-text" id="inputGroupPrepend"></span>
       <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
       <div class="invalid-feedback">
         Please choose a username.

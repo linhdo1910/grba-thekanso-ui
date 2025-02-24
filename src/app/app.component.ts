@@ -10,7 +10,7 @@ export class AppComponent {
   constructor() {
     this.initializeFormValidation();
   }
-
+//formv alidation
   initializeFormValidation() {
     document.addEventListener('DOMContentLoaded', () => {
       const forms = document.querySelectorAll('.needs-validation');
