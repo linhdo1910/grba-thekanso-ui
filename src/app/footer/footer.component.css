@@ -1,0 +1,38 @@
+a:hover {
+    color: rgba(218, 168, 109, 1);
+    /* font-weight: 500; */
+}
+.input-group {
+    width: 80%;
+}
+.body {
+    display: block;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+.copyright {
+    background-color: #3a241c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+    left: 0px;
+    right: 0px;
+}
+.bg {
+    background-color: rgba(217, 211, 197, 1);
+    padding: 15px;
+}
+.text-info{
+    font-size: 14px;
+}
+.text-primary{
+    font-size:32px;
+}
