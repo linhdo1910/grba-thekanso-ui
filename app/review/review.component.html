@@ -1,0 +1,48 @@
+<div class="review-container">
+    <h2 class="title">WRITING REVIEW</h2>
+    
+    <!-- Textarea nhập nội dung review -->
+    <textarea 
+        placeholder="Write here" 
+        [(ngModel)]="reviewText" 
+        rows="5" 
+        class="review-textarea">
+    </textarea>
+
+    <!-- Đánh giá sao với hiệu ứng hover và chọn sao -->
+    <div class="rating-section">
+        <label>Rating:</label>
+        <div class="stars">
+            <span 
+                *ngFor="let star of stars; let i = index" 
+                class="star" 
+                [class.filled]="i < rating || i < hoverRating" 
+                (click)="setRating(i + 1)"
+                (mouseenter)="setHoverRating(i + 1)"
+                (mouseleave)="setHoverRating(0)">
+                ★
+            </span>
+        </div>
+    </div>
+
+    <!-- Chọn ảnh sản phẩm -->
+    <div class="file-upload">
+        <label>Product image:</label>
+        <input type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <!-- Nút Submit và Cancel -->
+    <div class="button-group">
+        <button class="submit-btn" (click)="submitReview()">Submit</button>
+        <button class="cancel-btn" (click)="cancelReview()">Cancel</button>
+    </div>
+</div>
+
+<!-- Cửa sổ thông báo bình luận thành công -->
+<div *ngIf="showSuccessMessage" class="modal">
+    <div class="modal-content">
+        <p>Bình luận đã được gửi thành công!</p>
+        <button (click)="closeModal()">Đóng</button>
+    </div>
+</div>
+
