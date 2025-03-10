@@ -1,0 +1,37 @@
+.blog-detail {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 3px;
+    border: 1px solid #D9D3C5;
+}
+
+.blog-detail h2 {
+    color: #402A1D;
+    margin-bottom: 10px;
+}
+
+.blog-detail p {
+    color: #434343;
+    line-height: 1.8;
+}
+
+.blog-detail .img-fluid {
+    border-radius: 0px;
+    width:835px;
+    height:268px
+}
+
+.gallery .img-fluid {
+    width:250px;
+    height:250px;
+}
+
+.blog-meta .icon {
+    width: 18px;
+    height: 18px;
+    margin-bottom:10px;
+}
+
+.text-orange {
+    color: #DAA86D;
+}
