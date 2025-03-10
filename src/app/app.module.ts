@@ -8,6 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import { PaymentComponent } from './payment/payment.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
+import { SidebarBlogComponent } from './sidebar-blog/sidebar-blog.component';
+import { BlogListComponent } from './blog-list/blog-list.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
     HeaderComponent,
     PaymentComponent,
     QrCodeComponent,
-    OrderSuccessComponent
+    OrderSuccessComponent,
+    SidebarBlogComponent,
+    BlogListComponent,
+    BlogDetailComponent,
   ],
   imports: [
     BrowserModule,
