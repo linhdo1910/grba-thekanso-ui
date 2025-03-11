@@ -112,4 +112,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
+}
