@@ -1,0 +1,165 @@
+hr{
+    color:#402A1D;
+}
+
+.section-title {
+    font-weight: bold;
+    color: #402A1D;
+}
+
+.form-control,
+.form-select {
+    margin-bottom: 10px;
+    border: 1px solid #D9D3C5; 
+    border-radius: 6px;    
+}
+
+.text-orange {
+    color: #DAA86D;
+}
+
+.cart-item {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.payment-info {
+    background-color: #f0eae0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #DAA86D;
+    border-radius: 6px;
+}
+
+.btn-primary:hover {
+    background-color: #ffff;
+    border-color: #DAA86D;
+}
+
+.bg-light {
+    background-color: #f9f9f9 !important;
+    padding: 10px 50px; 
+}
+
+
+/* Shipping Option Container */
+.shipping-option {
+    border: 1px solid #D9D3C5;     
+    border-radius: 6px;            
+    padding: 15px;                
+    margin-bottom: 10px;           
+    background-color: #fff;       
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: border 0.3s, color 0.3s; 
+}
+
+/* Khi được chọn (checked) */
+.shipping-option .form-check-input:checked ~ .shipping-content {
+    color: #DAA86D;               
+}
+
+
+/* Nút radio (Input) */
+.shipping-option .form-check-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border: 2px solid #D9D3C5;
+}
+
+small {
+    color: #808080;
+}
+
+
+/* Payment Container */
+.form-check {
+    border: 1px solid #D9D3C5; 
+    border-radius: 6px;         
+    padding: 15px;              
+    margin-bottom: 10px;        
+    background-color: #fff;     
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+.form-check .form-check-input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    border: 2px solid #D9D3C5;
+}
+
+/* Khi radio button được chọn */
+.form-check input[type="radio"]:checked + .form-check-label {
+    color: #DAA86D; 
+    font-weight: bold;
+}
+
+/* Hiển thị thông tin ngân hàng khi được chọn */
+.payment-info {
+    background-color: #D9D3C5;
+    border-top: 1px solid #D9D3C5; 
+    padding: 10px;
+    margin-top: 10px;
+    display: none;  
+}
+
+/* Hiển thị thông tin khi radio được check */
+.form-check input[type="radio"]:checked ~ .payment-info {
+    display: block;
+}
+
+/*Cart */
+
+.cart-item {
+    border-bottom: 1px solid #D9D3C5;
+    padding: 10px 0;
+}
+
+.cart-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.text-orange .origin {
+    color: #434343;
+    margin-left: 8px; 
+}
+
+.text-orange .badge {
+    margin-left: 8px; 
+    border-radius: 0      
+}
+
+.input-group .form-control {
+    border: 1px solid #D9D3C5;
+    border-right: 0;
+}
+
+.input-group .btn-secondary {
+    background-color: #A8907C;
+    height: 100%;  
+    
+}
+
+.input-group .btn-secondary:hover{
+    background-color: #fff;
+    color:#402A1D;
+}
+.btn-link {
+    text-decoration: none;
+}
+
+
+

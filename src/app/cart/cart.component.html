@@ -1,0 +1,56 @@
+<div class="container">
+  <!-- Cart Header -->
+  <div>
+    <h3 class="text-primary fw-bold">Your Cart</h3>
+    <p class="text-muted">Have <b class="text-secondary">{{ cartItems.length }} products </b> in your cart</p>
+  </div>
+
+  <!-- Cart and Order Summary Section -->
+  <div class="row">
+    <!-- Cart Items Section -->
+    <div class="col-md-8">
+      <div *ngFor="let item of cartItems" class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center">
+          <img [src]="item.image" alt="Product Image" class="img-fluid" style="width: 100px; height: auto;">
+          <div class="ms-3">
+            <h6 class="mb-1">{{ item.name }}</h6>
+            <p class="mb-1 text-muted">{{ item.name }} with Trousers & Dupatta</p>
+            <p> Quantity: <span>{{ item.quantity }}</span></p>
+          </div>
+        </div>
+        <div class="text-end">
+            <span class="text-decoration-line-through me-2">{{ item.originalPrice | number }} VND</span>
+            <span class="text-danger">{{ item.price | number }} VND</span>
+            <span class="badge bg-danger ms-2">{{ item.discount }}%</span>
+            <button class="btn btn-sm" (click)="removeProduct(item.id)">X</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary Section -->
+    <div class="col-md-4">
+      <div class="card p-4">
+        <h4 class="text-secondary mb-4">Order Summary</h4>
+        <ul class="list-unstyled">
+          <li class="d-flex justify-content-between">
+            <span>Total</span>
+            <span>{{ calculateTotal() | number }} VND</span>
+          </li>
+          <li class="d-flex justify-content-between">
+            <span>Shipping Fee</span>
+            <span>Free</span>
+          </li>
+          <hr>
+          <li class="d-flex justify-content-between">
+            <span><strong>Total Amount</strong></span>
+            <span><strong>{{ calculateDiscountedTotal() | number }} VND</strong></span>
+          </li>
+        </ul>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-secondary" (click)="continueShopping()">Continue Shopping</button>
+          <button class="btn btn-primary" (click)="checkout()">Check Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
