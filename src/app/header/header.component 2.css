@@ -1,0 +1,143 @@
+.sub-header {
+    background-color: #3a241c;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    z-index: 1000; 
+    font-size: 14px;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    padding-bottom: 0px;
+    background-color: #fff;
+    margin-top: 30px; 
+}
+
+
+.header-center .search-box {
+    display: flex;
+    border: 1px solid #D9D3C5;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 450px;
+}
+
+.search-box input {
+    border: none;
+    padding: 8px 15px;
+    width: 100%;
+    outline: none;
+    font-size:14px;
+}
+
+.search-btn {
+    background-color: #DAA86D;
+    border: none;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-link,
+.cart-link {
+    text-decoration: none;
+    color: #402A1D;
+    font-weight: bold;
+    font-size:16px;
+}
+
+.cart-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #402A1D;
+    font-weight: bold;
+    position: relative; 
+}
+
+.cart-icon-wrapper {
+    position: relative; 
+    display: inline-block;
+}
+
+.cart-icon {
+    width: 25px;  
+    height: 25px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -3px;  
+    right: -3px;
+    background-color: #DAA86D;
+    color: #fff;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+
+.cart-text {
+    margin-left: 5px;
+    font-size:16px;
+}
+
+/* Navbar */
+.nav-link{
+    color: #402A1D;
+
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 5px 50px;
+}
+
+.dropdown-menu a {
+    color: #402A1D;
+    display: block;
+    width: 100%;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+a:hover,
+.dropdown-menu a:hover {
+    color: #DAA86D;
+}
+
+
+.dropdown-item {
+    color: #402A1D; 
+}
+
+
+.dropdown-item:hover,
+.nav-link:hover {
+    color: #DAA86D;
+}
+
+.dropdown-item:active {
+    background-color: #DAA86D !important; 
+    color: #FFFFFF !important; 
+}

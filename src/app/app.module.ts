@@ -14,6 +14,7 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { SidebarBlogComponent } from './sidebar-blog/sidebar-blog.component';
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
     SidebarBlogComponent,
     BlogListComponent,
     BlogDetailComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
