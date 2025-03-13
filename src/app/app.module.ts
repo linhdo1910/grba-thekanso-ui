@@ -14,6 +14,8 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { SidebarBlogComponent } from './sidebar-blog/sidebar-blog.component';
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homepage.component';
 import { CartComponent } from './cart/cart.component';
 
 
@@ -31,6 +33,8 @@ import { CartComponent } from './cart/cart.component';
     SidebarBlogComponent,
     BlogListComponent,
     BlogDetailComponent,
+    HomepageComponent,
+    SuggestedHomepageComponent,
     CartComponent,
   ],
   imports: [
