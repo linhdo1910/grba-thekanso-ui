@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 export class BlogDetailComponent {
   categories = ['People', 'Tips', 'Inspiration'];
   blog = {
-    image: 'asset/test2.png',
     title: 'Going all-in with millennial design',
     category: this.categories[1], 
     content1: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
