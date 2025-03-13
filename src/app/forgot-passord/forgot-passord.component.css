@@ -1,0 +1,81 @@
+/* Khung E chứa toàn bộ nội dung của Component */
+.container-forgot-password {
+    width: 568px;
+    height: 337px;
+    margin-left: 458px;
+    margin-top: 184px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* Dòng chữ Change Password */
+.title {
+    color: #402A1D;
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: 130px; 
+    margin-top: 13px; 
+}
+
+/* Dòng chữ mô tả hướng dẫn */
+.description {
+    width: 424px;
+    height: 48px;
+    color: #434343;
+    font-size: 16px;
+    margin-left: 48px; 
+    margin-top: 20px;
+    text-align: center; 
+}
+
+/* Khung nhập Email */
+.input-email {
+    width: 472px;
+    height: 48px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    color: #808080;
+    font-size: 14px;
+    position: absolute;
+    margin-left: 24px; 
+    margin-top: 10px;
+
+    box-sizing: border-box;
+}
+
+/* Container chứa các nút */
+.buttons-container {
+    position: absolute;
+    margin-left: 150px; 
+    margin-top: 80px;
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa hai nút */
+}
+
+/* Nút Submit */
+.btn-submit {
+    width: 100px;
+    height: 40px;
+    background-color: #DAA86D;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Nút Cancel */
+.btn-cancel {
+    width: 100px;
+    height: 40px;
+    background-color: #8D7B65;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}

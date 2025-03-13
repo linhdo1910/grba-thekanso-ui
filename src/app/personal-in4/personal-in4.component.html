@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="personal-in4.component.css">
+
+<div class="khung_chinh">
+  <!-- Phần A: Thanh công cụ chuyển trang -->
+  <div class="thanh_cong_cu">
+    <h2>Account Management</h2>
+    <ul>
+      <li>
+        <a (click)="navigateTo('')" class="kich_hoat" style="color: #402A1D;">
+          <span class="material-icons">account_circle</span>
+          Personal information
+        </a>
+      </li>
+      <li>
+        <a href="...." (click)="navigateTo('order-history')">
+          <span class="material-icons">history</span>
+          Order History
+        </a>
+      </li>
+      <li>
+        <a href="...." (click)="navigateTo('logout')">
+          <span class="material-icons">logout</span>
+          Log-out
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Phần B: Thông tin người dùng -->
+  <div class="noi_dung">
+    <h2>Personal information</h2>
+    <div class="luoi_thong_tin">
+      <div>
+        <label>First name</label>
+        <br>
+        <input type="text" [(ngModel)]="firstName" placeholder="Dianne">
+      </div>
+      <br>
+      <div>
+        <label>Last Name</label>
+        <br>
+        <input type="text" [(ngModel)]="lastName" placeholder="Russell">
+      </div>
+      <br>
+      <div>
+        <label>Email</label>
+        <br>
+        <input type="email" [(ngModel)]="email" placeholder="dianne.russell@gmail.com">
+      </div>
+      <br>
+      <div>
+        <label>Phone Number</label>
+        <br>
+        <input type="text" [(ngModel)]="phoneNumber" placeholder="(603) 555-0123">
+      </div>
+
+      <!-- Ảnh của khách hàng -->
+      <div class="khung_anh">
+        <img [src]="profileImage" alt="Profile Image" width="100">
+        <input type="file" (change)="onImageChange($event)" id="imageInput" style="display:none">
+        <a href="#" (click)="triggerImageInput($event)">Choose image</a>
+      </div>
+    </div>
+
+    <!-- Nút hành động -->
+    <div class="nut_hanh_dong">
+      <button class="nut_luu" (click)="saveChanges()">Save Changes</button>
+      <button class="nut_xoa" (click)="clearAll()">Clear All</button>
+    </div>
+  </div>
+</div>

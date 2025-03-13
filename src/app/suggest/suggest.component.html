@@ -1,0 +1,79 @@
+<div class="object-container">
+  <!-- Danh sách nội thất -->
+  <div class="object-list">
+    <h3>Object</h3>
+    <input type="text" placeholder="Search product" style="width: 220px ;">
+    <select>
+      <option>All Categories</option>
+      <option>Sofa</option>
+      <option>Table</option>
+    </select>
+
+    <div class="object-items">
+      <div *ngFor="let item of furnitureList" class="furniture-object" 
+           draggable="true" 
+           (dragstart)="onDragStart($event, item)">
+        <img [src]="item.imageUrl" [alt]="item.name">
+
+        <p>{{ item.name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Khung phòng -->
+  <div class="room-shape-section" 
+       (dragover)="onDragOver($event)" 
+       (drop)="onDrop($event)">
+    <H3 style="font-size: 24px ;">Click on the product to view details</H3>
+    <div class="room">
+      <div class="image-container">
+        <!-- Hình ảnh có vùng tương tác -->
+        <img [src]="imageUrl" alt="Room Shape" class="room-image" usemap="#image-map" />
+    
+        <!-- Image Map -->
+        <map name="image-map">
+          <!-- Vùng 1 -->
+          <area shape="rect" coords="22,84,170,268" 
+                href="#" alt="Region 1" 
+                (mouseover)="showTooltip($event, 'Ấn để xem chi tiết sản phẩm')" 
+                (mouseout)="hideTooltip()">
+    
+          <!-- Vùng 2 -->
+          <area shape="rect" coords="265,183,522,341" 
+                href="#" alt="Region 2" 
+                (mouseover)="showTooltip($event, 'Ấn để xem chi tiết sản phẩm')" 
+                (mouseout)="hideTooltip()">
+      </map>
+    
+    
+      <!-- Tooltip -->
+      <div *ngIf="tooltipVisible" class="tooltip" 
+           [style.left.px]="tooltipX" 
+           [style.top.px]="tooltipY">
+          {{ tooltipText }}
+      </div>
+    </div>
+
+      <div class="dimension-label horizontal">
+        {{ length.toFixed(2) }} m
+      </div>
+
+      <div class="dimension-label vertical">
+        {{ width.toFixed(2) }} m
+      </div>
+
+      <!-- Hiển thị các đồ nội thất đã được kéo vào phòng -->
+      <div *ngFor="let obj of placedFurniture" 
+           class="placed-object"
+           [style.top.px]="obj.y" [style.left.px]="obj.x" [style.transform]="'scale(1)'"
+           (mousedown)="startDragging($event, obj)">
+        <img [src]="obj.imageUrl" [alt]="obj.name">
+      </div>
+    
+    </div>
+    <button class="generate-room">GO TO SHOPPING</button>
+  </div>
+
+
+
+</div>

@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="sign-in.component.css">
+
+<!-- Component Đăng nhập -->
+<div class="khung_dang_nhap">
+    <!-- Tiêu đề Đăng nhập -->
+    <h2 class="tieu_de">Sign In</h2>
+
+    <!-- Form Nhập thông tin đăng nhập -->
+    <form class="form">
+        <!-- Ô nhập Email -->
+        <input type="email" placeholder="Email" class="o_nhap lieu_email" required>
+
+        <!-- Ô nhập Mật khẩu -->
+        <div class="o_mat_khau">
+            <input [type]="hienMatKhau ? 'text' : 'password'" placeholder="Password" class="o_nhap lieu_mat_khau" required>
+            
+        </div>
+
+        <!-- Lựa chọn Remember me và Liên kết Forgot password -->
+        <div class="lua_chon">
+            <label>
+                <input type="checkbox" class="o_tich"> Remember me
+            </label>
+            <a href="#" class="quen_mat_khau">Forgot password</a>
+        </div>
+
+        <!-- Nút Đăng nhập -->
+        <button type="submit" class="nut_dang_nhap">LOGIN</button>
+
+        <!-- Liên kết Đăng kí tài khoản mới -->
+        <p class="dang_ky">Don't have account? <a href="#" class="dang_ky_link">Register</a></p>
+
+        <!-- Đăng nhập bằng tài khoản Google -->
+        <div class="dang_nhap_xa_hoi">
+            <img src="asset/ggicon.png" alt="Google Icon" class="icon_xa_hoi">
+        </div>
+    </form>
+</div>
+
