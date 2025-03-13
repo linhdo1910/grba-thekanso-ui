@@ -1,0 +1,11 @@
+.custom-select {
+    width: 180px;
+    background-color: transparent;
+    border: 1px solid #d4c6b5;
+    color: gray;
+  }
+.custom-select:focus {
+    border-color: #c49a6c;
+    box-shadow: none;
+}
+  

@@ -1,0 +1,91 @@
+<div>
+  <img src="asset/banners/sofa 1.png">
+</div>
+<!-- Filters -->
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold text-primary">Living room</h2>
+
+    <select class="form-select custom-select">
+      <option selected>Sort</option>
+      <option value="popular">Popular</option>
+      <option value="newest">Newest</option>
+    </select>
+  </div>
+
+  <div class="d-flex align-items-center mt-2">
+    <div class="d-flex align-items-center me-4">
+      <img src="asset/filter_alt.png" width="15px" height="15px">
+      <span class="fw-bold text-dark px-3">FILTERS</span>
+    </div>
+
+    <!-- Filters Spread Out -->
+    <div class="d-flex w-100 justify-content-between">
+      <!-- Categories Dropdown -->
+      <select class="form-select custom-select">
+        <option selected>Categories</option>
+        <option value="sofa">Sofa</option>
+        <option value="table">Table</option>
+        <option value="chair">Chair</option>
+      </select>
+
+      <!-- Price Dropdown -->
+      <select class="form-select custom-select">
+        <option selected>Price</option>
+        <option value="low-high">Low to High</option>
+        <option value="high-low">High to Low</option>
+      </select>
+
+      <!-- Color Dropdown -->
+      <select class="form-select custom-select">
+        <option selected>Color</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="gray">Gray</option>
+      </select>
+
+      <!-- Size Dropdown -->
+      <select class="form-select custom-select">
+        <option selected>Size</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Products Table -->
+<div class="container">
+  <table class="table border-0">
+    <tbody>
+      <tr *ngFor="let row of paginatedProducts">
+        <td *ngFor="let product of row" class="text-center border-0">
+          <div class="card shadow-sm">
+            <img [src]="product.image" class="card-img-top p-2" [alt]="product.name" style="max-height: 200px; object-fit: contain;">
+            <div class="card-body">
+              <h6 class="text-primary" (click)="toProductDetail()">{{ product.name }}</h6>
+              <p class="fw-bold text-secondary">{{ product.price | number }} VND</p>
+              <p>{{ product.rating }} ({{ product.reviews }})</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Pagination -->
+  <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="prevPage()"><</a>
+      </li>
+      <li class="page-item" *ngFor="let page of totalPagesArray; let i = index" [class.active]="currentPage === (i + 1)">
+        <a class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="nextPage()">></a>
+      </li>
+    </ul>
+  </nav>
+</div>
