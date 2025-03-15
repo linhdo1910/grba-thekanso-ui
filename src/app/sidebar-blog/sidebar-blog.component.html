@@ -1,0 +1,21 @@
+<div class="sidebar p-3 rounded shadow-sm">
+    <div class="sidebar-section">
+        <h2 class="fw-medium text-center text-secondary">BLOG CATEGORIES</h2>
+        <ul class="list-unstyled">
+            <li *ngFor="let category of categories">{{ category }}</li>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <h2 class="fw-medium text-center text-secondary">RECENT POSTS</h2>
+        <div class="recent-posts">
+            <div *ngFor="let post of recentPosts" class="recent-post">
+                <img [src]="post.img" alt="{{ post.title }}">
+                <div>
+                    <p>{{ post.title }}</p>
+                    <span>{{ post.date }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,253 @@
+
+/* Carousel (Slider) Custom Style */
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #402A1D;  /* Màu sắc nút điều hướng */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%; /* Điều chỉnh khoảng cách vào sâu hơn từ viền màn hình */
+}
+
+.carousel-control-prev {
+    left: -10px; /* Đẩy nút trái vào sâu hơn */
+}
+
+.carousel-control-next {
+    right: -10px; /* Đẩy nút phải vào sâu hơn */
+}
+
+.banner-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 400px;
+}
+
+.carousel-item a {
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+}
+
+/* Product Card Custom Style */
+
+.product-card {
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    text-align: left;
+}
+.card-body .text-primary{
+    font-size:large;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.star-icon
+{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+.cart-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+h3 {
+    color: #402A1D;
+    font-weight: bold;
+}
+
+.text-primary {
+    color: #DAA86D !important;
+}
+
+.text-secondary {
+    color: #402A1D !important;
+}
+
+a {
+    color: #402A1D;
+    &:hover {
+        color: #DAA86D;
+    }
+}
+
+/* Hot deal */
+.special-offer-section {
+    background: url('/asset/hotdeal.png') no-repeat center center;
+    background-size: cover;
+    padding: 80px 0;
+    position: relative;
+    width:100vw;
+    height:450px;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow:hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .offer-content {
+        position: relative;
+        z-index: 1;
+
+        h2{
+            color:#402A1D;
+        }
+
+        p{
+            color:#DAA86D;
+        }
+    }
+
+    .time-block {
+        background: #fff;
+        padding: 15px 25px;
+        border-radius: 8px;
+        min-width: 100px;
+
+        h3 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        small {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color:#DAA86D;
+        }
+    }
+    .btn:hover{
+        background-color: #fff;
+        color: #402A1D;
+
+    }
+}
+
+.time-divider {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #DAA86D;
+    margin-top:40px; 
+    padding-bottom: 25px;
+}
+
+/*Review */
+.reviews-section {
+    overflow: hidden;
+}
+
+.review-carousel {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.review-track {
+    display: flex;
+    width: 100%; 
+    animation: scroll 20s linear infinite; /*Chỉnh tốc độ cuộn*/
+    gap:30px;
+}
+
+.review-card {
+    flex: 0 0 calc(33.333% - 20px); /* Hiện 3 card */
+    padding: 0 10px;
+    border-radius: 10px;
+    border:#DAA86D solid 1px;
+}
+
+.review-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    height: 50%;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #402A1D;
+    object-fit: cover;
+    margin-top: 30px;
+}
+
+.review-text {
+    color: #434343;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+h6 {
+    color: #402A1D;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Move left by half width */
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .review-card {
+        flex: 0 0 calc(50% - 20px); /* Show 2 cards on medium screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .review-card {
+        flex: 0 0 calc(100% - 20px); /* Show 1 card on small screens */
+    }
+}
+
+.suggested-section {
+    margin-top: 30px;
+}

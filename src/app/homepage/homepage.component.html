@@ -1,0 +1,156 @@
+<!-- Banner Section (Carousel) -->
+<div class="banner-container">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a routerLink="#"> <!--route tới category livingroom-->
+                    <img src="asset/banner-homepage/banner1.png" class="d-block w-100" alt="Banner 1">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a routerLink="#"> <!--route tới category workspace-->
+                    <img src="asset/banner-homepage/banner2.jpeg" class="d-block w-100" alt="Banner 2">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a routerLink="#"> 
+                    <img src="asset/banner-homepage/banner3.png" class="d-block w-100" alt="Banner 3">
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+
+<!-- New Products Section -->
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12  d-flex justify-content-between align-items-center">
+            <h3>New</h3>
+            <a routerLink="#" class="text-decoration-none">View more</a>
+        </div>
+        <div class="col-md-3" *ngFor="let product of newProducts">
+            <div class="card product-card shadow-sm">
+                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
+                    style="max-height: 200px; object-fit: contain;">
+                <div class="card-body">
+                    <h6 class="text-secondary">{{ product.name }}</h6>
+                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="rating mb-0">
+                            <img src="asset/star-icon.png" alt="star" class="star-icon">
+                            {{ product.rating }} ({{ product.reviews }})
+                        </p>
+                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Seller Products Section -->
+    <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h3>Best Seller</h3>
+            <a routerLink="#" class="text-decoration-none">View more</a>
+        </div>
+        <div class="col-md-3" *ngFor="let product of bestSellerProducts">
+            <div class="card product-card shadow-sm">
+                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
+                    style="max-height: 200px; object-fit: contain;">
+                <div class="card-body">
+                    <h6 class="text-secondary">{{ product.name }}</h6>
+                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="rating mb-0">
+                            <img src="asset/star-icon.png" alt="star" class="star-icon">
+                            {{ product.rating }} ({{ product.reviews }})
+                        </p>
+                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Special Offer Section -->
+<div class="special-offer-section">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-md-6">
+                <div class="offer-content text-white text-center">
+                    <h3 class="display-4 fw-bold mb-3">HOT DEAL</h3>
+                    <p class="lead mb-4 fw-medium">Our Special Products Deal of the Month</p>
+                    <div class="countdown-timer d-flex gap-4 mb-4">
+                        <div class="time-block text-center">
+                            <h3 class="mb-1">{{days}}</h3>
+                            <small>Days</small>
+                        </div>
+                        <div class="time-divider">:</div>
+                        <div class="time-block text-center">
+                            <h3 class="mb-1">{{hours}}</h3>
+                            <small>Hours</small>
+                        </div>
+                        <div class="time-divider">:</div>
+                        <div class="time-block text-center">
+                            <h3 class="mb-1">{{minutes}}</h3>
+                            <small>Minutes</small>
+                        </div>
+                        <div class="time-divider">:</div>
+                        <div class="time-block text-center">
+                            <h3 class="mb-1">{{seconds}}</h3>
+                            <small>Seconds</small>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary fw-medium">Shop Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Suggested Section -->
+<div class="suggested-section">
+    <div class="container">
+        <app-suggested-homepage></app-suggested-homepage>
+    </div>
+</div>
+
+<!-- Customer Reviews Section -->
+<div class="reviews-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-3">
+                <h3 class="fw-bold text-secondary">What Our Customers Say</h3>
+                <p class="text-primary">Reviews from our valued customers</p>
+            </div>
+        </div>
+        <div class="review-carousel">
+            <div class="review-track">
+                <div class="review-card" *ngFor="let review of reviews.concat(reviews)">
+                    <div class="review-content">
+                        <p class="review-text mb-3">"{{review.comment}}"</p>
+                        <div class="review-header d-flex align-items-center gap-3">
+                            <img [src]="review.avatar" [alt]="review.name" class="avatar">
+                            <div>
+                                <h6>{{review.name}}</h6>
+                                <div class="d-flex align-items-center">
+                                    <img src="asset/star-icon.png" alt="star" class="star-icon me-1">
+                                    <span class="rating">{{ review.rating }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

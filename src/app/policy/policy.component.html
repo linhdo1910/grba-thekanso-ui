@@ -1,0 +1,24 @@
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="sidebar p-3 rounded shadow-sm">
+                <h2 class="fw-bold text-uppercase text-center text-secondary">Policy</h2>
+                <nav class="nav flex-column">
+                    <a *ngFor="let policy of policies" 
+                       class="nav-link" 
+                       [class.active]="selectedPolicy === policy.title"
+                       (click)="setSelectedPolicy(policy.title)">
+                        {{ policy.title }}
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-9">
+            <h2 class="fw-bold">{{ selectedPolicy }}</h2>
+            <div *ngIf="selectedPolicyContent" [innerHTML]="selectedPolicyContent"></div>
+        </div>
+    </div>
+</div>

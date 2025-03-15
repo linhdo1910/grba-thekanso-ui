@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
+import { ProductsComponent } from './products/products.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { PolicyComponent } from './policy/policy.component';
 import { HeaderComponent } from './header/header.component';
 import { PaymentComponent } from './payment/payment.component';
 import { QrCodeComponent } from './qr-code/qr-code.component';
@@ -30,15 +30,31 @@ const routes: Routes = [
   { path: 'order-history', component: OderComponent },
   { path: 'logout', component: OderComponent }
 ];
+import { SidebarBlogComponent } from './sidebar-blog/sidebar-blog.component';
+import { BlogListComponent } from './blog-list/blog-list.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homepage.component';
+import { CartComponent } from './cart/cart.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
+    ProductsComponent,
+    AboutUsComponent,
+    PolicyComponent,
     HeaderComponent,
     PaymentComponent,
     QrCodeComponent,
     OrderSuccessComponent,
+    SidebarBlogComponent,
+    BlogListComponent,
+    BlogDetailComponent,
+    HomepageComponent,
+    SuggestedHomepageComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
