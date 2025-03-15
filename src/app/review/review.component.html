@@ -1,0 +1,55 @@
+<div class="review-container">
+    <h2 class="title"><strong>WRITING REVIEW </strong></h2>
+    
+    <!-- Textarea nhập nội dung review -->
+    <textarea 
+        placeholder="Write here" 
+        [(ngModel)]="reviewText" 
+        rows="5" 
+        class="review-textarea">
+    </textarea>
+
+<!-- Đánh giá sao với input số -->
+<div class="rating-section">
+    <label style="font-size: 14px; color: #DAA86D; margin-top: 6px;"><strong>Rating (1-5):</strong></label>
+    <input 
+        type="number" 
+        [(ngModel)]="rating" 
+        min="1" 
+        max="5" 
+        class="rating-input"
+        (input)="updateStars()"
+        style="font-size: 14px;">
+    
+    <div class="stars">
+        <span 
+            *ngFor="let star of stars; let i = index" 
+            class="star" 
+            [class.filled]="i < rating">
+            ★
+        </span>
+    </div>
+</div>
+
+
+    <!-- Chọn ảnh sản phẩm -->
+    <div class="file-upload" style="font-size: 14px; color: #DAA86D;margin-left: 18px; margin-top: 20px;">
+        <label> <strong>Product image:</strong></label>
+        <input type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <!-- Nút Submit và Cancel -->
+    <div class="button-group">
+        <button class="submit-btn" (click)="submitReview()" style="height: 40px; width: 100px; background-color: #DAA86D; color: white;">Submit</button>
+        <button class="cancel-btn" (click)="cancelReview()">Cancel</button>
+    </div>
+</div>
+
+<!-- Cửa sổ thông báo bình luận thành công -->
+<div *ngIf="showSuccessMessage" class="modal">
+    <div class="modal-content">
+        <p>Bình luận đã được gửi thành công!</p>
+        <button (click)="closeModal()">Đóng</button>
+    </div>
+</div>
+

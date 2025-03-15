@@ -1,0 +1,132 @@
+/* Định dạng khung đăng nhập */
+.khung_dang_nhap {
+    width: 568px;
+    height: 510px;
+    position: absolute;
+    margin-left: 461px;
+    margin-top: 161px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    
+}
+
+
+/* Tiêu đề "Sign In" */
+.tieu_de {
+    font-size: 32px;
+    color: #402A1D;
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* Khung nhập nội dung (Email và Password) */
+.o_nhap {
+    width: 472px;
+    height: 45px;
+    padding: 10px;
+    margin-left: 24px;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Khung nhập Email cách lề trên 92px */
+.lieu_email {
+    margin-top: 70px;
+}
+
+/* Ô tích "Remember me" */
+.o_tich {
+    width: 18px;
+    height: 18px;
+    margin-left: 22px;
+    accent-color: #DAA86D;
+    vertical-align: middle;
+
+    
+}
+.lua_chon{
+    margin-top: 50px;
+}
+
+/* Dòng chữ "Remember me" */
+.lua_chon label {
+    font-size: 14px;
+    margin-left: 10px;
+    
+    color: #000;
+    vertical-align: middle;
+   
+    position: absolute;
+    left: 11px;
+    top: 312px;
+}
+
+/* Dòng chữ "Forgot password" */
+.quen_mat_khau {
+    font-size: 14px;
+    color: gray;
+    position: absolute;
+    right: 24px;
+ 
+    text-decoration: underline;
+    cursor: pointer;
+    position: absolute;
+    left: 400px;
+    top: 317px;
+}
+
+/* Nút "Login" */
+.nut_dang_nhap {
+    width: 472px;
+    height: 40px;
+    margin-left: 24px;
+    margin-top: 20px;
+    background-color: #DAA86D;
+    color: white;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    top: 320px;
+}
+
+/* Dòng chữ "Don't have account?" */
+.dang_ky {
+    font-size: 14px;
+    color: gray;
+    position: absolute;
+    left: 200px;
+    top: 380px;
+}
+
+/* Dòng chữ "Register" */
+.dang_ky_link {
+    color: #402A1D;
+    
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    position: absolute;
+    left: 130px;
+    top: 0px;
+}
+
+/* Ảnh biểu tượng Google */
+.icon_xa_hoi {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    left: calc(50% - 27.5px); /* Căn giữa khung C */
+    top: 389px;
+    cursor: pointer;
+    position: absolute;
+    
+    top: 430px;
+}
+

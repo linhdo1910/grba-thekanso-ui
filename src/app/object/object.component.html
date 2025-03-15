@@ -1,0 +1,55 @@
+<div class="object-container">
+  <!-- Danh sách nội thất -->
+  <div class="object-list">
+    <h3>Object</h3>
+    <input type="text" placeholder="Search product" style="width: 220px ;">
+    <select>
+      <option>All Categories</option>
+      <option>Sofa</option>
+      <option>Table</option>
+    </select>
+
+    <div class="object-items">
+      <div *ngFor="let item of furnitureList" class="furniture-object" 
+           draggable="true" 
+           (dragstart)="onDragStart($event, item)">
+        <img [src]="item.imageUrl" [alt]="item.name">
+
+        <p>{{ item.name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Khung phòng -->
+  <div class="room-shape-section" 
+       (dragover)="onDragOver($event)" 
+       (drop)="onDrop($event)">
+    <div class="room">
+      <img [src]="imageUrl" alt="Room Shape" class="room-image" />
+
+      <div class="dimension-label horizontal">
+        {{ length.toFixed(2) }} m
+      </div>
+
+      <div class="dimension-label vertical">
+        {{ width.toFixed(2) }} m
+      </div>
+
+      <!-- Hiển thị các đồ nội thất đã được kéo vào phòng -->
+      <div *ngFor="let obj of placedFurniture" 
+           class="placed-object"
+           [style.top.px]="obj.y" [style.left.px]="obj.x" [style.transform]="'scale(1)'"
+           (mousedown)="startDragging($event, obj)">
+        <img [src]="obj.imageUrl" [alt]="obj.name">
+      </div>
+    
+    </div>
+    <button class="generate-room">GENERATE YOUR ROOM</button>
+  </div>
+
+
+</div>
+
+  
+  
+  

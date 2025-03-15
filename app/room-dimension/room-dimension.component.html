@@ -1,0 +1,46 @@
+<!-- room-dimension.component.html -->
+<div class="room-dimension-container">
+    <!-- Form nhập thông tin kích thước phòng -->
+    <div class="form-section">
+      <h2>Room Dimension</h2>
+      <p>Click the plus or minus sign to adjust the size according to the arrows</p>
+  
+      <!-- Nhập chiều dài phòng -->
+      <label for="length">Length (m)</label>
+      <input
+        type="number"
+        id="length"
+        [(ngModel)]="length"
+        (input)="onDimensionChange()"
+        placeholder="Enter length"
+        min="0"
+      />
+  
+      <!-- Nhập chiều rộng phòng -->
+      <label for="width">Width (m)</label>
+      <input
+        type="number"
+        id="width"
+        [(ngModel)]="width"
+        (input)="onDimensionChange()"
+        placeholder="Enter width"
+        min="0"
+      />
+  
+      <!-- Chiều cao cố định và diện tích phòng tự động tính -->
+      <label for="height">Height (m) (Fixed)</label>
+      <input type="number" id="height" [value]="height" readonly />
+  
+      <label for="area">Area (m²)</label>
+      <input type="number" id="area" [value]="area" readonly />
+    </div>
+  
+    <!-- Hình ảnh room-shape biểu thị kích thước phòng -->
+    <div class="room-shape-section">
+      <div id="room-shape" class="room-shape">
+        <div class="dimension-label horizontal">{{ length.toFixed(2) }} m</div>
+        <div class="dimension-label vertical">{{ width.toFixed(2) }} m</div>
+      </div>
+    </div>
+  </div>
+  

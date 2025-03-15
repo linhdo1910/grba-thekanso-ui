@@ -8,6 +8,8 @@ import { ProductsComponent } from './products/products.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  title = 'frontend';
   constructor() {
     this.initializeFormValidation();
   }

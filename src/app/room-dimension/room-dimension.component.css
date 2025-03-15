@@ -1,0 +1,141 @@
+.room-dimension-container{
+    display: flex;
+
+}
+.form-section {
+    background-color: #D9D3C5; /* Màu nền */
+    padding: 20px;
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 356px; /* Giới hạn chiều rộng */
+    height: 550px ;
+    margin-top: 94px;
+    margin-left: 112px;
+
+
+
+  }
+  
+  h2 {
+    color: #402A1D; /* Màu chữ tiêu đề */
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: #434343;
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin: 5px 0;
+    text-align: left;
+    font-size: 16px;
+    color: #402A1D;
+  }
+  
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  input[readonly] {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .dimension-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  button {
+    background-color: #DAA86D;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    width: 45px;
+  }
+  
+  button:hover {
+    background-color: #c69360;
+  }
+  
+  .next-button {
+    background-color: #d9a875;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+  }
+  
+  .next-button:hover {
+    background-color: #c69360;
+  }
+  /* ROOM SHAPE */
+.room-shape-section{
+    margin-top: 70px;
+    margin-left: 155px;
+    
+
+}
+.room-shape{
+    display: flex;
+
+}
+.room-shape-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+    margin-left: 155px;
+
+  }
+  
+  .room-image {
+    width: 700px;
+    height: 700px;
+    display: block;
+  }
+  
+  .dimension-label {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  /* Định vị nhãn chiều ngang */
+  .dimension-label.horizontal {
+    bottom: -20px; /* Đặt dưới ảnh */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* Định vị nhãn chiều dọc */
+  .dimension-label.vertical {
+    right: -80px; /* Đặt bên phải ảnh */
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg); /* Xoay chữ dọc */
+  }
+  
