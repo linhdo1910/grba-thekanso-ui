@@ -56,17 +56,29 @@
 </div>
 
 <!-- Products Table -->
-<div class="container">
+<div class="container mt-3">
+  <!-- Filter Section -->
+  <!-- (Same as your code) -->
+</div>
+
+<!-- Products Section -->
+<div class="container mt-4">
   <table class="table border-0">
     <tbody>
       <tr *ngFor="let row of paginatedProducts">
         <td *ngFor="let product of row" class="text-center border-0">
-          <div class="card shadow-sm">
+          <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
             <img [src]="product.image" class="card-img-top p-2" [alt]="product.name" style="max-height: 200px; object-fit: contain;">
             <div class="card-body">
-              <h6 class="text-primary" (click)="toProductDetail()">{{ product.name }}</h6>
-              <p class="fw-bold text-secondary">{{ product.price | number }} VND</p>
-              <p>{{ product.rating }} ({{ product.reviews }})</p>
+              <h6 class="text-secondary">{{ product.name }}</h6>
+              <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="rating mb-0">
+                  <img src="asset/star-icon.png" alt="star" class="star-icon">
+                  {{ product.rating }} ({{ product.reviews }})
+                </p>
+                <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+              </div>
             </div>
           </div>
         </td>
@@ -74,7 +86,7 @@
     </tbody>
   </table>
 
-<!-- Pagination -->
+  <!-- Pagination -->
   <nav>
     <ul class="pagination justify-content-center">
       <li class="page-item" [class.disabled]="currentPage === 1">

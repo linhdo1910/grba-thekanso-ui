@@ -1,5 +1,6 @@
 a:hover {
     color: rgba(218, 168, 109, 1);
+    cursor: pointer;
 }
 .input-group {
     width: 80%;

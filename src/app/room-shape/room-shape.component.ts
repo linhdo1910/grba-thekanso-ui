@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-shape',
@@ -16,6 +17,8 @@ export class RoomShapeComponent {
     { id: 4, name: 'Room 04', src: 'asset/room-shape/Rectangle 17527 (1).svg' }
   ];
 
+  constructor(private router: Router) {}
+
   selectedShape: any = null;
 
   // Hàm chọn hình ảnh khi click
@@ -26,7 +29,9 @@ export class RoomShapeComponent {
   // Hàm xử lý khi bấm nút NEXT
   nextPage() {
     console.log('Next page triggered');
+    this.router.navigate(['/room-dimension']); 
   }
+  
 }
 
 

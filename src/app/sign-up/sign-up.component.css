@@ -1,102 +1,80 @@
-body{
-  font-family: "Roboto";
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  padding: 20px; 
 }
+
 .dang_ky {
-    width: 568px;
-    height: 780px;
-    margin-left: 469px;
-    margin-top: 211px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+  width: 100%;
+  max-width: 570px; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.khung_nhap {
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  color: gray;
+  margin-left: 0; 
+  margin-bottom: 20px;
+}
+
+.khung_nhap:nth-child(n) {
+  margin-top: 20px; 
+}
+
+.ghi_chu {
+  font-size: 14px;
+  color: gray;
+  margin-left: 24px;
+  margin-top: 10px; 
+}
+
+.dong_dieu_khoan {
+  margin-left: 24px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
+}
+
+.btn {
+  width: 100%;
+  margin-left: 0;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+p a:hover {
+  color: #DAA86D;
+}
+
+p {
+  font-size: 14px;
+}
+
+.google-icon {
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  margin-left: 232.5px; 
+  margin-top: 20px
+}
+
+@media (max-width: 768px) {
+  .dang_ky {
+    width: 90%; 
   }
-  
-  .tieu_de {
-    font-size: 32px;
-    color: #402A1D;
-    margin-left: 115px; /* 584px - 469px */
-    margin-top: 24px; /* 235px - 211px */
-  }
-  
+
   .khung_nhap {
-    width: 472px;
-    height: 50px;
-    font-size: 14px;
-    color: gray;
-    margin-left: 24px; /* 493px - 469px */
-    margin-bottom: 20px;
+    max-width: 100%; 
   }
-  
-  .khung_nhap:nth-child(1) {
-    margin-top: 20px; /* 258px - 211px */
-  }
-  
-  .khung_nhap:nth-child(2) {
-    margin-top: 20px; /* 320px - 258px */
-  }
-  
-  .khung_nhap:nth-child(3) {
-    margin-top: 20px; /* 382px - 320px */
-  }
-  
-  .khung_nhap:nth-child(4) {
-    margin-top: 20px; /* 444px - 382px */
-  }
-  
-  .ghi_chu {
-    font-size: 14px;
-    color: gray;
-    margin-left: 24px;
-    margin-top: 10px; /* 510px - 444px */
-  }
-  
-  .dong_dieu_khoan {
-    margin-left: 24px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: gray;
-  }
-  
-  .nut_dang_ky {
-    width: 472px;
-    height: 50px;
-    background-color: #DAA86D;
-    color: white;
-    font-size: 15px;
-    margin-left: 24px;
-    margin-top: 20px; /* 612px - 444px */
-    border: none;
-    cursor: pointer;
-  }
-  
-  .chu_dang_nhap {
-    font-size: 14px;
-    color: gray;
-    margin-left: 170px; /* 639px - 469px */
-    margin-top: 20px; /* 668px - 612px */
-  }
-  
-  .link_dang_nhap {
-    color: #402A1D;
-    font-size: 14px;
-  }
-  
-  .chu_khac {
-    font-size: 14px;
-    color: gray;
-    margin-left: 174px; /* 643px - 469px */
-    margin-top: 20px; /* 709px - 668px */
-  }
-  
-  .nut_mang_xa_hoi {
-    margin-left: 232.5px; /* (520px - 55px) / 2 */
-    margin-top: 20px; /* 750px - 709px */
-  }
-  
-  .icon_xa_hoi {
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-  }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Product {
   id: number;
@@ -7,6 +8,7 @@ interface Product {
   image: string;
   rating: number;
   reviews: number;
+  discount: number
 }
 
 @Component({
@@ -17,16 +19,16 @@ interface Product {
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [
-    { id: 1, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 120 },
-    { id: 2, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 90 },
-    { id: 3, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 85 },
-    { id: 4, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.6, reviews: 105 },
-    { id: 5, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.4, reviews: 110 },
-    { id: 6, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.1, reviews: 95 },
-    { id: 7, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 100 },
-    { id: 8, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.7, reviews: 130 },
-    { id: 9, name: 'Chair living room style Japan', price: 2000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 80 },
-    { id: 10, name: 'Cabinet living room style Japan', price: 3000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 75 }
+    { id: 1, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 120, discount:80 },
+    { id: 2, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 90, discount:80 },
+    { id: 3, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 85, discount:27 },
+    { id: 4, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.6, reviews: 105, discount:80 },
+    { id: 5, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.4, reviews: 11, discount: 20 },
+    { id: 6, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.1, reviews: 95, discount:80 },
+    { id: 7, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 100, discount:88 },
+    { id: 8, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.7, reviews: 130, discount:80 },
+    { id: 9, name: 'Chair living room style Japan', price: 2000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 80, discount:99 },
+    { id: 10, name: 'Cabinet living room style Japan', price: 3000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 75, discount:80 }
   ];
 
   productsChunked: Product[][] = [];
@@ -35,6 +37,8 @@ export class ProductsComponent implements OnInit {
   itemsPerPage: number = 4;
   totalPages: number = 1;
   totalPagesArray: number[] = [];
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.chunkProducts(4);
@@ -49,7 +53,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private setupPagination(): void {
-    this.totalPages = Math.ceil(this.productsChunked.length / (this.itemsPerPage / 4)); // Convert to row count
+    this.totalPages = Math.ceil(this.productsChunked.length / (this.itemsPerPage / 4)); 
     this.totalPagesArray = Array(this.totalPages).fill(0).map((_, i) => i + 1);
     this.updatePagination();
   }
@@ -78,7 +82,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  toProductDetail() {
-    alert('going')
+  navigateToProductDetail(productId: number): void {
+    this.router.navigate(['/product-details', productId]);
   }
 }

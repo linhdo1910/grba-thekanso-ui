@@ -1,0 +1,92 @@
+.thumbnail-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* Increased gap between thumbnails for better visibility */
+}
+
+.thumbnail-item {
+    cursor: pointer;
+}
+
+.thumbnail-img {
+    width: 150px;
+    height: 150px;  /* Resize thumbnail image */
+    object-fit: cover;
+    border-radius: 2px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.thumbnail-img:hover {
+    opacity: 0.7;
+}
+
+.main-image-carousel {
+    position: relative;
+}
+
+.main-img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    object-fit: contain;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    padding: 10px 20px;
+    color: #DAA86D;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: #DAA86D;
+    color: white;
+}
+
+.carousel-control-prev:focus,
+.carousel-control-next:focus {
+    outline: none;
+}
+.size-options{
+    color: #D9D3C5;
+    text-align: center;
+    border: 1px solid #D9D3C5;
+}
+.size-options:hover{
+    color: #DAA86D;
+    text-align: center;
+    border: 1px solid #DAA86D;
+}
+.product-options {
+    margin-top: 20px;
+  }
+.color-options {
+    display: flex;
+    gap: 10px; /* Space between color boxes */
+}
+
+.color-option {
+    width: 40px; 
+    height: 40px;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.color-option:hover {
+border-color: #DAA86D; 
+}

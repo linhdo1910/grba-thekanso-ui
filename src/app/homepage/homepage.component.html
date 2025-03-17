@@ -3,17 +3,17 @@
     <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <a routerLink="#"> <!--route tới category livingroom-->
+                <a routerLink="/products"> <!--route tới category livingroom-->
                     <img src="asset/banner-homepage/banner1.png" class="d-block w-100" alt="Banner 1">
                 </a>
             </div>
             <div class="carousel-item">
-                <a routerLink="#"> <!--route tới category workspace-->
+                <a routerLink="products"> <!--route tới category workspace-->
                     <img src="asset/banner-homepage/banner2.jpeg" class="d-block w-100" alt="Banner 2">
                 </a>
             </div>
             <div class="carousel-item">
-                <a routerLink="#"> 
+                <a routerLink="/products"> 
                     <img src="asset/banner-homepage/banner3.png" class="d-block w-100" alt="Banner 3">
                 </a>
             </div>
@@ -30,12 +30,12 @@
 <!-- New Products Section -->
 <div class="container my-4">
     <div class="row">
-        <div class="col-12  d-flex justify-content-between align-items-center">
+        <div class="col-12 d-flex justify-content-between align-items-center">
             <h3>New</h3>
-            <a routerLink="#" class="text-decoration-none">View more</a>
+            <a routerLink="/products">View more</a>
         </div>
         <div class="col-md-3" *ngFor="let product of newProducts">
-            <div class="card product-card shadow-sm">
+            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
                 <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
                     style="max-height: 200px; object-fit: contain;">
                 <div class="card-body">
@@ -57,10 +57,10 @@
     <div class="row mt-4">
         <div class="col-12 d-flex justify-content-between align-items-center">
             <h3>Best Seller</h3>
-            <a routerLink="#" class="text-decoration-none">View more</a>
+            <a routerLink="/products" class="text-decoration-none">View more</a>
         </div>
         <div class="col-md-3" *ngFor="let product of bestSellerProducts">
-            <div class="card product-card shadow-sm">
+            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
                 <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
                     style="max-height: 200px; object-fit: contain;">
                 <div class="card-body">

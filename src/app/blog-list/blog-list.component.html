@@ -1,35 +1,38 @@
 <div class="container my-2 ps-0">
-    <div class="row">
-        <!-- Sidebar Component -->
-        <div class="col-md-3 px-4">
-            <app-sidebar-blog></app-sidebar-blog>
-        </div>
-
-        <!-- Blog List Section -->
-        <div class="col-md-9 px-3">
-            <h2 class="fw-bold">People</h2>
-            <div class="blog-list">
-                <div *ngFor="let blog of blogs" class="blog-item d-flex mb-4">
-                    <img [src]="blog.img" alt="{{ blog.title }}" class="blog-img me-3">
-
-                    <div>
-                        <h5 class="fw-bold">{{ blog.title }}</h5>
-                        <p>{{ blog.description }}</p>
-
-                        <p class="blog-meta d-flex align-items-center">
-                            <span class="d-flex align-items-center">
-                                <img src="asset/admin-icon.png" alt="Admin" class="icon"> Admin
-                            </span>
-                            <span class="mx-2">|</span>
-                            <span class="d-flex align-items-center">
-                                <img src="asset/calendar-icon.png" alt="Date" class="icon"> {{ blog.date }}
-                            </span>
-                        </p>
-                        
-                        <a href="#" class="text-orange">Read more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <!-- Sidebar Component -->
+    <div class="col-md-3 px-4">
+      <app-sidebar-blog (categorySelected)="onCategorySelected($event)"></app-sidebar-blog>
     </div>
+
+    <!-- Blog List Section -->
+    <div class="col-md-9 px-3">
+      <h2 class="fw-bold text-uppercase text-secondary">{{ selectedCategory || 'All Blogs' }}</h2>
+      <div class="blog-list">
+        <div *ngFor="let blog of filteredBlogs()" class="blog-item d-flex mb-4">
+          <img [src]="blog.img" alt="{{ blog.title }}" class="blog-img me-3">
+
+          <div>
+            <h5 class="fw-bold">{{ blog.title }}</h5>
+            <p>{{ blog.description }}</p>
+
+            <p class="blog-meta d-flex align-items-center">
+              <span class="d-flex align-items-center">
+                <img src="asset/admin-icon.png" alt="Admin" class="icon"> Admin
+              </span>
+              <span class="mx-2">|</span>
+              <span class="d-flex align-items-center">
+                <img src="asset/calendar-icon.png" alt="Date" class="icon"> {{ blog.date }}
+              </span>
+            </p>
+
+            <a href="#" class="text-orange">Read more</a>
+          </div>
+        </div>
+
+        <!-- Optional: If no blogs -->
+        <p *ngIf="filteredBlogs().length === 0">No blogs found in this category.</p>
+      </div>
+    </div>
+  </div>
 </div>

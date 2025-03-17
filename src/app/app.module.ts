@@ -20,7 +20,7 @@ import { RoomDimensionComponent } from './room-dimension/room-dimension.componen
 import { RoomShapeComponent } from './room-shape/room-shape.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { ForgotPassordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
 import { SuggestComponent } from './suggest/suggest.component';
 
@@ -36,6 +36,8 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homepage.component';
 import { CartComponent } from './cart/cart.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductService } from './product.service';
 
 
 @NgModule({
@@ -55,6 +57,7 @@ import { CartComponent } from './cart/cart.component';
     HomepageComponent,
     SuggestedHomepageComponent,
     CartComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,11 +71,12 @@ import { CartComponent } from './cart/cart.component';
     RoomShapeComponent,
     SignInComponent,
     SignUpComponent,
-    ForgotPassordComponent,
+    ForgotPasswordComponent,
     ObjectComponent,
     SuggestComponent,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

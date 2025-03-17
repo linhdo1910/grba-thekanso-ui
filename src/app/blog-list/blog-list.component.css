@@ -32,7 +32,9 @@ h2{
     height: 16px;
     margin-right: 5px; 
 }
-
+h2{
+    border-bottom: 2px solid #DAA86D;
+}
 
 
 

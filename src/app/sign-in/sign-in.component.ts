@@ -1,4 +1,3 @@
-// sign-in.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -31,20 +30,17 @@ export class SignInComponent {
       console.log('Remember Me:', this.rememberMe);
       alert('Login successful!');
 
-      // Điều hướng tới trang chính sau khi đăng nhập thành công
-      this.router.navigate(['/home']);
+      this.router.navigate(['/homepage']);
     } else {
       alert('Vui lòng nhập email và mật khẩu.');
     }
   }
 
-  // Xử lý khi nhấn vào "Forgot password"
   onForgotPassword() {
     this.router.navigate(['/forgot-password']);
   }
 
-  // Xử lý khi nhấn vào "Register"
   onRegister() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/sign-up']);
   }
 }

@@ -5,9 +5,10 @@
     border: 1px solid #D9D3C5;
 }
 
-.blog-detail h2 {
+.blog-detail h3 {
     color: #402A1D;
     margin-bottom: 10px;
+    border-bottom: 2px solid #DAA86D;
 }
 
 .blog-detail p {

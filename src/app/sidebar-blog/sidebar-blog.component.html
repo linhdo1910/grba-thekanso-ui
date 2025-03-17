@@ -1,18 +1,25 @@
 <div class="sidebar p-3 rounded shadow-sm">
     <div class="sidebar-section">
-        <h2 class="fw-medium text-center text-secondary">BLOG CATEGORIES</h2>
+        <h2 class="fw-bold text-center text-secondary">BLOG CATEGORIES</h2>
         <ul class="list-unstyled">
-            <li *ngFor="let category of categories">{{ category }}</li>
+            <li *ngFor="let category of categories" 
+                (click)="filterByCategory(category)" 
+                [class.active]="category === selectedCategory" 
+                style="cursor: pointer;">
+                {{ category }}
+            </li>
         </ul>
     </div>
 
     <div class="sidebar-section">
-        <h2 class="fw-medium text-center text-secondary">RECENT POSTS</h2>
+        <h2 class="fw-bold text-center text-secondary">RECENT POSTS</h2>
         <div class="recent-posts">
-            <div *ngFor="let post of recentPosts" class="recent-post">
+            <div *ngFor="let post of recentPosts" class="recent-post" 
+                (click)="filterByRecentPost(post)" 
+                style="cursor: pointer;">
                 <img [src]="post.img" alt="{{ post.title }}">
                 <div>
-                    <p>{{ post.title }}</p>
+                    <p class="text-primary">{{ post.title }}</p>
                     <span>{{ post.date }}</span>
                 </div>
             </div>

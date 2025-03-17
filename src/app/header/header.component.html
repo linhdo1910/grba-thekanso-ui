@@ -6,7 +6,7 @@
 
     <div class="main-header">
         <div class="header-left">
-            <a routerLink=""> <!--Route load lại homepage-->
+            <a routerLink="homepage"> <!--Route load lại homepage-->
                 <img src="asset/logo.png" width="150px" alt="Logo">
             </a>
         </div>
@@ -21,8 +21,9 @@
         </div>
 
         <div class="header-right">
-            <a routerLink="" class="auth-link">Sign up/Sign in</a> <!--Route tới trang signup/signin-->
-            <a routerLink="" class="cart-link"> <!--Route tới trang giỏ hàng-->
+            <a routerLink="sign-up" class="auth-link">Sign up</a> /<!--Route tới trang signup/signin-->
+            <a routerLink="sign-in" class="auth-link">Sign in</a>
+            <a routerLink="cart" class="cart-link"> <!--Route tới trang giỏ hàng-->
                 <div class="cart-icon-wrapper">
                     <img src="asset/cart-icon.png" alt="Cart Icon" class="cart-icon">
                     <span class="cart-badge">0</span>
@@ -49,34 +50,38 @@
                             <i class="fa fa-chevron-down dropdown-icon ms-1"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="productDropdown">
-                            <li><a class="dropdown-item" routerLink="">Living Room</a></li>
-                            <li><a class="dropdown-item" routerLink="">Bed Room</a></li>
-                            <li><a class="dropdown-item" routerLink="">Dining Room</a></li>
-                            <li><a class="dropdown-item" routerLink="">Workspace</a></li>
-                            <li><a class="dropdown-item" routerLink="">Home Decor & Accessories</a></li>
+                            <li><a class="dropdown-item" routerLink="products/living-room">Living Room</a></li>
+                            <li><a class="dropdown-item" routerLink="products/bedroom">Bed Room</a></li>
+                            <li><a class="dropdown-item" routerLink="products/dining-room">Dining Room</a></li>
+                            <li><a class="dropdown-item" routerLink="products/workspace">Workspace</a></li>
+                            <li><a class="dropdown-item" routerLink="products/home-decor">Home Decor & Accessories</a></li>
                         </ul>
                     </li>
 
                     <!-- Blog Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center fw-medium" routerLink="" id="blogDropdown"
+                        <a class="nav-link d-flex align-items-center fw-medium" routerLink="blog" id="blogDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-journal-text"></i> Blog
                             <i class="fa fa-chevron-down dropdown-icon ms-1"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="blogDropdown">
-                            <li><a class="dropdown-item" routerLink="">People</a></li>
-                            <li><a class="dropdown-item" routerLink="">Tips</a></li>
-                            <li><a class="dropdown-item" routerLink="">Inspiration</a></li>
+                            <li><a class="dropdown-item" routerLink="blog/people">People</a></li>
+                            <li><a class="dropdown-item" routerLink="blog/tips">Tips</a></li>
+                            <li><a class="dropdown-item" routerLink="blog/inspiration">Inspiration</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link fw-medium" routerLink="">Customize</a>
+                        <a class="nav-link fw-medium" routerLink="room-shape">Customize</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link fw-medium" routerLink="about-us">About us</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" routerLink="policy">Policy</a>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Product {
   id: number;
@@ -86,7 +87,9 @@ export class HomepageComponent implements OnInit, OnDestroy {
   seconds: number = 0;
   private timerInterval: any;
 
-  constructor() {}
+  constructor(private router: Router) {  
+    this.startCountdown(new Date('2025-03-31'));
+  }
 
   ngOnInit(): void {
     const targetDate = new Date('2025-03-31');
@@ -97,6 +100,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
+  }
+
+  navigateToProductDetail(productId: number): void {
+    this.router.navigate(['/product-details', productId]);
   }
 
   private startCountdown(targetDate: Date): void {
