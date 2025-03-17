@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-forgot-passord',
+  selector: 'app-forgot-password',
   imports: [],
-  templateUrl: './forgot-passord.component.html',
-  styleUrl: './forgot-passord.component.css'
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.css'
 })
-export class ForgotPassordComponent {
+export class ForgotPasswordComponent {
   constructor(private router: Router) {}
 
   // Hàm xử lý khi ấn nút Submit

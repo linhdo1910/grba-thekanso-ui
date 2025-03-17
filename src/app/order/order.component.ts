@@ -10,13 +10,13 @@ interface Order {
 }
 
 @Component({
-  selector: 'app-oder',
-  templateUrl: './oder.component.html',
-  styleUrls: ['./oder.component.css'],
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css'],
   standalone: true,
   imports: [CommonModule] // Thêm CommonModule để sử dụng *ngFor và *ngIf
 })
-export class OderComponent {
+export class OrderComponent {
   orders: Order[] = [
     { id: '001', date: '2024-10-01', total: '$150.00', status: 'Shipped' },
     { id: '002', date: '2024-10-05', total: '$200.00', status: 'Processing' },
