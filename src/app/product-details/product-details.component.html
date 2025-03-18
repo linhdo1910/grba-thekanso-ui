@@ -30,54 +30,73 @@
       <div class="product-info">
         <h3>{{ product.name }}</h3>
 
+        <!-- Rating Section -->
         <div class="rating">
           <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="text-muted">({{ product.reviews }} reviews)</span>
         </div>
         <hr>
+
+        <!-- Price Section -->
         <div class="price-info mt-3">
-          <span [ngClass]="{'text-decoration-line-through me-2': product.discount > 0, 'text-secondary fw-bold': product.discount === 0}">
+          <span 
+            [ngClass]="{
+              'text-decoration-line-through me-2': product.discount > 0,
+              'text-secondary fw-bold': product.discount === 0
+            }">
             {{ product.price | number }} VND
           </span>
-          <span *ngIf="product.discount > 0" class="text-secondary">{{ getDiscountedPrice() | number }} VND</span>
-          <span *ngIf="product.discount > 0" class="badge bg-danger ms-2">{{ product.discount }}% OFF</span>
+          <span *ngIf="product.discount > 0" class="text-secondary">
+            {{ getDiscountedPrice() | number }} VND
+          </span>
+          <span *ngIf="product.discount > 0" class="badge bg-danger ms-2">
+            {{ product.discount }}% OFF
+          </span>
         </div>
 
         <p class="mt-2 text-muted">Inclusive of all taxes</p>
         <hr>
-        
+
+        <!-- Product Options -->
         <div class="product-options mt-3">
           <label for="color">Color</label>
-          <div class="color-options">
-            <a *ngFor="let colorName of product.colors"
-                    class="color-option"
-                    [ngClass]="{'selected': selectedColor === colorName}"
-                    [ngStyle]="{'background-image': 'url(' + productService.getImageUrlByColor(colorName) + ')'}"
-                    (click)="onColorSelect(colorName)"
-                    [title]="colorName"
-                    [attr.alt]="colorName">
+          <div class="color-options mt-3">
+            <a 
+              *ngFor="let colorName of product.colors"
+              class="color-option"
+              [ngClass]="{ 'selected': selectedColor === colorName }"
+              [ngStyle]="{ 'background-image': 'url(' + productService.getImageUrlByColor(colorName) + ')' }"
+              (click)="onColorSelect(colorName)"
+              [title]="colorName"
+              [attr.alt]="colorName">
               <span class="hover-info">{{ colorName }}</span>
             </a>
           </div>
 
-          <label for="size" class="mt-2">Size</label>
-          <div class="size-options mx-2">{{ product.sizes }}
+          <label for="size" class="mt-4">Size</label>
+          <div class="size-options mt-3">
+            {{ product.sizes }}
           </div>
         </div>
 
+        <!-- Quantity Section -->
+        <label class="mt-4">Quantity</label>
         <div class="quantity-controls mt-3">
-          <label class="mt-2">Quantity</label>
-          <button class="btn btn-outline-secondary" (click)="changeQuantity(-1)">-</button>
+          <button class="btn btn-quantity" (click)="changeQuantity(-1)">-</button>
           <span class="mx-2">{{ quantity }}</span>
-          <button class="btn btn-outline-secondary" (click)="changeQuantity(1)">+</button>
+          <button class="btn btn-quantity" (click)="changeQuantity(1)">+</button>
         </div>
-        <hr> 
-        <div class="product-buttons mt-3">
-          <button class="btn btn-secondary w-50" (click)="addToCart()">Add to Cart</button>
+        <hr>
+
+        <!-- Product Buttons -->
+        <div class="product-buttons mt-4">
+          <button class="btn btn-secondary w-50 me-2" (click)="addToCart()">Add to Cart</button>
           <button class="btn btn-primary w-50" (click)="quickBuy()">Quick Buy</button>
         </div>
+        <hr class="mt-4">
 
-        <div class="additional-info mt-3 text-muted">
+        <!-- Additional Information -->
+        <div class="additional-info text-muted">
           <p>100% Original Products</p>
           <p>Pay on delivery might be available</p>
           <p>Easy 14 days returns and exchanges</p>
@@ -86,4 +105,25 @@
       </div>
     </div>
   </div>
+  <app-product-info></app-product-info>
+  <h2 class="text-center text-secondary mt-3">Related Products</h2>
+  <div class="row mt-4">
+        <div class="col-md-3" *ngFor="let product of Product">
+            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
+                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
+                    style="max-height: 200px; object-fit: contain;">
+                <div class="card-body">
+                    <h6 class="text-secondary">{{ product.name }}</h6>
+                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="rating mb-0">
+                            <img src="asset/star-icon.png" alt="star" class="star-icon">
+                            {{ product.rating }} ({{ product.reviews }})
+                        </p>
+                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

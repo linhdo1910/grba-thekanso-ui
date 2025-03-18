@@ -40,12 +40,10 @@ export class BlogListComponent {
     }
   ];
 
-  // Function to receive event from Sidebar
   onCategorySelected(category: string) {
     this.selectedCategory = category;
   }
 
-  // Optional: Function to filter blogs by selected category
   filteredBlogs() {
     return this.selectedCategory
       ? this.blogs.filter(blog => blog.category === this.selectedCategory)

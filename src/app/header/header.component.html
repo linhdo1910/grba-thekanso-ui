@@ -60,15 +60,15 @@
 
                     <!-- Blog Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link d-flex align-items-center fw-medium" routerLink="blog" id="blogDropdown"
+                        <a class="nav-link d-flex align-items-center fw-medium" id="blogDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-journal-text"></i> Blog
                             <i class="fa fa-chevron-down dropdown-icon ms-1"></i>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="blogDropdown">
-                            <li><a class="dropdown-item" routerLink="blog/people">People</a></li>
-                            <li><a class="dropdown-item" routerLink="blog/tips">Tips</a></li>
-                            <li><a class="dropdown-item" routerLink="blog/inspiration">Inspiration</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/blog']" [queryParams]="{ category: 'People' }">People</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/blog']" [queryParams]="{ category: 'Tips' }">Tips</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/blog']" [queryParams]="{ category: 'Inspiration' }">Inspiration</a></li>
                         </ul>
                     </li>
 

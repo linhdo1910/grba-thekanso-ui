@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { ProductService } from '../product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
   standalone: false,
   templateUrl: './payment.component.html',
-  styleUrl: './payment.component.css'
+  styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent {
   cartProducts = [
@@ -28,13 +30,55 @@ export class PaymentComponent {
     }
   ];
 
-  // Xóa sản phẩm khỏi giỏ hàng
+  discountCode: string = ''; // Input for discount code
+  discountAmount: number = 0; // Discount amount applied
+  totalAfterDiscount: number = this.calculateTotal(); // Total after applying discount
+
+  constructor(private productService: ProductService, private router: Router) {}
+
+  // Remove a product from the cart
   removeProduct(index: number): void {
     this.cartProducts.splice(index, 1);
+    this.calculateTotalAfterDiscount(); // Recalculate total after removing a product
   }
 
-  // Tính tổng giá trị đơn hàng
+  // Calculate the total price of the cart
   calculateTotal(): number {
     return this.cartProducts.reduce((total, product) => total + product.discountPrice * product.quantity, 0);
+  }
+
+  // Apply a discount code - fixing
+  applyDiscountCode(): void {
+    if (this.discountCode.trim() === '') {
+      alert('Please enter a discount code.');
+      this.discountAmount = 0;
+      this.totalAfterDiscount = this.calculateTotal();
+      return;
+    }
+
+    const total = this.calculateTotal();
+    const discount = this.productService.applyDiscountCode(this.discountCode);
+
+    if (discount < total) {
+      this.discountAmount = total - discount;
+      this.totalAfterDiscount = discount;
+      alert(`Discount applied! You saved ${this.discountAmount.toLocaleString()} VND.`);
+    } else if (discount === total) {
+      alert('No code exists or the code is invalid.');
+      this.discountAmount = 0;
+      this.totalAfterDiscount = total;
+    }
+  }
+
+  // Calculate the total after applying the discount
+  calculateTotalAfterDiscount(): void {
+    const total = this.calculateTotal();
+    this.totalAfterDiscount = total - this.discountAmount;
+  }
+
+  // Confirm the order
+  confirmOrder(): void {
+    alert('Order successfully placed! Redirecting to the order page...');
+    this.router.navigate(['/order']); // Redirect to the order page
   }
 }

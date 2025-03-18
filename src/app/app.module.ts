@@ -40,6 +40,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ProductService } from './product.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductInfoComponent } from './product-info/product-info.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { CommonModule } from '@angular/common';
     SuggestedHomepageComponent,
     CartComponent,
     ProductDetailsComponent,
+    ProductInfoComponent,
   ],
   imports: [
     BrowserModule,

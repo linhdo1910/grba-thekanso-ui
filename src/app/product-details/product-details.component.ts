@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService, Product } from '../product.service';
 
 @Component({
@@ -16,9 +16,61 @@ export class ProductDetailsComponent implements OnInit {
   quantity: number = 1;
   currentMainImage: string = '';
 
+  Product = [
+    {
+      id: 1,
+      name: 'Wooden Chair',
+      price: 2999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.5,
+      reviews: 120
+    },
+    {
+      id: 2,
+      name: 'Modern Table',
+      price: 5999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.8,
+      reviews: 85
+    },
+    {
+      id: 3,
+      name: 'Modern Table',
+      price: 5999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.8,
+      reviews: 85
+    },
+    {
+      id: 4,
+      name: 'Modern Table',
+      price: 5999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.8,
+      reviews: 85
+    },
+    {
+      id: 5,
+      name: 'Modern Table',
+      price: 5999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.8,
+      reviews: 85
+    },
+    {
+      id: 6,
+      name: 'Modern Table',
+      price: 5999999,
+      image: 'asset/products/demo1.jpg',
+      rating: 4.8,
+      reviews: 85
+    }
+  ];
+
   constructor(
     public productService: ProductService, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
 
   changeQuantity(delta: number): void {
     const newQuantity = this.quantity + delta;
-    this.quantity = Math.max(1, newQuantity); // Ensure quantity is at least 1 // Ensure quantity is at least 1 // Ensure quantity is at least 1 // Ensure quantity is at least 1
+    this.quantity = Math.max(1, newQuantity);
   }
 
   addToCart(): void {
@@ -79,7 +131,7 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
-//Scroll thumbnails
+  
   scrollThumbnails(direction: number): void {
     const container = document.querySelector('.thumbnail-carousel');
     if (container) {
@@ -96,4 +148,9 @@ export class ProductDetailsComponent implements OnInit {
     }
     return 0;
   }
+
+  navigateToProductDetail(productId: number): void {
+    this.router.navigate(['/product-details', productId]);
+  }
+  
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface CartItem {
   id: number;
@@ -8,7 +9,7 @@ interface CartItem {
   size: string;
   quantity: number;
   originalPrice: number;
-  discount: number;  // Added discount property
+  discount: number;
 }
 
 @Component({
@@ -27,7 +28,7 @@ export class CartComponent {
       size: '1m2',
       quantity: 1,
       originalPrice: 10000000,
-      discount: 50 
+      discount: 50
     },
     {
       id: 2,
@@ -37,7 +38,7 @@ export class CartComponent {
       size: '1m2',
       quantity: 1,
       originalPrice: 10000000,
-      discount: 10  
+      discount: 10
     },
     {
       id: 3,
@@ -47,9 +48,12 @@ export class CartComponent {
       size: '1m2',
       quantity: 1,
       originalPrice: 10000000,
-      discount: 30 
+      discount: 30
     }
   ];
+
+  constructor(private router: Router) {}
+
   calculateTotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
@@ -57,19 +61,19 @@ export class CartComponent {
   calculateDiscountedTotal(): number {
     let total = 0;
     this.cartItems.forEach(item => {
-      const discountAmount = (item.discount / 100) * item.originalPrice; 
-      const discountedPrice = item.originalPrice - discountAmount; 
-      total += discountedPrice * item.quantity; 
+      const discountAmount = (item.discount / 100) * item.originalPrice;
+      const discountedPrice = item.originalPrice - discountAmount;
+      total += discountedPrice * item.quantity;
     });
     return total;
   }
 
   continueShopping(): void {
-    alert('Continue shopping clicked!');
+    this.router.navigate(['/products']); 
   }
 
   checkout(): void {
-    alert('Proceeding to checkout...');
+    this.router.navigate(['/payment']); 
   }
 
   removeProduct(productId: number): void {

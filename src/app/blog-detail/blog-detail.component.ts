@@ -9,7 +9,8 @@ interface Blog {
   content5: string;
 }
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-blog-detail',
@@ -17,10 +18,10 @@ import { Component } from '@angular/core';
   templateUrl: './blog-detail.component.html',
   styleUrl: './blog-detail.component.css'
 })
-export class BlogDetailComponent {
+export class BlogDetailComponent implements OnInit {
   categories = ['People', 'Tips', 'Inspiration'];
 
-  blogs: Blog [] = [
+  blogs: Blog[] = [
     {
       title: 'The Power of Personal Stories',
       category: this.categories[0], 
@@ -64,9 +65,36 @@ export class BlogDetailComponent {
     }
   ];
 
-  selectedCategory: string = '';
+  selectedCategory: string = ''; 
+  filteredBlogs: Blog[] = this.blogs; 
+  blog: Blog | undefined;
 
-  onCategorySelected(category: string) {
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Handle query parameters for category filtering
+    this.route.queryParamMap.subscribe(params => {
+      this.selectedCategory = params.get('category') || ''; 
+      this.filterBlogs();
+    });
+
+    // Handle route parameters for blog detail
+    const title = this.route.snapshot.paramMap.get('title');
+    if (title) {
+      this.blog = this.blogs.find(blog => blog.title === title);
+    }
+  }
+
+  filterBlogs(): void {
+    if (this.selectedCategory) {
+      this.filteredBlogs = this.blogs.filter(blog => blog.category === this.selectedCategory);
+    } else {
+      this.filteredBlogs = this.blogs;
+    }
+  }
+
+  onCategorySelected(category: string): void {
     this.selectedCategory = category;
-  }  
+    this.filterBlogs();
+  }
 }

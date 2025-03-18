@@ -1,147 +1,61 @@
-/* Phần A: Thanh công cụ chuyển trang */
-.thanh_cong_cu {
-  position: absolute;
-  width: 300px;
-  height: 250px;
-  top: 210px;
-  left: 150px;
-
-  background-color: #f9f9f9;
-  border: 2px solid #D9D3C5;
-  padding: 20px;
-  color: #D9D3C5;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.thanh_cong_cu a:hover {
+/* Custom styling for account management */
+.nav-link {
+  font-size: 18px;
+  padding: 10px;
   color: #402A1D;
-  
 }
 
-.thanh_cong_cu h2 {
-  font-size: 20px;
-  color: #402A1D;
-  margin-top: 24px;
-  margin-left: 20px;
-  margin-bottom: 24px;
+.nav-link:hover {
+  color: #DFAA6D; /* Highlight color for hover */
 }
 
-.thanh_cong_cu ul {
-  list-style: none;
-  padding-left: 20px;
-}
-
-.thanh_cong_cu li {
-  margin-bottom: 24px;
-}
-
-.thanh_cong_cu a {
-  font-size: 16px;
-  color: #808080;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.thanh_cong_cu a span.material-icons {
-  margin-right: 8px;
-}
-
-.kich_hoat {
+.nav-link.active {
   font-weight: bold;
   color: #402A1D;
 }
 
-/* Phần C: Bảng lịch sử đơn hàng */
-.phieu_don_hang {
-  position: absolute;
-  top: 210px;
-  left: 481px;
-  width: 820px;
-  height: 500px;
-  border: 2px solid #D9D3C5;
-  padding: 20px;
-  background-color: #FFF;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow-y: auto;
-}
-
-.tieu_de {
+/* Styling for table */
+.table th {
+  background-color: #f8f9fa;
   color: #402A1D;
-  font-size: 20px;
-  margin: 20px 0;
 }
 
-.bang_thong_tin {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-.bang_thong_tin th,
-.bang_thong_tin td {
-  padding: 20px 8px;
-  font-size: 16px;
-  text-align: left;
-  border-bottom: 1px solid #D9D3C5;
-}
-
-.bang_thong_tin th {
-  background-color: #F5F2ED;
-  font-weight: bold;
-}
-
-.bang_thong_tin tbody tr:nth-child(even) {
-  background-color: #FAF9F7;
-}
-
-.bang_thong_tin tbody tr:hover {
-  background-color: #F0EDE8;
-}
-
-.nut_xem_chi_tiet {
-  padding: 6px 12px;
+.table td {
   font-size: 14px;
-  background-color: #DAA86D;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.nut_xem_chi_tiet:hover {
-  background-color: #C6955E;
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
 }
 
-.thanh_phan_trang {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  margin-top: 16px;
+/* Button styling for pagination */
+.pagination button {
+  margin: 0 2px;
+  font-size: 14px;
 }
 
-.thanh_phan_trang button {
-  padding: 6px 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #D9D3C5;
-  color: #402A1D;
-  transition: background-color 0.2s;
-}
-
-.thanh_phan_trang button.active,
-.thanh_phan_trang button:hover {
-  background-color: #DAA86D;
+.pagination .active {
+  background-color: #DFAA6D;
   color: white;
 }
 
-.thanh_phan_trang button:disabled {
-  background-color: #EAE6DF;
-  cursor: not-allowed;
+/* Custom styling for the table buttons */
+.btn-outline-primary {
+  border-color: #DFAA6D;
+  color: #DFAA6D;
+}
+
+.btn-outline-primary:hover {
+  background-color: #DFAA6D;
+  color: white;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
 }

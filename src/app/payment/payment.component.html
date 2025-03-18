@@ -112,7 +112,7 @@
             </div>
 
             <div class="text-end">
-               <button class="btn btn-primary fw-medium fs-7">CONFIRM ORDER</button>
+               <button (click)="confirmOrder()" class="btn btn-primary fw-medium fs-7">CONFIRM ORDER</button>
             </div>
 
         </div>
@@ -144,17 +144,31 @@
 
             <!-- Promo Code -->
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Add promo code">
-                <button class="btn btn-secondary fw-medium">APPLY CODE</button>
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Add promo code"
+                    [(ngModel)]="discountCode"
+                >
+                <button class="btn btn-secondary fw-medium" (click)="applyDiscountCode()">APPLY CODE</button>
             </div>
+
+            <!-- Discount Information -->
+            <div *ngIf="discountAmount > 0" class="d-flex justify-content-between">
+                <p>Discount</p>
+                <p class="text-success">-{{ discountAmount | number }} VND</p>
+            </div>
+
+            <!-- Shipping Fee -->
             <div class="d-flex justify-content-between">
                 <p>Shipping Fee</p>
                 <p>Free</p>
             </div>
 
+            <!-- Total Amount -->
             <div class="d-flex justify-content-between">
                 <p><strong>Total Amount</strong></p>
-                <p class="text-orange"><strong>{{ calculateTotal() | number }} VND</strong></p>
+                <p class="text-orange"><strong>{{ totalAfterDiscount | number }} VND</strong></p>
             </div>
 
         </div>
