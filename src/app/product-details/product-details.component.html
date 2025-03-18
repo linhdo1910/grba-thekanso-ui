@@ -2,27 +2,31 @@
   <div class="row">
     <!-- Left Column - Thumbnail Carousel -->
     <div class="col-md-2">
-      <div class="thumbnail-carousel">
-        <!-- Static color images as thumbnails -->
-        <div *ngFor="let colorName of product.colors; let i = index" class="thumbnail-item">
-          <img 
-            [src]="productService.getImageUrlByColor(colorName)" 
-            alt="{{ colorName }}" 
-            class="thumbnail-img" 
-            (click)="onColorSelect(colorName)">
+      <div class="thumbnail-carousel-container">
+        <button class="scroll-button" (click)="scrollThumbnails(-1)">&#9650;</button>
+        <div class="thumbnail-carousel">
+          <!-- Static images as thumbnails & Edited to show image on main 18/3-->
+          <div *ngFor="let sideImage of product.image; let i = index" class="thumbnail-item">
+            <img 
+              [src]="sideImage" 
+              alt="{{ sideImage }}" 
+              class="thumbnail-img" 
+              (click)="onImageSelect(sideImage)">
+          </div>
         </div>
+        <button class="scroll-button" (click)="scrollThumbnails(1)">&#9660;</button>
       </div>
     </div>
 
     <!-- Middle Column - Main Image -->
-    <div class="col-md-4">
-      <div class="main-image-carousel">
+    <div class="col-md-6">
+      <div class="main-img">
         <img [src]="currentMainImage" alt="Main Product Image" class="main-img">
       </div>
     </div>
 
     <!-- Right Column - Product Details -->
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="product-info">
         <h3>{{ product.name }}</h3>
 
@@ -30,41 +34,47 @@
           <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="text-muted">({{ product.reviews }} reviews)</span>
         </div>
-
+        <hr>
         <div class="price-info mt-3">
-          <span class="text-danger">{{ product.price | number }} VND</span>
-          <span class="badge bg-danger ms-2">{{ product.discount }}% OFF</span>
+          <span [ngClass]="{'text-decoration-line-through me-2': product.discount > 0, 'text-secondary fw-bold': product.discount === 0}">
+            {{ product.price | number }} VND
+          </span>
+          <span *ngIf="product.discount > 0" class="text-secondary">{{ getDiscountedPrice() | number }} VND</span>
+          <span *ngIf="product.discount > 0" class="badge bg-danger ms-2">{{ product.discount }}% OFF</span>
         </div>
 
         <p class="mt-2 text-muted">Inclusive of all taxes</p>
-
+        <hr>
+        
         <div class="product-options mt-3">
           <label for="color">Color</label>
           <div class="color-options">
-            <button *ngFor="let colorName of product.colors"
+            <a *ngFor="let colorName of product.colors"
                     class="color-option"
+                    [ngClass]="{'selected': selectedColor === colorName}"
                     [ngStyle]="{'background-image': 'url(' + productService.getImageUrlByColor(colorName) + ')'}"
-                    (click)="onColorSelect(colorName)">
-              {{ colorName }}
-            </button>
-            <span class="color-name">{{ selectedColor }}</span>
+                    (click)="onColorSelect(colorName)"
+                    [title]="colorName"
+                    [attr.alt]="colorName">
+              <span class="hover-info">{{ colorName }}</span>
+            </a>
           </div>
 
           <label for="size" class="mt-2">Size</label>
-          <div>
-            <span class="btn btn-primary mx-2">{{ product.sizes }}</span>
+          <div class="size-options mx-2">{{ product.sizes }}
           </div>
         </div>
 
         <div class="quantity-controls mt-3">
+          <label class="mt-2">Quantity</label>
           <button class="btn btn-outline-secondary" (click)="changeQuantity(-1)">-</button>
           <span class="mx-2">{{ quantity }}</span>
           <button class="btn btn-outline-secondary" (click)="changeQuantity(1)">+</button>
         </div>
-
+        <hr> 
         <div class="product-buttons mt-3">
-          <button class="btn btn-primary w-100" (click)="addToCart()">Add to Cart</button>
-          <button class="btn btn-warning w-100 mt-2" (click)="quickBuy()">Quick Buy</button>
+          <button class="btn btn-secondary w-50" (click)="addToCart()">Add to Cart</button>
+          <button class="btn btn-primary w-50" (click)="quickBuy()">Quick Buy</button>
         </div>
 
         <div class="additional-info mt-3 text-muted">

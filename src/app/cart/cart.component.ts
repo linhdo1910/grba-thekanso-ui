@@ -37,7 +37,7 @@ export class CartComponent {
       size: '1m2',
       quantity: 1,
       originalPrice: 10000000,
-      discount: 0  
+      discount: 10  
     },
     {
       id: 3,

@@ -77,11 +77,11 @@
 
 <div class="product-tooltip" [style.left.px]="tooltipX" [style.top.px]="tooltipY" *ngIf="activeProduct">
     <div class="d-flex align-items-start gap-3">
-        <img [src]="activeProduct.image" [alt]="activeProduct.name" class="product-thumbnail">
+        <img [src]="activeProduct?.image" [alt]="activeProduct?.name" class="product-thumbnail">
         <div>
-            <h6 class="mb-1">{{activeProduct.name}}</h6>
-            <p class="mb-1">{{activeProduct.description}}</p>
-            <p class="mb-1">{{activeProduct.price | currency:'VND'}}</p>
+            <h6 class="mb-1">{{ activeProduct?.name }}</h6>
+            <p class="mb-1">{{ activeProduct?.description }}</p>
+            <p class="mb-1">{{ activeProduct?.price | currency:'VND':'symbol':'1.0-0':'vi' }}</p>
         </div>
     </div>
 </div>

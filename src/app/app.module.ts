@@ -38,6 +38,8 @@ import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homep
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductService } from './product.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -74,7 +76,9 @@ import { ProductService } from './product.service';
     ForgotPasswordComponent,
     ObjectComponent,
     SuggestComponent,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    CommonModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
