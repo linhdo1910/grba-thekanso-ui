@@ -1,103 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// Định nghĩa cấu trúc sản phẩm trong đơn hàng
-interface Product {
-    name: string;
-    price: number;
-    quantity: number;
-    subtotal: number;
-    image: string;
-}
-
-// Định nghĩa cấu trúc địa chỉ thanh toán
-interface BillingAddress {
-    name: string;
-    address: string;
-    email: string;
-    phone: string;
-}
-
-// Định nghĩa cấu trúc thông tin đơn hàng
-interface Order {
-    date: string; // Ngày đặt hàng
-    orderId: number; // Mã đơn hàng
-    paymentMethod: string; // Phương thức thanh toán
-    subtotal: number; // Tổng tiền trước giảm giá
-    discount: number; // Phần trăm giảm giá
-    shipping: string; // Phí vận chuyển
-    total: number; // Tổng số tiền thanh toán
-    status: number; // Trạng thái đơn hàng (1: Order received, 2: Processing, 3: On the way, 4: Delivered)
-    billingAddress: BillingAddress; // Địa chỉ thanh toán
-    products: Product[]; // Danh sách sản phẩm trong đơn hàng
-}
+import { OrderService, Order } from '../order.service';
 
 @Component({
-    selector: 'app-order-detail',
-    templateUrl: './order-detail.component.html',
-    standalone: false,
-    styleUrls: ['./order-detail.component.css']
+  selector: 'app-order-detail',
+standalone: false,
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.css'],
 })
-export class OrderDetailComponent {
+export class OrderDetailComponent implements OnInit {
+  @Input() orderId!: number; // Receive the order ID from the parent component
+  @Output() close = new EventEmitter<void>(); // Emit an event to close the detail view
 
-    constructor(private router: Router) {}
+  order!: Order | undefined; // Store the order details
 
-    navigateTo(route: string): void {
-      this.router.navigate([route]);
+  constructor(private orderService: OrderService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Fetch the order details from the service
+    this.order = this.orderService.getOrderById(this.orderId);
+    if (!this.order) {
+      console.error(`Order with ID ${this.orderId} not found.`);
     }
-    
-    // Thông tin đơn hàng, có thể thay đổi bằng dữ liệu từ API hoặc Input
-    order: Order = {
-        date: 'April 24, 2021',
-        orderId: 4152,
-        paymentMethod: 'Paypal',
-        subtotal: 2000000,
-        discount: 20,
-        shipping: 'Free',
-        total: 1000000,
-        status: 3, // Trạng thái hiện tại (ví dụ: Processing)
-        billingAddress: {
-            name: 'Dainne Russell',
-            address: '4140 Parker Rd. Allentown, New Mexico 31134',
-            email: 'dainne.ressell@gmail.com',
-            phone: '(671) 555-0110'
-        },
-        products: [
-            {
-                name: 'Red Capsicum',
-                price: 14.00,
-                quantity: 5,
-                subtotal: 70.00,
-                image: 'src/asset/sofa-01.svg'
-            },
-            {
-                name: 'Red Capsicum',
-                price: 14.00,
-                quantity: 5,
-                subtotal: 70.00,
-                image: 'path/to/image2.png'
-            },
-            {
-                name: 'Red Capsicum',
-                price: 14.00,
-                quantity: 5,
-                subtotal: 70.00,
-                image: 'path/to/image3.png'
-            }
-        ]
-    };
-    
+  }
 
-    // Hàm hủy đơn hàng
-    cancelOrder() {
-        if (this.order.status < 4) {
-            console.log('Đơn hàng đã bị hủy.');
-        }
-    }
+  closeDetail(): void {
+    this.close.emit(); // Notify the parent to close the detail view
+  }
 
-    // Hàm viết đánh giá (chỉ cho phép khi đơn hàng đã giao)
-    writeReview() {
-        if (this.order.status === 4) {
-            console.log('Đi tới trang viết đánh giá.');
-        }
+  cancelOrder(): void {
+    if (this.order && this.order.status < 4) {
+      this.orderService.cancelOrder(this.order.orderId);
+      console.log(`Order ${this.order.orderId} has been canceled.`);
+    } else {
+      console.log(`Order ${this.order?.orderId} cannot be canceled.`);
     }
+  }
+
+  writeReview(): void {
+    if (this.order && this.order.status === 4) {
+      console.log(`Redirecting to the review page for order ${this.order.orderId}.`);
+      this.router.navigate(['/write-review', this.order.orderId]);
+    } else {
+      console.log(`Cannot write a review for order ${this.order?.orderId}.`);
+    }
+  }
 }

@@ -1,114 +1,71 @@
-<div class="thanh_cong_cu">
-        <h2>Account Management</h2>
-        <ul>
-          <li>
-            <a (click)="navigateTo('')" href="" >
-              <span class="material-icons">account_circle</span>
-              Personal information
-            </a>
-          </li>
-          <li>
-            <a (click)="navigateTo('order-history')" class="kich_hoat" style="color: #402A1D;">
-              <span class="material-icons">history</span>
-              Order History
-            </a>
-          </li>
-          <li>
-            <a (click)="navigateTo('logout')" href="">
-              <span class="material-icons">logout</span>
-              Log-out
-            </a>
-          </li>
-        </ul>
+<div class="container mt-4" *ngIf="order">
+  <!-- Header -->
+  <div class="text-right">
+    <button class="btn btn-link" (click)="closeDetail()">Back to List</button>
+  </div>
+  
+  <!-- Order Details Section -->
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <h2>Order Details · {{ order.date }} · {{ order.products.length }} Products</h2>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Billing Address</h5>
+          <p><strong>{{ order.billingAddress.name }}</strong></p>
+          <p>{{ order.billingAddress.address }}</p>
+          <p>{{ order.billingAddress.email }}</p>
+          <p>{{ order.billingAddress.phone }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Order Info</h5>
+          <p><strong>Order ID:</strong> #{{ order.orderId }}</p>
+          <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+          <p><strong>Subtotal:</strong> {{ order.subtotal | currency:'VND' }}</p>
+          <p><strong>Discount:</strong> {{ order.discount }}%</p>
+          <p><strong>Shipping:</strong> {{ order.shipping }}</p>
+          <p><strong>Total:</strong> {{ order.total | currency:'VND' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Products</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of order.products">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency:'VND' }}</td>
+            <td>x{{ product.quantity }}</td>
+            <td>{{ product.subtotal | currency:'VND' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="card-footer text-center">
+    <button class="btn btn-outline-secondary" (click)="cancelOrder()" [disabled]="order?.status === 4">
+      Cancel
+    </button>
+    <button class="btn btn-primary" (click)="writeReview()" [disabled]="order?.status !== 4">
+      Write Review
+    </button>
+  </div>
 </div>
-
-      <!-- PHẦN B: ORDER DETAIL -->
-<div class="order-details-container">
-    <!-- Tiêu đề và quay lại danh sách -->
-    <div class="order-header" s>
-        <h2>Order Details 
-            <span>· {{ order.date }} · {{ order.products.length }} Products</span>
-        </h2>
-        <a href="#" class="back-to-list">Back to List</a>
-    </div>
- 
-    <!-- Thông tin địa chỉ và đơn hàng -->
-    <div class="order-info">
-        <!-- Địa chỉ thanh toán -->
-        <div class="billing-address" style="margin-top: 20px; margin-left: 35px; width: 364px;height: 280px;">
-            <h3>Billing Address</h3>
-            <p class="name" style="color:#402A1D; font-size: 16px; "><strong>{{ order.billingAddress.name }}</strong></p>
-            <p>{{ order.billingAddress.address }}</p>
-            <h3>Email</h3>
-            <p> {{ order.billingAddress.email }}</p>
-            <h3>Phone</h3>
-            <p> {{ order.billingAddress.phone }}</p>
-        </div>
-
-        <!-- Thông tin đơn hàng -->
-        <div class="order-summary" style="margin-top: 20px; width: 364px; ">
-           <div class="orderandpayment">
-            <p><strong>Order ID:</strong><br> #{{ order.orderId }}</p>
-            <p><strong>Payment Method:</strong> <br> {{ order.paymentMethod }}</p>
-           </div> 
-            <p><strong style="margin-right: 113px;">Subtotal:</strong> {{ order.subtotal | currency:'VND' }}</p>
-            <p><strong style="margin-right: 111px;">Discount:</strong> {{ order.discount }}%</p>
-            <p><strong style="margin-right: 111px;">Shipping:</strong> {{ order.shipping }}</p>
-            <p class="total" style="font-size: 18px;" ><strong style="margin-right: 128px; color: #402A1D; font-size: 16px;">Total:</strong> {{ order.total | currency:'VND' }}</p>
-        </div>
-    </div>
-
-    <!-- Tiến trình giao hàng dựa trên trạng thái đơn hàng -->
-    <div class="order-progress">
-        <div class="step" [class.completed]="order.status >= 1">
-            <span class="icon" style="color: white;">01</span>
-            <p >Order received</p>
-        </div>
-        <div class="step" [class.active]="order.status === 2" [class.completed]="order.status > 2">
-            <span class="step-number">02</span>
-            <p>Processing</p>
-        </div>
-        <div class="step" [class.active]="order.status === 3" [class.completed]="order.status > 3">
-            <span class="step-number">03</span>
-            <p>On the way</p>
-        </div>
-        <div class="step" [class.active]="order.status === 4">
-            <span class="step-number">04</span>
-            <p>Delivered</p>
-        </div>
-    </div>
-
-    <!-- Bảng sản phẩm -->
-    <div class="product-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of order.products">
-                    <td>
-                        <img [src]="product.image" alt="{{ product.name }}" />
-                        {{ product.name }}
-                    </td>
-                    <td>{{ product.price | currency:'USD' }}</td>
-                    <td>x{{ product.quantity }}</td>
-                    <td>{{ product.subtotal | currency:'USD' }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Nút hành động, chỉ hiển thị nút Write review khi đơn hàng đã giao -->
-    <div class="action-buttons">
-        <button class="cancel-btn" [disabled]="order.status === 4" style="margin-right: 21px;">Cancel</button>
-        <button class="review-btn" [disabled]="order.status !== 4" style="margin-right: 58px;">Write review</button>
-    </div>
-</div>
-
-
-

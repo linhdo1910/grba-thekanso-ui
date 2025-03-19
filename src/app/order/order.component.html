@@ -1,7 +1,7 @@
 <div class="container">
   <!-- Sidebar: Account Management -->
   <div class="thanh_cong_cu">
-    <h2>Account Management</h2>
+    <h2 class="text-primary">Account Management</h2>
     <ul>
       <li>
         <a (click)="showSection('personal-info')" [class.kich_hoat]="currentSection === 'personal-info'">
@@ -26,13 +26,15 @@
 
   <!-- Dynamic Content Section -->
   <div class="noi_dung">
+    <!-- Personal Information -->
     <ng-container *ngIf="currentSection === 'personal-info'">
       <app-personal-in4></app-personal-in4>
     </ng-container>
 
-    <ng-container *ngIf="currentSection === 'order-history'">
+    <!-- Order History -->
+    <ng-container *ngIf="currentSection === 'order-history' && !showOrderDetail">
       <div class="phieu_don_hang">
-        <h2 class="tieu_de">Order History</h2>
+        <h2 class="text-secondary">Order History</h2><hr>
         <table class="bang_thong_tin">
           <thead>
             <tr>
@@ -45,12 +47,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let order of displayedOrders">
-              <td>{{ order.id }}</td>
+              <td>{{ order.orderId }}</td>
               <td>{{ order.date }}</td>
               <td>{{ order.total }}</td>
               <td>{{ order.status }}</td>
               <td>
-                <button class="nut_xem_chi_tiet" (click)="viewDetails(order.id)">
+                <button class="nut_xem_chi_tiet" (click)="viewDetails(order.orderId)">
                   View Details
                 </button>
               </td>
@@ -73,6 +75,11 @@
           <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
         </div>
       </div>
+    </ng-container>
+
+    <!-- Order Detail -->
+    <ng-container *ngIf="showOrderDetail && selectedOrderId !== null">
+      <app-order-detail [orderId]="selectedOrderId" (close)="closeOrderDetail()"></app-order-detail>
     </ng-container>
   </div>
 </div>
