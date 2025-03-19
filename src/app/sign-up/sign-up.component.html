@@ -1,31 +1,107 @@
 <div class="center-container">
   <div class="dang_ky">
     <h2 class="text-secondary text-center">Create your account</h2>
-    <form>
-      <input type="text" class="khung_nhap" placeholder="Enter your name">
-      <input type="email" class="khung_nhap" placeholder="Type your Email">
-      <input type="password" class="khung_nhap" placeholder="Type your Password">
-      <input type="password" class="khung_nhap" placeholder="Confirm Password">
+    <form (ngSubmit)="onSubmit()">
+      <!-- Name Field -->
+      <div class="input-container">
+        <input 
+          type="text" 
+          class="khung_nhap" 
+          placeholder="Enter your name" 
+          [(ngModel)]="name" 
+          name="name"
+        >
+      </div>
 
-      <p class="ghi_chu">Must be 8 characters at least</p>
+      <!-- Email Field -->
+      <div class="input-container">
+        <input 
+          type="email" 
+          class="khung_nhap" 
+          placeholder="Type your Email" 
+          [(ngModel)]="email" 
+          name="email"
+          (input)="validateEmail()"
+        >
+        <!-- Email Validation Note -->
+        <p 
+          class="ghi_chu text-danger" 
+          *ngIf="!isEmailValid"
+        >
+          Please enter a valid email address.
+        </p>
+      </div>
+      
+      <!-- Password Field -->
+      <div class="input-container">
+        <input 
+          type="password" 
+          class="khung_nhap" 
+          placeholder="Type your Password" 
+          [(ngModel)]="password" 
+          name="password"
+          (input)="checkPasswordLength()"
+        >
+        <!-- Password Validation Note -->
+        <p 
+          class="ghi_chu text-danger" 
+          *ngIf="!isPasswordValid"
+        >
+          Must be at least 8 characters.
+        </p>
+      </div>
 
+      <!-- Confirm Password Field -->
+      <div class="input-container">
+        <input 
+          type="password" 
+          class="khung_nhap" 
+          placeholder="Re-enter your Password" 
+          [(ngModel)]="confirmPassword" 
+          name="confirmPassword"
+          (input)="validateConfirmPassword()"
+        >
+        <!-- Confirm Password Validation Note -->
+        <p 
+          class="ghi_chu text-danger" 
+          *ngIf="!isConfirmPasswordValid"
+        >
+          Passwords do not match.
+        </p>
+      </div>
+
+      <!-- Terms and Conditions -->
       <div class="dong_dieu_khoan">
-        <input type="checkbox">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="isTermsAccepted" 
+          name="terms"
+        >
         <span class="text-info">
-          By creating an account means you agree to the <a routerLink="./policy">Terms and Conditions</a>,
+          By creating an account, you agree to the <a routerLink="./policy">Terms and Conditions</a>
           and our <a routerLink="./policy">Policy</a>.
         </span>
       </div>
 
-      <button type="submit" class="btn btn-primary">CREATE ACCOUNT</button>
+      <!-- Success Message -->
+      <p class="text-success text-center fw-bold" *ngIf="successMessage">{{ successMessage }}</p>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="!isFormValid()"
+      >
+        CREATE ACCOUNT
+      </button>
 
       <br><br>
 
       <p class="text-info text-center">
-        Already have an account? <a routerLink="./sign-in">Sign in</a>
+        Already have an account? <a routerLink="/sign-in"><b>Sign in</b></a>
       </p>
 
-      <p class="text-info text-center">or do it via other accounts</p>
+      <hr><p class="text-info text-center">or do it via other accounts</p>
 
       <div>
         <a routerLink=" ">

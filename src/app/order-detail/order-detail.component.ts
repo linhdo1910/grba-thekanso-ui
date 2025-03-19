@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Router } from '@angular/router';
 // Định nghĩa cấu trúc sản phẩm trong đơn hàng
 interface Product {
@@ -35,8 +34,7 @@ interface Order {
 @Component({
     selector: 'app-order-detail',
     templateUrl: './order-detail.component.html',
-
-    imports: [CommonModule], // Thêm CommonModule vào imports
+    standalone: false,
     styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent {

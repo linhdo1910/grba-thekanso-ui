@@ -1,76 +1,78 @@
-<div class="container mt-5">
-  <div class="row">
-    
-    <!-- Account Management Container -->
-    <div class="col-md-4">
-      <h2 class="text-primary">Account Management</h2>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a (click)="navigateTo('')" href="..." class="nav-link">
-            <span class="material-icons">account_circle</span>
-            Personal information
-          </a>
-        </li>
-        <li class="nav-item">
-          <a (click)="navigateTo('order-history')" class="nav-link active" style="color: #402A1D;">
-            <span class="material-icons">history</span>
-            Order History
-          </a>
-        </li>
-        <li class="nav-item">
-          <a (click)="navigateTo('logout')" href="..." class="nav-link">
-            <span class="material-icons">logout</span>
-            Log-out
-          </a>
-        </li>
-      </ul>
-    </div>
+<div class="container">
+  <!-- Sidebar: Account Management -->
+  <div class="thanh_cong_cu">
+    <h2>Account Management</h2>
+    <ul>
+      <li>
+        <a (click)="showSection('personal-info')" [class.kich_hoat]="currentSection === 'personal-info'">
+          <span class="material-icons">account_circle</span>
+          Personal Information
+        </a>
+      </li>
+      <li>
+        <a (click)="showSection('order-history')" [class.kich_hoat]="currentSection === 'order-history'">
+          <span class="material-icons">history</span>
+          Order History
+        </a>
+      </li>
+      <li>
+        <a (click)="navigateTo('logout')">
+          <span class="material-icons">logout</span>
+          Log-out
+        </a>
+      </li>
+    </ul>
+  </div>
 
-    <!-- Order History Container -->
-    <div class="col-md-8">
-      <h2 class="text-primary">Order History</h2>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let order of displayedOrders">
-            <td>{{order.id}}</td>
-            <td>{{order.date}}</td>
-            <td>{{order.total}}</td>
-            <td>{{order.status}}</td>
-            <td>
-              <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(order.id)">
-                View Details
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Dynamic Content Section -->
+  <div class="noi_dung">
+    <ng-container *ngIf="currentSection === 'personal-info'">
+      <app-personal-in4></app-personal-in4>
+    </ng-container>
 
-      <div class="d-flex justify-content-between">
-        <button class="page-link" (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
+    <ng-container *ngIf="currentSection === 'order-history'">
+      <div class="phieu_don_hang">
+        <h2 class="tieu_de">Order History</h2>
+        <table class="bang_thong_tin">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of displayedOrders">
+              <td>{{ order.id }}</td>
+              <td>{{ order.date }}</td>
+              <td>{{ order.total }}</td>
+              <td>{{ order.status }}</td>
+              <td>
+                <button class="nut_xem_chi_tiet" (click)="viewDetails(order.id)">
+                  View Details
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div class="pagination">
-          <button
-            *ngFor="let page of pages"
-            class="page-link"
-            (click)="goToPage(page)"
-            [class.active]="page === currentPage"
-          >
-            {{ page }}
-          </button>
+        <div class="thanh_phan_trang">
+          <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
+
+          <span *ngFor="let page of pages">
+            <button
+              (click)="goToPage(page)"
+              [class.active]="page === currentPage"
+            >
+              {{ page }}
+            </button>
+          </span>
+
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
         </div>
-
-        <button class="page-link" (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
       </div>
-    </div>
-
+    </ng-container>
   </div>
 </div>

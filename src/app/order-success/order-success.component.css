@@ -3,29 +3,8 @@
     width: 200px;
     height: auto;
 }
-
-h2 {
-    color: #402A1D;
-}
-
 .order-id {
     color: #DAA86D;
     font-weight: bold;
     font-size:20px;
-}
-
-.btn-primary {
-    background-color: #DAA86D;
-    border:none;
-    border-radius: 6px;
-    padding: 10px 30px;
-    color: #fff;
-    font-weight: bold;
-}
-
-.btn-primary:hover {
-    background-color: #fff;
-    color:#402A1D;
-    border:1px solid#DAA86D;
-
 }

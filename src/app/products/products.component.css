@@ -8,4 +8,61 @@
     border-color: #c49a6c;
     box-shadow: none;
 }
+.product-card {
+  transition: transform 0.3s ease;
+  margin-bottom: 20px;
+  width: 320px;
+  height: 360px;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.card-body {
+  text-align: left;
+}
+.card-body .text-primary{
+  font-size:large;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-icon
+{
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.cart-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+h3 {
+  color: #402A1D;
+  font-weight: bold;
+}
+
+a {
+  color: #402A1D;
+  &:hover {
+      color: #DAA86D;
+  }
+}
+.img-banner{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+}
   

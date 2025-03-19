@@ -1,10 +1,11 @@
 <div>
-  <img src="asset/banners/sofa 1.png">
+  <img class="img-banner" src="asset/banners/sofa 1.png" alt="Banner">
 </div>
+
 <!-- Filters -->
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h2 class="fw-bold text-primary">Living Room</h2>
+    <h2 class="fw-bold text-primary">{{ category }}</h2>
 
     <!-- Sort Dropdown -->
     <select class="form-select custom-select">
@@ -16,14 +17,22 @@
 
   <div class="d-flex align-items-center mt-2">
     <div class="d-flex align-items-center me-4">
-      <img src="asset/filter_alt.png" width="15px" height="15px">
+      <img src="asset/filter_alt.png" width="15px" height="15px" alt="Filter Icon">
       <span class="fw-bold text-dark px-3">FILTERS</span>
     </div>
 
     <div class="d-flex w-100 justify-content-between">
       <!-- Categories Dropdown -->
       <select class="form-select custom-select">
-        <option selected>Categories</option>
+        <option selected>Category</option>
+        <option value="living-room">Living Room</option>
+        <option value="bedroom">Bedroom</option>
+        <option value="dining-room">Dining Room</option>
+        <option value="workspace">Workspace</option>
+        <option value="home-decor">Home Decoration</option>
+      </select>
+      <select class="form-select custom-select">
+        <option selected>Sub-category</option>
         <option value="bed">Bed</option>
         <option value="table">Table</option>
         <option value="chair">Chair</option>
@@ -47,25 +56,35 @@
       <!-- Color Dropdown -->
       <select class="form-select custom-select">
         <option selected>Color</option>
-        <option value="black">Black</option>
-        <option value="white">White</option>
-        <option value="walnut">Walnut</option>
-        <option value="wood">Wood</option>
+        <option value="ash">Ash</option>
         <option value="bashwood">Bashwood</option>
+        <option value="birch">Birch</option>
+        <option value="cedar">Cedar</option>
+        <option value="mable">Mable</option>
+        <option value="oak">Oak</option>
+        <option value="walnut">Walnut</option>
+        <option value="white">White</option>
+      </select>
+
+      <!-- Size Dropdown -->
+      <select class="form-select custom-select">
+        <option selected>Size</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
       </select>
     </div>
   </div>
 </div>
 
-<div class="container mt-3">
-</div>
+<!-- Product List -->
 <div class="container mt-4">
   <table class="table border-0">
     <tbody>
       <tr *ngFor="let row of paginatedProducts">
         <td *ngFor="let product of row" class="text-center border-0">
           <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
-            <img [src]="product.image" class="card-img-top p-2" [alt]="product.name" style="max-height: 200px; object-fit: contain;">
+            <img [src]="product.image[0]" class="card-img-top p-2" [alt]="product.name" style="max-height: 200px; object-fit: contain;">
             <div class="card-body">
               <h6 class="text-secondary">{{ product.name }}</h6>
               <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>

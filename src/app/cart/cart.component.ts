@@ -57,7 +57,7 @@ export class CartComponent {
   calculateTotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
-
+//tinh tong gia tri san pham sau giam gia
   calculateDiscountedTotal(): number {
     let total = 0;
     this.cartItems.forEach(item => {

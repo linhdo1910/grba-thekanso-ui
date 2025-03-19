@@ -1,80 +1,97 @@
 .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; 
-    padding: 20px; 
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; 
+  padding: 20px; 
+}
+
+.dang_ky {
+  width: 100%;
+  max-width: 570px; 
+  padding: 20px;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.input-container {
+  position: relative; 
+  margin-bottom: 20px; 
+}
+
+.khung_nhap {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  padding: 15px;
+  color: #d7d7d7;
+  font-size: 14px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.khung_nhap:nth-child(n) {
+  margin-top: 20px; 
+}
+
+.dong_dieu_khoan {
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
+}
+
+.btn {
+  width: 100%;
+  margin-left: 0;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+p a:hover {
+  color: #DAA86D;
+}
+
+p {
+  font-size: 14px;
+}
+.google-icon {
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  margin-left: 162px
+}
+
+.ghi_chu {
+  font-size: 12px;
+  color: #dc3545;
+  position: absolute; 
+  transform: translateY(-50%);
+  right: 10px; 
+  white-space: nowrap; 
+}
+
+@media (max-width: 768px) {
   .dang_ky {
-    width: 100%;
-    max-width: 570px; 
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
+    width: 90%; 
   }
-  
+
   .khung_nhap {
-    width: 100%;
-    height: 50px;
-    font-size: 14px;
-    color: gray;
-    margin-left: 0; 
-    margin-bottom: 20px;
+    max-width: 100%; 
   }
-  
-  .khung_nhap:nth-child(n) {
-    margin-top: 20px; 
-  }
-  
+
   .ghi_chu {
-    font-size: 14px;
-    color: gray;
-    margin-left: 24px;
-    margin-top: 10px; 
+    font-size: 10px; 
+    right: 5px; 
   }
-  
-  .dong_dieu_khoan {
-    margin-left: 24px;
-    margin-top: 10px;
-    font-size: 14px;
-    color: gray;
-  }
-  
-  .btn {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  
-  p a:hover {
-    color: #DAA86D;
-  }
-  
-  p {
-    font-size: 14px;
-  }
-  
-  .google-icon {
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    margin-left: 150px;
-  }
-  
-  @media (max-width: 768px) {
-    .dang_ky {
-      width: 90%; 
-    }
-  
-    .khung_nhap {
-      max-width: 100%; 
-    }
-  }
-  
+}

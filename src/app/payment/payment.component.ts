@@ -78,7 +78,7 @@ export class PaymentComponent {
 
   // Confirm the order
   confirmOrder(): void {
-    alert('Order successfully placed! Redirecting to the order page...');
-    this.router.navigate(['/order']); // Redirect to the order page
+    alert('Order successfully placed! Redirecting to the payment page...');
+    this.router.navigate(['/qr-code']); // Redirect to the order page
   }
 }

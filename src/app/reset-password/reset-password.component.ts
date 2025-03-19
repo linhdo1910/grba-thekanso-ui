@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Import FormsModule trực tiếp
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
+  standalone: false,
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css'],
-
-  imports: [FormsModule] // Import FormsModule trực tiếp
 })
 export class ResetPasswordComponent {
   password: string = '';
   confirmPassword: string = '';
 
+  constructor(private router: Router) {}
+
   onSubmit() {
     if (this.password === this.confirmPassword) {
-      alert('Đổi mật khẩu thành công');
+      alert('Password changed successfully');
+      this.router.navigate(['/sign-in']); 
     } else {
-      alert('2 mật khẩu không giống nhau');
+      alert('Passwords do not match');
       this.password = '';
       this.confirmPassword = '';
     }

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
+  standalone: false,
   templateUrl: './sign-up.component.html',
- 
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
@@ -11,30 +12,44 @@ export class SignUpComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
-  agreeTerms: boolean = false;
+  isPasswordValid: boolean = false;
+  isConfirmPasswordValid: boolean = true;
+  isEmailValid: boolean = false;
+  isTermsAccepted: boolean = false;
+  successMessage: string = '';
 
-  createAccount() {
-    if (this.password.length < 8) {
-      alert('Mật khẩu phải có ít nhất 8 ký tự!');
-      return;
-    }
-    if (this.password !== this.confirmPassword) {
-      alert('Mật khẩu xác nhận không khớp!');
-      return;
-    }
-    if (!this.agreeTerms) {
-      alert('Bạn cần đồng ý với các điều khoản và chính sách bảo mật!');
-      return;
-    }
-    alert('Tạo tài khoản thành công!');
+  constructor(private router: Router) {}
+
+  checkPasswordLength(): void {
+    this.isPasswordValid = this.password.length >= 8;
+    this.validateConfirmPassword(); 
   }
 
-  login() {
-    alert('Chuyển tới trang đăng nhập');
+  validateEmail(): void {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    this.isEmailValid = emailPattern.test(this.email);
   }
 
-  loginWithGoogle() {
-    alert('Đăng nhập bằng tài khoản Google');
+  validateConfirmPassword(): void {
+    this.isConfirmPasswordValid = this.password === this.confirmPassword;
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.name.trim() !== '' &&
+      this.isEmailValid &&
+      this.isPasswordValid &&
+      this.isTermsAccepted
+    );
+  }
+
+  onSubmit(): void {
+    if (this.isFormValid()) {
+      this.successMessage = 'Account created successfully! Redirecting to sign-in page...';
+      setTimeout(() => {
+        this.router.navigate(['/sign-in']); 
+      }, 2000);
+    }
   }
 }
 

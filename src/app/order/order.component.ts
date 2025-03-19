@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 interface Order {
@@ -13,8 +12,7 @@ interface Order {
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css'],
-  standalone: true,
-  imports: [CommonModule] // Thêm CommonModule để sử dụng *ngFor và *ngIf
+  standalone: false,
 })
 export class OrderComponent {
   orders: Order[] = [
@@ -28,6 +26,7 @@ export class OrderComponent {
   itemsPerPage: number = 2;
   totalPages: number = 1;
   pages: number[] = [];
+  currentSection: string = 'order-history'; 
 
   constructor(private router: Router) {
     this.updateDisplayedOrders();
@@ -66,5 +65,9 @@ export class OrderComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updateDisplayedOrders();
+  }
+
+  showSection(section: string): void {
+    this.currentSection = section;
   }
 }

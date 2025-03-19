@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-in4',
-
+  standalone:false,
   templateUrl: './personal-in4.component.html',
-  styleUrls: ['./personal-in4.css'],
-  imports: [CommonModule, FormsModule, RouterModule]
+  styleUrls: ['./personal-in4.component.css']
 })
 export class PersonalIn4Component {
   firstName: string = '';
@@ -17,25 +14,34 @@ export class PersonalIn4Component {
   phoneNumber: string = '';
   profileImage: string = 'https://via.placeholder.com/100';
 
+  personalInfo = {
+    firstName: 'Dianne',
+    lastName: 'Russell',
+    email: 'dianne.russell@gmail.com',
+    phoneNumber: '(603) 555-0123',
+    imageUrl: 'path-to-your-image.jpg'
+  };
+
+
   constructor(private router: Router) {}
 
-  // Điều hướng tới các trang khác
+  // Navigate to other pages
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
 
-  // Lưu thông tin người dùng
+  // Save user information
   saveChanges() {
-    console.log('Thông tin đã được lưu:', {
+    console.log('Information saved:', {
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.email,
       phoneNumber: this.phoneNumber
     });
-    alert('Thông tin đã được lưu!');
+    alert('Information has been saved!');
   }
 
-  // Xóa toàn bộ thông tin người dùng
+  // Clear all user information
   clearAll() {
     this.firstName = '';
     this.lastName = '';
@@ -44,7 +50,7 @@ export class PersonalIn4Component {
     this.profileImage = 'https://via.placeholder.com/100';
   }
 
-  // Thay đổi hình ảnh đại diện
+  // Handle image changes
   onImageChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -58,10 +64,9 @@ export class PersonalIn4Component {
     }
   }
 
-  // Mở hộp thoại chọn hình ảnh
-  triggerImageInput(event: Event) {
-    event.preventDefault();
+  // Trigger the file input for image selection
+  triggerImageInput() {
     const fileInput = document.getElementById('imageInput') as HTMLInputElement;
-    fileInput?.click();
+    fileInput.click();
   }
 }
