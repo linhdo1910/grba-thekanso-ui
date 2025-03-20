@@ -1,54 +1,142 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ProductService, Product } from '../product.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms'; 
+import { Product } from '../interface/product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-products',
-  standalone: false,
+  standalone: true, 
+  imports: [CommonModule, FormsModule], 
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
+  productsPages: Product[][][] = [];
   paginatedProducts: Product[][] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 12; 
+  itemsPerPage: number = 20; 
   totalPages: number = 1;
   totalPagesArray: number[] = [];
   category: string = 'All Products';
 
-  constructor(private productService: ProductService, private router: Router) {}
+  // Các biến filter options
+  categories: string[] = [];       
+  subCategories: string[] = [];    
+  colors: string[] = [];
+  sizes: string[] = [];
+
+  // Các filter được chọn
+  selectedCategory: string = '';      
+  selectedSubCategory: string = '';  
+  selectedColor: string = '';
+  selectedSize: string = '';
+  sort: string = '';
+  priceOrder: string = '';
+  keyword: string = ''; 
+
+  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.fetchProducts();
+    this.route.queryParamMap.subscribe(params => {
+      const kw = params.get('keyword');
+      if (kw) {
+        this.keyword = kw;
+      }
+      this.loadProducts();
+    });
   }
 
-  private fetchProducts(): void {
-    this.products = this.productService.getAllProducts();
-    this.setupPagination();
+  loadProducts(): void {
+    let filters: any = {};
+
+    if (this.sort) {
+      filters.sort = this.sort === 'newest' ? 'New' : (this.sort === 'popular' ? 'Popular' : '');
+    }
+
+    // Lọc theo productSubCategory 
+    if (this.selectedSubCategory) {
+      filters.productSubCategory = this.selectedSubCategory;
+    }
+    if (this.selectedSize) {
+      filters.size = this.selectedSize;
+    }
+    if (this.selectedColor) {
+      filters.color = this.selectedColor;
+    }
+    if (this.priceOrder) {
+      filters.priceOrder = this.priceOrder;
+    }
+    if (this.keyword) {
+      filters.keyword = this.keyword;
+    }
+
+    this.productService.getAllProducts(filters).subscribe(
+      (data: Product[]) => {
+        this.products = data;
+        this.extractFilterOptions();
+        this.paginateProducts(this.itemsPerPage);
+        this.setupPagination();
+      },
+      error => {
+        console.error('Error loading products:', error);
+      }
+    );
+  }
+
+  extractFilterOptions(): void {
+    const categorySet = new Set<string>();
+    const subCategorySet = new Set<string>();
+    const colorSet = new Set<string>();
+    const sizeSet = new Set<string>();
+
+    this.products.forEach(product => {
+      if (product.productCategory) {
+        categorySet.add(product.productCategory);
+      }
+      if (product.productSubCategory) {
+        subCategorySet.add(product.productSubCategory);
+      }
+      if (product.color) {
+        product.color.split(',').forEach(c => colorSet.add(c.trim()));
+      }
+      if (product.size) {
+        sizeSet.add(product.size);
+      }
+    });
+
+    this.categories = Array.from(categorySet);
+    this.subCategories = Array.from(subCategorySet);
+    this.colors = Array.from(colorSet);
+    this.sizes = Array.from(sizeSet);
+  }
+
+  private paginateProducts(chunkSize: number): void {
+    this.productsPages = [];
+    if (!this.products || this.products.length === 0 || chunkSize <= 0) {
+      return;
+    }
+    for (let i = 0; i < this.products.length; i += chunkSize) {
+      const page = this.products.slice(i, i + chunkSize);
+      const rows: Product[][] = [];
+      const rowSize = 4;
+      for (let j = 0; j < page.length; j += rowSize) {
+        rows.push(page.slice(j, j + rowSize));
+      }
+      this.productsPages.push(rows);
+    }
   }
 
   private setupPagination(): void {
-    // Calculate total pages
-    this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
+    this.totalPages = this.productsPages.length;
     this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
-    // Paginate products for the current page
     this.updatePagination();
   }
 
   private updatePagination(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-
-    // Slice the products for the current page
-    const currentPageProducts = this.products.slice(startIndex, endIndex);
-
-    //20/3
-    this.paginatedProducts = [];
-    for (let i = 0; i < currentPageProducts.length; i += 4) {
-      this.paginatedProducts.push(currentPageProducts.slice(i, i + 4));
-    }
+    this.paginatedProducts = this.productsPages[this.currentPage - 1] || [];
   }
 
   goToPage(page: number): void {
@@ -70,7 +158,12 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  navigateToProductDetail(productId: number): void {
+  navigateToProductDetail(productId: string): void {
     this.router.navigate(['/product-details', productId]);
+  }
+
+  onFilterChange(): void {
+    this.currentPage = 1;
+    this.loadProducts();
   }
 }

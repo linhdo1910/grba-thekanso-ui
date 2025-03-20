@@ -1,12 +1,11 @@
-<div class="container" *ngIf="product">
+<div class="container" *ngIf="product as prod">
   <div class="row">
     <!-- Left Column - Thumbnail Carousel -->
     <div class="col-md-2">
       <div class="thumbnail-carousel-container">
         <button class="scroll-button" (click)="scrollThumbnails(-1)">&#9650;</button>
         <div class="thumbnail-carousel">
-          <!-- Static images as thumbnails & Edited to show image on main 18/3-->
-          <div *ngFor="let sideImage of product.image; let i = index" class="thumbnail-item">
+          <div *ngFor="let sideImage of prod.images" class="thumbnail-item">
             <img 
               [src]="sideImage" 
               alt="{{ sideImage }}" 
@@ -28,29 +27,35 @@
     <!-- Right Column - Product Details -->
     <div class="col-md-4">
       <div class="product-info">
-        <h3>{{ product.name }}</h3>
+        <h3>{{ prod.productName }}</h3>
 
         <!-- Rating Section -->
-        <div class="rating">
-          <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <span class="text-muted">({{ product.reviews }} reviews)</span>
-        </div>
-        <hr>
+            <div class="rating">
+              <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
+                <span class="text-warning">&#9733;</span>
+              </ng-container>
+              <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
+                <span class="text-muted">&#9734;</span>
+              </ng-container>
+              <span class="text-muted">({{ product.reviews }} reviews)</span>
+            </div>
+            <hr>
+
 
         <!-- Price Section -->
         <div class="price-info mt-3">
           <span 
             [ngClass]="{
-              'text-decoration-line-through me-2': product.discount > 0,
-              'text-secondary fw-bold': product.discount === 0
+              'text-decoration-line-through me-2': (prod.discount ?? 0) > 0,
+              'text-secondary fw-bold': (prod.discount ?? 0) === 0
             }">
-            {{ product.price | number }} VND
+            {{ prod.productPrice | number }} VND
           </span>
-          <span *ngIf="product.discount > 0" class="text-secondary">
+          <span *ngIf="(prod.discount ?? 0) > 0" class="text-secondary">
             {{ getDiscountedPrice() | number }} VND
           </span>
-          <span *ngIf="product.discount > 0" class="badge bg-danger ms-2">
-            {{ product.discount }}% OFF
+          <span *ngIf="(prod.discount ?? 0) > 0" class="badge bg-danger ms-2">
+            {{ prod.discount }}% OFF
           </span>
         </div>
 
@@ -62,20 +67,18 @@
           <label for="color">Color</label>
           <div class="color-options mt-3">
             <a 
-              *ngFor="let colorName of product.colors"
+              *ngFor="let colorName of productColors"
               class="color-option"
               [ngClass]="{ 'selected': selectedColor === colorName }"
-              [ngStyle]="{ 'background-image': 'url(' + productService.getImageUrlByColor(colorName) + ')' }"
               (click)="onColorSelect(colorName)"
-              [title]="colorName"
-              [attr.alt]="colorName">
+              [title]="colorName">
               <span class="hover-info">{{ colorName }}</span>
             </a>
           </div>
 
           <label for="size" class="mt-4">Size</label>
           <div class="size-options mt-3">
-            {{ product.sizes }}
+            {{ prod.size }}
           </div>
         </div>
 
@@ -105,25 +108,32 @@
       </div>
     </div>
   </div>
-  <app-product-info></app-product-info>
-  <h2 class="text-center text-secondary mt-3">Related Products</h2>
-  <div class="row mt-4">
-        <div class="col-md-3" *ngFor="let product of Product">
-            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
-                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
-                    style="max-height: 200px; object-fit: contain;">
-                <div class="card-body">
-                    <h6 class="text-secondary">{{ product.name }}</h6>
-                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="rating mb-0">
-                            <img src="asset/star-icon.png" alt="star" class="star-icon">
-                            {{ product.rating }} ({{ product.reviews }})
-                        </p>
-                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
-                    </div>
-                </div>
-            </div>
+
+    <!-- Thông tin mô tả sản phẩm -->
+  <app-product-info [product]="product"></app-product-info>
+  <!-- Related Products -->
+<h2 class="text-center text-secondary mt-3">Related Products</h2>
+<div class="row mt-4">
+  <div class="col-md-3" *ngFor="let prod of relatedProducts">
+    <div class="card product-card shadow-sm" (click)="navigateToProductDetail(prod._id)" style="cursor: pointer;">
+      <img [src]="prod.coverImage" class="card-img-top p-2" [alt]="prod.productName"
+           style="max-height: 200px; object-fit: contain;">
+      <div class="card-body">
+        <h6 class="text-secondary">{{ prod.productName }}</h6>
+        <p class="fw-bold text-primary mb-2">{{ prod.productPrice | number }} VND</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="rating mb-0">
+            <ng-container *ngFor="let star of [].constructor(prod.rating); let i = index">
+              <span class="text-warning">&#9733;</span>
+            </ng-container>
+            <ng-container *ngFor="let star of [].constructor(5 - prod.rating); let i = index">
+              <span class="text-muted">&#9734;</span>
+            </ng-container>
+            <span class="text-muted">({{ prod.reviews }} reviews)</span>
+          </p>
+          <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
         </div>
+      </div>
     </div>
+  </div>
 </div>

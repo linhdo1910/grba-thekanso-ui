@@ -55,21 +55,31 @@ export class PaymentComponent {
       this.totalAfterDiscount = this.calculateTotal();
       return;
     }
-
+  
     const total = this.calculateTotal();
-    const discount = this.productService.applyDiscountCode(this.discountCode);
-
-    if (discount < total) {
-      this.discountAmount = total - discount;
-      this.totalAfterDiscount = discount;
-      alert(`Discount applied! You saved ${this.discountAmount.toLocaleString()} VND.`);
-    } else if (discount === total) {
-      alert('No code exists or the code is invalid.');
-      this.discountAmount = 0;
-      this.totalAfterDiscount = total;
-    }
+    // Gọi API và subscribe để xử lý giá trị discount trả về
+    this.productService.applyDiscountCode(this.discountCode, total).subscribe(
+      (discount: number) => {
+        // Giả sử API trả về tổng tiền sau khi áp dụng giảm giá
+        if (discount < total) {
+          this.discountAmount = total - discount;
+          this.totalAfterDiscount = discount;
+          alert(`Discount applied! You saved ${this.discountAmount.toLocaleString()} VND.`);
+        } else if (discount === total) {
+          alert('No code exists or the code is invalid.');
+          this.discountAmount = 0;
+          this.totalAfterDiscount = total;
+        }
+      },
+      error => {
+        console.error('Error applying discount code', error);
+        alert('An error occurred while applying discount code.');
+        this.discountAmount = 0;
+        this.totalAfterDiscount = total;
+      }
+    );
   }
-
+  
   // Calculate the total after applying the discount
   calculateTotalAfterDiscount(): void {
     const total = this.calculateTotal();

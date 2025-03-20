@@ -22,14 +22,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
-import { SuggestComponent } from './suggest/suggest.component'; 
-
-
-const routes: Routes = [
-  { path: '', component: OrderComponent },
-  { path: 'order-history', component: OrderComponent },
-  { path: 'logout', component: OrderComponent }
-];
+import { SuggestComponent } from './suggest/suggest.component';
 import { SidebarBlogComponent } from './sidebar-blog/sidebar-blog.component';
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
@@ -37,17 +30,22 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homepage.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductInfoComponent } from './product-info/product-info.component';
 import { ProductService } from './product.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductInfoComponent } from './product-info/product-info.component';
+import { HttpClientModule } from '@angular/common/http';
 
+const routes: Routes = [
+  { path: '', component: OrderComponent },
+  { path: 'order-history', component: OrderComponent },
+  { path: 'logout', component: OrderComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    ProductsComponent,
     AboutUsComponent,
     PolicyComponent,
     HeaderComponent,
@@ -62,11 +60,14 @@ import { ProductInfoComponent } from './product-info/product-info.component';
     CartComponent,
     ProductDetailsComponent,
     ProductInfoComponent,
-    SignUpComponent,
-    SignInComponent,
-    ForgotPasswordComponent,
-    ResetPasswordComponent,
-    OrderComponent,
+    // Các component khác mà không có standalone: true
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    ProductsComponent,
+    OrderComponent, 
     OrderDetailComponent,
     PersonalIn4Component,
     ObjectComponent,

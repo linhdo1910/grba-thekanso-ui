@@ -22,57 +22,29 @@
     </div>
 
     <div class="d-flex w-100 justify-content-between">
-      <!-- Categories Dropdown -->
-      <select class="form-select custom-select">
-        <option selected>Category</option>
-        <option value="living-room">Living Room</option>
-        <option value="bedroom">Bedroom</option>
-        <option value="dining-room">Dining Room</option>
-        <option value="workspace">Workspace</option>
-        <option value="home-decor">Home Decoration</option>
-      </select>
-      <select class="form-select custom-select">
-        <option selected>Sub-category</option>
-        <option value="bed">Bed</option>
-        <option value="table">Table</option>
-        <option value="chair">Chair</option>
-        <option value="entrance">Entrance</option>
-        <option value="light">Light</option>
-        <option value="tableware">Tableware</option>
-        <option value="couch">Couch</option>
-        <option value="tv-stand">TV Stand</option>
-        <option value="cabinet">Cabinet</option>
-        <option value="crack">Crack</option>
+                <!-- SubCategory Dropdown -->
+              <select class="form-select custom-select" [(ngModel)]="selectedSubCategory" (change)="onFilterChange()">
+                <option value="">SubCategory</option>
+                <option *ngFor="let sub of subCategories" [value]="sub">{{ sub }}</option>
       </select>
 
-      <!-- Price Dropdown -->
-      <select class="form-select custom-select">
-        <option selected>Price</option>
-        <option value="0-2999999">0 - 2,999,999 VND</option>
-        <option value="3000000-5999999">2,999,999 - 5,999,999 VND</option>
-        <option value="above-5999999">Above 5,999,999 VND</option>
-      </select>
+          <!-- Price Dropdown -->
+          <select class="form-select custom-select" [(ngModel)]="priceOrder" (change)="onFilterChange()">
+            <option value="">Price</option>
+            <option value="Low">Lowest to Highest</option> 
+            <option value="High">Highest to Lowest</option> 
+          </select>
+          <!-- Size Dropdown -->
+          <select class="form-select custom-select" [(ngModel)]="selectedSize" (change)="onFilterChange()">
+            <option value="">Size</option>
+            <option *ngFor="let s of sizes" [value]="s">{{ s }}</option>
+          </select>
 
-      <!-- Color Dropdown -->
-      <select class="form-select custom-select">
-        <option selected>Color</option>
-        <option value="ash">Ash</option>
-        <option value="bashwood">Bashwood</option>
-        <option value="birch">Birch</option>
-        <option value="cedar">Cedar</option>
-        <option value="mable">Mable</option>
-        <option value="oak">Oak</option>
-        <option value="walnut">Walnut</option>
-        <option value="white">White</option>
-      </select>
-
-      <!-- Size Dropdown -->
-      <select class="form-select custom-select">
-        <option selected>Size</option>
-        <option value="small">Small</option>
-        <option value="medium">Medium</option>
-        <option value="large">Large</option>
-      </select>
+          <!-- Color Dropdown -->
+          <select class="form-select custom-select" [(ngModel)]="selectedColor" (change)="onFilterChange()">
+            <option value="">Color</option>
+            <option *ngFor="let c of colors" [value]="c">{{ c }}</option>
+          </select>
     </div>
   </div>
 </div>
@@ -83,15 +55,20 @@
     <tbody>
       <tr *ngFor="let row of paginatedProducts">
         <td *ngFor="let product of row" class="text-center border-0">
-          <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
-            <img [src]="product.image[0]" class="card-img-top p-2" [alt]="product.name" style="max-height: 200px; object-fit: contain;">
+          <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product._id)" style="cursor: pointer;">
+            <img [src]="product.coverImage" class="card-img-top p-2" [alt]="product.productName" style="max-height: 200px; object-fit: contain;">
             <div class="card-body">
-              <h6 class="text-secondary">{{ product.name }}</h6>
-              <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
+              <h6 class="text-secondary">{{ product.productName }}</h6>
+              <p class="fw-bold text-primary mb-2">{{ product.productPrice | number }} VND</p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="rating mb-0">
-                  <img src="asset/star-icon.png" alt="star" class="star-icon">
-                  {{ product.rating }} ({{ product.reviews }})
+                  <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
+                    <span class="text-warning">&#9733;</span>
+                  </ng-container>
+                  <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
+                    <span class="text-muted">&#9734;</span>
+                  </ng-container>
+                  <span class="text-muted">({{ product.reviews }})</span>
                 </p>
                 <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
               </div>
