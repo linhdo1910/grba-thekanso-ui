@@ -16,7 +16,7 @@ export class RoomDimensionComponent {
   calculateArea(): void {
     this.area = this.length * this.width;
   }
-  imageUrl: string = "asset/room-shape/Rectangle 17527 (1).svg";
+  imageUrl: string = "asset/room-shape/room4.png";
 
 
   onDimensionChange(): void {

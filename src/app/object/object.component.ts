@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./object.component.css'],
 })
 export class ObjectComponent {
-  imageUrl: string = 'asset/room-shape/Rectangle 17527 (1).svg'; // Ảnh nền của phòng
+  imageUrl: string = 'asset/room-shape/room4.png'; // Ảnh nền của phòng
   length: number = 10.00;
   width: number = 7.32;
 
