@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-shape',
-
-  imports: [CommonModule], // Đảm bảo CommonModule được import trực tiếp
+  standalone:false, 
   templateUrl: './room-shape.component.html',
   styleUrls: ['./room-shape.component.css']
 })

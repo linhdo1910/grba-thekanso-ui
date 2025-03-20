@@ -23,7 +23,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
 import { SuggestComponent } from './suggest/suggest.component'; 
-import { GoogleMapsModule } from '@angular/google-maps';
 
 
 const routes: Routes = [
@@ -70,19 +69,18 @@ import { ProductInfoComponent } from './product-info/product-info.component';
     OrderComponent,
     OrderDetailComponent,
     PersonalIn4Component,
+    ObjectComponent,
+    RoomDimensionComponent,
+    RoomShapeComponent,
+    SuggestComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes), 
     ReviewComponent,
-    RoomDimensionComponent,
-    RoomShapeComponent,
-    ObjectComponent,
-    SuggestComponent,
     AppRoutingModule,
     FormsModule,
     CommonModule,
-    GoogleMapsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

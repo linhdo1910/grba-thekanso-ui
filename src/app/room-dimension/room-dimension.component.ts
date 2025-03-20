@@ -1,13 +1,11 @@
 // room-dimension.component.ts
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 @Component({
   selector: 'app-room-dimension',
+  standalone: false, // Standalone component
   templateUrl: './room-dimension.component.html',
   styleUrls: ['./room-dimension.component.css'],
-
-  imports: [FormsModule] // Thêm FormsModule vào imports
 })
 export class RoomDimensionComponent {
   length: number = 0;

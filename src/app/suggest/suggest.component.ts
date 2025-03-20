@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-suggest',
-
-  imports: [CommonModule], // Thêm CommonModule để dùng *ngIf
+  standalone: false,
   templateUrl: './suggest.component.html',
   styleUrls: ['./suggest.component.css']
 })

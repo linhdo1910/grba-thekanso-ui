@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-object',
-  standalone: true, // Standalone component
+  standalone: false, 
   templateUrl: './object.component.html',
   styleUrls: ['./object.component.css'],
-  imports: [CommonModule], // Thêm dòng này
 })
 export class ObjectComponent {
   imageUrl: string = 'asset/room-shape/Rectangle 17527 (1).svg'; // Ảnh nền của phòng
