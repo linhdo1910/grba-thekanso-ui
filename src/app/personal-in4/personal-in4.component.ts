@@ -12,14 +12,14 @@ export class PersonalIn4Component {
   lastName: string = '';
   email: string = '';
   phoneNumber: string = '';
-  profileImage: string = 'https://via.placeholder.com/100';
+  profileImage: string = '';
 
   personalInfo = {
-    firstName: 'Dianne',
-    lastName: 'Russell',
-    email: 'dianne.russell@gmail.com',
-    phoneNumber: '(603) 555-0123',
-    imageUrl: 'path-to-your-image.jpg'
+    firstName: 'An',
+    lastName: 'Pham',
+    email: 'anptt22411ca@st.uel.edu.vn',
+    phoneNumber: '0913854054',
+    imageUrl: 'asset/banners/anp.png'
   };
 
 

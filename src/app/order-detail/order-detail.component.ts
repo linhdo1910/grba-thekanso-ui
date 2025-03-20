@@ -25,7 +25,11 @@ export class OrderDetailComponent implements OnInit {
   }
 
   closeDetail(): void {
-    this.close.emit(); // Notify the parent to close the detail view
+    if (this.order) {
+      this.router.navigate(['/write-review', this.order.orderId]); // Navigate to the review component with the order ID
+    } else {
+      console.error('Order not found. Cannot navigate to the review page.');
+    }
   }
 
   cancelOrder(): void {
@@ -40,9 +44,39 @@ export class OrderDetailComponent implements OnInit {
   writeReview(): void {
     if (this.order && this.order.status === 4) {
       console.log(`Redirecting to the review page for order ${this.order.orderId}.`);
-      this.router.navigate(['/write-review', this.order.orderId]);
+      this.router.navigate(['review', this.order.orderId]);
     } else {
       console.log(`Cannot write a review for order ${this.order?.orderId}.`);
+    }
+  }
+
+  getDeliveryProgress(status: number): number {
+    switch (status) {
+      case 1: // Order received
+        return 25;
+      case 2: // Processing
+        return 50;
+      case 3: // On the way
+        return 75;
+      case 4: // Delivered
+        return 100;
+      default:
+        return 0;
+    }
+  }
+
+  getDeliveryStatusText(status: number): string {
+    switch (status) {
+      case 1:
+        return 'Order Received';
+      case 2:
+        return 'Processing';
+      case 3:
+        return 'On the Way';
+      case 4:
+        return 'Delivered';
+      default:
+        return 'Unknown Status';
     }
   }
 }

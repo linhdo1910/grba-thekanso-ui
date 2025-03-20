@@ -18,7 +18,6 @@ export class SidebarBlogComponent {
     { title: 'Going all-in with millennial design', date: '03 Aug 2022', img: 'asset/sofa-01.svg' },
     { title: 'Exploring new ways of decorating', date: '03 Aug 2022', img: 'asset/sofa-02.svg' },
     { title: 'Handmade pieces that took time to make', date: '03 Aug 2022', img: 'asset/sofa-03.svg' },
-    { title: 'Modern home in Milan Japan Japan', date: '03 Aug 2022', img: 'asset/sofa-04.svg'},
     { title: 'Colorful office redesign Japan Japan', date: '03 Aug 2022', img:'asset/test.png' },
   ];
 

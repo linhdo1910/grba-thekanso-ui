@@ -22,7 +22,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
-import { SuggestComponent } from './suggest/suggest.component';
+import { SuggestComponent } from './suggest/suggest.component'; 
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 const routes: Routes = [
@@ -68,7 +69,7 @@ import { ProductInfoComponent } from './product-info/product-info.component';
     ResetPasswordComponent,
     OrderComponent,
     OrderDetailComponent,
-    PersonalIn4Component
+    PersonalIn4Component,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +82,7 @@ import { ProductInfoComponent } from './product-info/product-info.component';
     AppRoutingModule,
     FormsModule,
     CommonModule,
+    GoogleMapsModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

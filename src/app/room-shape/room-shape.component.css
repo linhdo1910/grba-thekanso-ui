@@ -1,80 +1,62 @@
-
-
-
 .shape-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Tạo layout 2x2 */
-    gap: 30px; /* Khoảng cách giữa các hình */
-    width: 250px; /* Điều chỉnh kích thước tổng */
-
-  }
-  
-  .shape-item {
-    width: 150px;
-    height: 150px;
-
+    margin-left: 146px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.shape-item {
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .shape-item img {
-    max-width: 95%;
-    max-height: 95%;
-  }
-  
-  .shape-item.selected {
-    background-color: white; /* Khi được chọn thì có nền xám */
-    border: 2px solid #DAA86D; /* Viền màu đen */
-  }
-  
-.btn-rotate {
-
-    height: 40px;
-    width: 160px;
-    background-color:  #8D7B65; /* Màu nâu vàng */
-    color: white;
-    border: none;
-    border-radius: 6px; /* Bo góc */
-    font-weight: bold;
-    cursor: pointer;
-    margin-left: 140px;
-    margin-top: 30px;
-    margin-right: 20px;
-    
-
+    transition: transform 0.3s ease;
 }
 
-.btn-next {
-    height: 40px;
-    width: 160px;
-    background-color:  #DAA86D; /* Màu nâu xám */
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
+.shape-item:hover {
+    transform: scale(1.1);
 }
 
-/* Hiệu ứng hover */
-.btn-rotate:hover {
-    background-color: #7A6A5B;
+.shape-item.selected {
+    border: 2px solid #DAA86D;
 }
 
-.btn-next:hover {
-    background-color:  #C0925E;
-}
-
-
-.container{
+.container {
     display: flex;
-    justify-content: space-between; /* Căn đều hai class */
-    margin-top: 88px;
-    margin-left: 130px;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
 
+.title {
+    color: #402A1D;
+    font-size: 24px;
+    margin-left: 146px;
+}
 
+.description {
+    color: #434343;
+    margin-left: 146px;
+    margin-top: 5px;
+    width: 326px;
+}
 
+.button-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px;
+}
+
+.shape-preview {
+    flex: 1;
+    margin-right: 150px;
+    text-align: center;
+}
+
+.preview-title {
+    font-size: 24px;
+    color: #402A1D;
+}
+
+.preview-img {
+    width: auto;
+    height: 520px;
+    object-fit:cover
 }

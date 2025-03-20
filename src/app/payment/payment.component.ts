@@ -11,21 +11,21 @@ import { Router } from '@angular/router';
 export class PaymentComponent {
   cartProducts = [
     {
-      image: 'asset/test1.jpg',
+      image: 'asset/products/demo1.jpg',
       name: 'Kalini',
       discountPrice: 5000000,
       originalPrice: 10000000,
       discountPercent: 50,
-      size: '1m2',
+      size: 'Large',
       quantity: 1
     },
     {
-      image: 'asset/test2.jpg',
+      image: 'asset/products/demo1.jpg',
       name: 'Kalini',
       discountPrice: 5000000,
       originalPrice: 10000000,
       discountPercent: 50,
-      size: '1m2',
+      size: 'Small',
       quantity: 1
     }
   ];

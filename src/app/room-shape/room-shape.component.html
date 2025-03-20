@@ -1,33 +1,30 @@
 <div class="container">
-    <!-- Hiển thị hình ảnh lớn khi được chọn -->
+    <div class="shape-selector">
+        <h2 class="title">Room Shape</h2>
+        <p class="description">Select a room shape below. You can rotate to have it fit your idea</p>
 
-  
-    <!-- Khu vực chọn hình dạng phòng -->
-    <div class="shape-selector" style="margin-right: 50px;">
-      <h2 style="color: #402A1D ; font-size: 24px; top: 206px; margin-left: 146px;">Room Shape</h2>
-      <p style="height: 58px;width: 326px; color: #434343 ; margin-left: 146px; margin-top: 5px ;">Select a room shape below. You can rotate to have it fit your idea</p>
-  
-      <div class="shape-list" style=" margin-left: 146px;">
-        <!-- Sử dụng *ngFor để lặp qua các hình ảnh -->
-        <div 
-          *ngFor="let shape of roomShapes" 
-          (click)="selectShape(shape)" 
-          [class.selected]="selectedShape?.id === shape.id" 
-          class="shape-item"
-          title="Click to select {{ shape.name }}"
-        >
-          <img [src]="shape.src" [alt]="shape.name" />
+        <div class="shape-list">
+            <!-- Loop through room shapes -->
+            <div 
+                *ngFor="let shape of roomShapes" 
+                (click)="selectShape(shape)" 
+                [class.selected]="selectedShape?.id === shape.id" 
+                class="shape-item"
+                title="Click to select {{ shape.name }}"
+            >
+                <img [src]="shape.src" [alt]="shape.name" />
+            </div>
         </div>
-      </div>
-  
-      <!-- Nút điều hướng -->
-      <button class="btn-rotate">ROTATE</button>
-      <button class="btn-next" (click)="nextPage()">NEXT</button>
+
+        <!-- Centered NEXT button -->
+        <div class="button-container">
+            <button class="btn fw-bold btn-primary" (click)="nextPage()">NEXT</button>
+        </div>
     </div>
-        <!-- Hiển thị hình ảnh lớn khi được chọn -->
-    <div class="shape-preview" *ngIf="selectedShape" style="margin-right: 150px ; "  >
-      <h3 style="font-size: 24px ; color: #402A1D;">Preview: {{ selectedShape.name }}</h3>
-      <img [src]="selectedShape.src" [alt]="selectedShape.name" class="preview-img" style="width: 600px; height: 600px;"/>
+
+    <!-- Display selected shape preview -->
+    <div class="shape-preview" *ngIf="selectedShape">
+        <h3 class="preview-title">Preview: {{ selectedShape.name }}</h3>
+        <img [src]="selectedShape.src" [alt]="selectedShape.name" class="preview-img" />
     </div>
-  </div>
-  
+</div>

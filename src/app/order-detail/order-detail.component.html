@@ -1,16 +1,19 @@
-<div class="container mt-4" *ngIf="order">
+<div class="container" *ngIf="order">
   <!-- Header -->
   <div class="text-right">
     <button class="btn btn-link" (click)="closeDetail()">Back to List</button>
   </div>
   
   <!-- Order Details Section -->
+  <h2 class="text-secondary">Order Details</h2>
+  <p class="text-info">{{ order.date }} · {{ order.products.length }} Products</p>
+  <hr>
+
   <div class="row mb-3">
-    <div class="col-md-8">
-      <h2>Order Details · {{ order.date }} · {{ order.products.length }} Products</h2>
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Billing Address</h5>
+          <h5 class="text-info">Billing Address</h5><hr>
           <p><strong>{{ order.billingAddress.name }}</strong></p>
           <p>{{ order.billingAddress.address }}</p>
           <p>{{ order.billingAddress.email }}</p>
@@ -19,12 +22,14 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Order Info</h5>
-          <p><strong>Order ID:</strong> #{{ order.orderId }}</p>
-          <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+          <h5 class="text-info">Order Info</h5><hr>
+          <div class="d-flex justify-content-between">
+            <p><strong>Order ID:</strong> #{{ order.orderId }}</p>
+            <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+          </div><hr>
           <p><strong>Subtotal:</strong> {{ order.subtotal | currency:'VND' }}</p>
           <p><strong>Discount:</strong> {{ order.discount }}%</p>
           <p><strong>Shipping:</strong> {{ order.shipping }}</p>
@@ -33,14 +38,51 @@
       </div>
     </div>
   </div>
-
+  <!-- Delivery Status Progress Bar -->
+  <div class="mb-4">
+    <h5 class="text-info">Delivery Status</h5>
+    <hr>
+  <!-- Delivery Status Progress Tracker -->
+  <div class="progress-tracker">
+    <div class="progress-step" [class.completed]="order.status > 1" [class.active]="order.status === 1">
+      <div class="progress-circle">1</div>
+      <div class="progress-text">Order Received</div>
+    </div>
+    <div class="progress-step" [class.completed]="order.status > 2" [class.active]="order.status === 2">
+      <div class="progress-circle">2</div>
+      <div class="progress-text">Processing</div>
+    </div>
+    <div class="progress-step" [class.completed]="order.status > 3" [class.active]="order.status === 3">
+      <div class="progress-circle">3</div>
+      <div class="progress-text">On the Way</div>
+    </div>
+    <div class="progress-step" [class.completed]="order.status === 4" [class.active]="order.status === 4">
+      <div class="progress-circle">4</div>
+      <div class="progress-text">Delivered</div>
+    </div>
+  </div>
+  <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        [style.width]="getDeliveryProgress(order.status) + '%'"
+        [class.bg-success]="order.status === 4"
+        [class.bg-warning]="order.status < 4"
+        [attr.aria-valuenow]="getDeliveryProgress(order.status)"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+      </div>
+    </div>
+  </div>
   <!-- Products Table -->
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Products</h5>
-      <table class="table">
+      <h5 class="text-info">Products</h5><hr>
+      <table class="bang_thong_tin">
         <thead>
           <tr>
+            <th>Image</th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -49,6 +91,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let product of order.products">
+            <td>
+              <img [src]="product.image" alt="{{ product.name }}" class="product-image">
+            </td>
             <td>{{ product.name }}</td>
             <td>{{ product.price | currency:'VND' }}</td>
             <td>x{{ product.quantity }}</td>
@@ -60,11 +105,11 @@
   </div>
 
   <!-- Action Buttons -->
-  <div class="card-footer text-center">
-    <button class="btn btn-outline-secondary" (click)="cancelOrder()" [disabled]="order?.status === 4">
+  <div class="card-footer">
+    <button class="btn btn-outline-secondary" (click)="cancelOrder()" [disabled]="order.status === 4">
       Cancel
     </button>
-    <button class="btn btn-primary" (click)="writeReview()" [disabled]="order?.status !== 4">
+    <button class="btn btn-primary" (click)="writeReview()" [disabled]="order.status !== 4">
       Write Review
     </button>
   </div>
