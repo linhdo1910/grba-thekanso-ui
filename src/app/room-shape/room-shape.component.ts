@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 })
 export class RoomShapeComponent {
   roomShapes = [
-    { id: 1, name: 'Room 01', src: 'asset/room-shape/HCN 3.svg' },
-    { id: 2, name: 'Room 02', src: 'asset/room-shape/HCN 1.svg' },
-    { id: 3, name: 'Room 03', src: 'asset/room-shape/HCN 2@3x.svg' },
-    { id: 4, name: 'Room 04', src: 'asset/room-shape/Rectangle 17527 (1).svg' }
+    { id: 1, name: 'Room 01', src: 'asset/room-shape/room1.png' },
+    { id: 2, name: 'Room 02', src: 'asset/room-shape/room2.png' },
+    { id: 3, name: 'Room 03', src: 'asset/room-shape/room3.png' },
+    { id: 4, name: 'Room 04', src: 'asset/room-shape/room4.png' }
   ];
 
   constructor(private router: Router) {}

@@ -124,8 +124,8 @@ select {
 
 .room {
   position: relative;
-  width: 700px; /* Điều chỉnh theo tỷ lệ */
-  height: 700px;
+  width: 600px; /* Điều chỉnh theo tỷ lệ */
+  height: 600px;
 
   background-color: white;
 }
@@ -140,7 +140,6 @@ select {
   position: absolute;
   font-size: 16px;
   font-weight: bold;
-
   background-color: white;
   padding: 3px 6px;
   border-radius: 5px;
