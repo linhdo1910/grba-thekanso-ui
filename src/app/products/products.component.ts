@@ -1,66 +1,141 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  rating: number;
-  reviews: number;
-  discount: number
-}
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms'; 
+import { Product } from '../interface/product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-products',
-  standalone: false,
+  standalone: true, 
+  imports: [CommonModule, FormsModule], 
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  products: Product[] = [
-    { id: 1, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 120, discount:80 },
-    { id: 2, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 90, discount:80 },
-    { id: 3, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 85, discount:27 },
-    { id: 4, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.6, reviews: 105, discount:80 },
-    { id: 5, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.4, reviews: 11, discount: 20 },
-    { id: 6, name: 'Table living room style Japan', price: 1500000, image: 'asset/products/demo1.jpg', rating: 4.1, reviews: 95, discount:80 },
-    { id: 7, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.2, reviews: 100, discount:88 },
-    { id: 8, name: 'Bed living room style Japan', price: 5000000, image: 'asset/products/demo1.jpg', rating: 4.7, reviews: 130, discount:80 },
-    { id: 9, name: 'Chair living room style Japan', price: 2000000, image: 'asset/products/demo1.jpg', rating: 4.5, reviews: 80, discount:99 },
-    { id: 10, name: 'Cabinet living room style Japan', price: 3000000, image: 'asset/products/demo1.jpg', rating: 4.3, reviews: 75, discount:80 }
-  ];
-
-  productsChunked: Product[][] = [];
+  products: Product[] = [];
+  productsPages: Product[][][] = [];
   paginatedProducts: Product[][] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 4;
+  itemsPerPage: number = 20; 
   totalPages: number = 1;
   totalPagesArray: number[] = [];
 
-  constructor(private router: Router) {}
+  // Các biến filter options
+  categories: string[] = [];       
+  subCategories: string[] = [];    
+  colors: string[] = [];
+  sizes: string[] = [];
+
+  // Các filter được chọn
+  selectedCategory: string = '';      
+  selectedSubCategory: string = '';  
+  selectedColor: string = '';
+  selectedSize: string = '';
+  sort: string = '';
+  priceOrder: string = '';
+  keyword: string = ''; 
+
+  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.chunkProducts(4);
-    this.setupPagination();
+    this.route.queryParamMap.subscribe(params => {
+      const kw = params.get('keyword');
+      if (kw) {
+        this.keyword = kw;
+      }
+      this.loadProducts();
+    });
   }
 
-  private chunkProducts(chunkSize: number): void {
-    this.productsChunked = [];
+  loadProducts(): void {
+    let filters: any = {};
+
+    if (this.sort) {
+      filters.sort = this.sort === 'newest' ? 'New' : (this.sort === 'popular' ? 'Popular' : '');
+    }
+
+    // Lọc theo productSubCategory 
+    if (this.selectedSubCategory) {
+      filters.productSubCategory = this.selectedSubCategory;
+    }
+    if (this.selectedSize) {
+      filters.size = this.selectedSize;
+    }
+    if (this.selectedColor) {
+      filters.color = this.selectedColor;
+    }
+    if (this.priceOrder) {
+      filters.priceOrder = this.priceOrder;
+    }
+    if (this.keyword) {
+      filters.keyword = this.keyword;
+    }
+
+    this.productService.getAllProducts(filters).subscribe(
+      (data: Product[]) => {
+        this.products = data;
+        this.extractFilterOptions();
+        this.paginateProducts(this.itemsPerPage);
+        this.setupPagination();
+      },
+      error => {
+        console.error('Error loading products:', error);
+      }
+    );
+  }
+
+  extractFilterOptions(): void {
+    const categorySet = new Set<string>();
+    const subCategorySet = new Set<string>();
+    const colorSet = new Set<string>();
+    const sizeSet = new Set<string>();
+
+    this.products.forEach(product => {
+      if (product.productCategory) {
+        categorySet.add(product.productCategory);
+      }
+      if (product.productSubCategory) {
+        subCategorySet.add(product.productSubCategory);
+      }
+      if (product.color) {
+        product.color.split(',').forEach(c => colorSet.add(c.trim()));
+      }
+      if (product.size) {
+        sizeSet.add(product.size);
+      }
+    });
+
+    this.categories = Array.from(categorySet);
+    this.subCategories = Array.from(subCategorySet);
+    this.colors = Array.from(colorSet);
+    this.sizes = Array.from(sizeSet);
+  }
+
+  private paginateProducts(chunkSize: number): void {
+    this.productsPages = [];
+    if (!this.products || this.products.length === 0 || chunkSize <= 0) {
+      return;
+    }
     for (let i = 0; i < this.products.length; i += chunkSize) {
-      this.productsChunked.push(this.products.slice(i, i + chunkSize));
+      const page = this.products.slice(i, i + chunkSize);
+      const rows: Product[][] = [];
+      const rowSize = 4;
+      for (let j = 0; j < page.length; j += rowSize) {
+        rows.push(page.slice(j, j + rowSize));
+      }
+      this.productsPages.push(rows);
     }
   }
 
   private setupPagination(): void {
-    this.totalPages = Math.ceil(this.productsChunked.length / (this.itemsPerPage / 4)); 
-    this.totalPagesArray = Array(this.totalPages).fill(0).map((_, i) => i + 1);
+    this.totalPages = this.productsPages.length;
+    this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
     this.updatePagination();
   }
 
   private updatePagination(): void {
-    const startRow = (this.currentPage - 1) * (this.itemsPerPage / 4);
-    this.paginatedProducts = this.productsChunked.slice(startRow, startRow + (this.itemsPerPage / 4));
+    this.paginatedProducts = this.productsPages[this.currentPage - 1] || [];
   }
 
   goToPage(page: number): void {
@@ -82,7 +157,12 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  navigateToProductDetail(productId: number): void {
+  navigateToProductDetail(productId: string): void {
     this.router.navigate(['/product-details', productId]);
+  }
+
+  onFilterChange(): void {
+    this.currentPage = 1;
+    this.loadProducts();
   }
 }

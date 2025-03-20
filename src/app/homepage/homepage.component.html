@@ -27,58 +27,68 @@
     </div>
 </div>
 
-<!-- New Products Section -->
 <div class="container my-4">
     <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h3>New</h3>
-            <a routerLink="/products">View more</a>
-        </div>
-        <div class="col-md-3" *ngFor="let product of newProducts">
-            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
-                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
-                    style="max-height: 200px; object-fit: contain;">
-                <div class="card-body">
-                    <h6 class="text-secondary">{{ product.name }}</h6>
-                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="rating mb-0">
-                            <img src="asset/star-icon.png" alt="star" class="star-icon">
-                            {{ product.rating }} ({{ product.reviews }})
-                        </p>
-                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
-                    </div>
-                </div>
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h3>New Products</h3>
+        <a routerLink="/products?sort=New" class="text-decoration-none">View more</a>
+      </div>
+      <div class="col-md-3" *ngFor="let product of newProducts">
+        <div class="card product-card shadow-sm" [routerLink]="['/product-details', product._id]" style="cursor: pointer;">
+            <img [src]="product.coverImage" class="card-img-top p-2" [alt]="product.productName" style="max-height: 200px; object-fit: contain;">
+          <div class="card-body">
+            <h6 class="text-secondary">{{ product.productName }}</h6>
+            <p class="fw-bold text-primary mb-2">{{ product.productPrice | number }} VND</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="rating mb-0">
+                    <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
+                      <span class="text-warning">&#9733;</span>
+                    </ng-container>
+                    <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
+                      <span class="text-muted">&#9734;</span>
+                    </ng-container>
+                    <span class="text-muted">({{ product.reviews }})</span>
+                  </p>
+              <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    <!-- Best Seller Products Section -->
-    <div class="row mt-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h3>Best Seller</h3>
-            <a routerLink="/products" class="text-decoration-none">View more</a>
-        </div>
-        <div class="col-md-3" *ngFor="let product of bestSellerProducts">
-            <div class="card product-card shadow-sm" (click)="navigateToProductDetail(product.id)" style="cursor: pointer;">
-                <img [src]="product.image" class="card-img-top p-2" [alt]="product.name"
-                    style="max-height: 200px; object-fit: contain;">
-                <div class="card-body">
-                    <h6 class="text-secondary">{{ product.name }}</h6>
-                    <p class="fw-bold text-primary mb-2">{{ product.price | number }} VND</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="rating mb-0">
-                            <img src="asset/star-icon.png" alt="star" class="star-icon">
-                            {{ product.rating }} ({{ product.reviews }})
-                        </p>
-                        <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
-                    </div>
-                </div>
+  </div>
+  
+  <!-- Popular Products Section -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h3>Popular Products</h3>
+        <a routerLink="/products?sort=Popular" class="text-decoration-none">View more</a>
+      </div>
+      <div class="col-md-3" *ngFor="let product of popularProducts">
+        <div class="card product-card shadow-sm" [routerLink]="['/product-details', product._id]" style="cursor: pointer;">
+            <img [src]="product.coverImage" class="card-img-top p-2" [alt]="product.productName" style="max-height: 200px; object-fit: contain;">
+          <div class="card-body">
+            <h6 class="text-secondary">{{ product.productName }}</h6>
+            <p class="fw-bold text-primary mb-2">{{ product.productPrice | number }} VND</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="rating mb-0">
+                    <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
+                      <span class="text-warning">&#9733;</span>
+                    </ng-container>
+                    <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
+                      <span class="text-muted">&#9734;</span>
+                    </ng-container>
+                    <span class="text-muted">({{ product.reviews }})</span>
+                  </p>
+              <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
+  
+  
 <!-- Special Offer Section -->
 <div class="special-offer-section">
     <div class="container">

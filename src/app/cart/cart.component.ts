@@ -1,16 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  size: string;
-  quantity: number;
-  originalPrice: number;
-  discount: number;
-}
+import { CartItem } from '../interface/cart';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,41 +9,15 @@ interface CartItem {
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-  cartItems: CartItem[] = [
-    {
-      id: 1,
-      name: 'Kalini Sofa',
-      price: 5000000,
-      image: 'asset/products/demo1.jpg',
-      size: '1m2',
-      quantity: 1,
-      originalPrice: 10000000,
-      discount: 50
-    },
-    {
-      id: 2,
-      name: 'Kalini Chair',
-      price: 5000000,
-      image: 'asset/products/demo1.jpg',
-      size: '1m2',
-      quantity: 1,
-      originalPrice: 10000000,
-      discount: 10
-    },
-    {
-      id: 3,
-      name: 'Kalini Bed',
-      price: 5000000,
-      image: 'asset/products/demo1.jpg',
-      size: '1m2',
-      quantity: 1,
-      originalPrice: 10000000,
-      discount: 30
-    }
-  ];
+export class CartComponent implements OnInit {
+  cartItems: CartItem[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService) {}
+
+  ngOnInit(): void {
+    // Lấy dữ liệu giỏ hàng từ CartService
+    this.cartItems = this.cartService.getCartItems();
+  }
 
   calculateTotal(): number {
     return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -69,14 +34,15 @@ export class CartComponent {
   }
 
   continueShopping(): void {
-    this.router.navigate(['/products']); 
+    this.router.navigate(['/products']);
   }
 
   checkout(): void {
-    this.router.navigate(['/payment']); 
+    this.router.navigate(['/payment']);
   }
 
-  removeProduct(productId: number): void {
-    this.cartItems = this.cartItems.filter(item => item.id !== productId);
+  removeProduct(productId: string, size: string, color: string): void {
+    this.cartService.removeProduct(productId, size, color);
+    this.cartItems = this.cartService.getCartItems();
   }
 }

@@ -1,14 +1,15 @@
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="product">
   <!-- Tab Navigation -->
   <ul class="nav nav-tabs" id="productTabs" role="tablist">
     <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+      <a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">
+        Description
+      </a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" id="additional-info-tab" data-bs-toggle="tab" href="#additional-info" role="tab" aria-controls="additional-info" aria-selected="false">Additional Information</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
+      <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">
+        Reviews ({{ product.reviews }})
+      </a>
     </li>
   </ul>
 
@@ -16,52 +17,19 @@
   <div class="tab-content" id="productTabsContent">
     <!-- Description Tab -->
     <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-      <h2 class="text-center text-primary mt-3">Wooden Japanese Style Chair</h2>
+      <h2 class="text-center text-primary mt-3">{{ product.productName }}</h2>
       <p class="text-justify text-info py-3 px-3">
-        Crafted with precision and a deep respect for tradition, the Wooden Japanese Style Chair brings timeless elegance and comfort to any space. Inspired by the minimalist aesthetics of Japanese design, this chair showcases clean lines and a simple yet functional structure that embodies the essence of wabi-sabi—appreciating beauty in imperfection.
+        {{ product.productDescription }}
+        
       </p>
-      <div class="d-flex justify-content-center">
-        <img src="/asset/banners/au-2.jpg" alt="Wooden Japanese Style" class="img-fluid px-3" style="width: 620px; height: auto;">
+      <div class="d-flex justify-content-center" *ngIf="product.images && product.images.length > 0">
+        <img [src]="product.images[8]" alt="{{ product.productName }}" class="img-fluid" style="width: 620px; height: auto;">
       </div>
-      <p class="text-justify text-info py-3 px-3">
-        Built for durability, this chair is made from high-quality, sustainably sourced wood, ensuring long-lasting strength while maintaining a lightweight profile. Its ergonomic design promotes proper posture, offering both comfort and support for extended periods of sitting.
-      </p>
-      <p class="text-justify text-info py-3 px-3">
-        Crafted with precision and a deep respect for tradition, the Wooden Japanese Style Chair brings timeless elegance and comfort to any space. Inspired by the minimalist aesthetics of Japanese design, this chair showcases clean lines and a simple yet functional structure that embodies the essence of wabi-sabi—appreciating beauty in imperfection.
-      </p>
-      <div class="d-flex justify-content-center">
-        <img src="/asset/banners/au-1.jpg" alt="Wooden Japanese Style" class="img-fluid px-3" style="width: 620px; height: auto;">
-      </div>
-      <p class="text-justify text-info py-3 px-3">
-        Built for durability, this chair is made from high-quality, sustainably sourced wood, ensuring long-lasting strength while maintaining a lightweight profile. Its ergonomic design promotes proper posture, offering both comfort and support for extended periods of sitting.
-      </p>
-      <p class="text-justify text-info py-3 px-3">
-        Crafted with precision and a deep respect for tradition, the Wooden Japanese Style Chair brings timeless elegance and comfort to any space. Inspired by the minimalist aesthetics of Japanese design, this chair showcases clean lines and a simple yet functional structure that embodies the essence of wabi-sabi—appreciating beauty in imperfection.
-      </p>
-      <div class="d-flex justify-content-center">
-        <img src="/asset/banners/au-3.jpg" alt="Wooden Japanese Style" class="img-fluid px-3" style="width: 620px; height: auto;">
-      </div>
-      <p class="text-justify text-info py-3 px-3">
-        Built for durability, this chair is made from high-quality, sustainably sourced wood, ensuring long-lasting strength while maintaining a lightweight profile. Its ergonomic design promotes proper posture, offering both comfort and support for extended periods of sitting.
-      </p>
-    </div>
-
-    <!-- Additional Information Tab -->
-    <div class="tab-pane fade" id="additional-info" role="tabpanel" aria-labelledby="additional-info-tab">
-      <h3 class="text-center text-primary mt-3">Additional Information</h3>
-      <ul class="list-group">
-        <li class="list-group-item">Material: Leather</li>
-        <li class="list-group-item">Dimensions: 200x90x85 cm</li>
-        <li class="list-group-item">Weight: 6.8 kg</li>
-        <li class="list-group-item">Connectivity: Bluetooth</li>
-        <li class="list-group-item">Battery life: 20 hours</li>
-      </ul>
     </div>
 
     <!-- Reviews Tab -->
     <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
       <h3 class="text-center text-primary mt-3">Customer Reviews</h3>
-
       <!-- Review 1 -->
       <div class="review mb-3 p-3 border rounded shadow-sm">
         <div class="d-flex align-items-center">
@@ -134,3 +102,7 @@
     </div>
   </div>
 </div>
+
+
+
+    

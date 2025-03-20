@@ -29,6 +29,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 const routes: Routes = [
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
   { path: 'homepage', component: HomepageComponent },
+  { path: 'products/:category', component: ProductsComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'policy', component: PolicyComponent },
@@ -48,12 +49,14 @@ const routes: Routes = [
   { path: 'object', component: ObjectComponent },
   { path: 'suggest', component: SuggestComponent },
   { path: 'blog', component: BlogListComponent },
+  { path: 'blog-detail/:id', component: BlogDetailComponent },
   { path: 'blog/:id', component: BlogDetailComponent }, 
   { path: 'sidebar-blog', component: SidebarBlogComponent },
   { path: 'suggested-homepage', component: SuggestedHomepageComponent },
   { path: 'cart', component: CartComponent },
   { path: 'product-details/:id', component: ProductDetailsComponent }, 
-  { path: '**', redirectTo: 'homepage' } 
+  { path: '**', redirectTo: 'homepage' }, 
+  
 ];
 
 @NgModule({

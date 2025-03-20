@@ -1,15 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  rating: number;
-  reviews: number;
-}
-
+import { Product } from '../interface/product'; 
+import { ProductService } from '../product.service';
 interface Review {
   id: number;
   name: string;
@@ -25,24 +17,8 @@ interface Review {
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit, OnDestroy {
-  newProducts: Product[] = [
-    { id: 1, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.5, reviews: 120 },
-    { id: 2, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.2, reviews: 90 },
-    { id: 3, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.3, reviews: 85 },
-    { id: 4, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.6, reviews: 105 }
-  ];
-
-  bestSellerProducts: Product[] = [
-    { id: 5, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.4, reviews: 110 },
-    { id: 6, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.1, reviews: 95 },
-    { id: 7, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.2, reviews: 100 },
-    { id: 8, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.7, reviews: 130 },
-    { id: 9, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.5, reviews: 80 },
-    { id: 10, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.3, reviews: 75 },
-    { id: 11, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.5, reviews: 80 },
-    { id: 12, name: 'Sofa living room style Japan', price: 5000000, image: 'asset/test3.png', rating: 4.3, reviews: 75 }
-  ];
-
+  newProducts: Product[] = [];
+  popularProducts: Product[] = [];
   reviews: Review[] = [
     {
       id: 1,
@@ -80,18 +56,38 @@ export class HomepageComponent implements OnInit, OnDestroy {
       comment: "Beautiful designs and great prices. Would recommend to everyone. Ship fast and good quality.",
     }
   ];
-
+  
   days: number = 0;
   hours: number = 0;
   minutes: number = 0;
   seconds: number = 0;
   private timerInterval: any;
 
-  constructor(private router: Router) {  
+  constructor(private router: Router, private productService: ProductService) {  
     this.startCountdown(new Date('2025-03-31'));
   }
-
   ngOnInit(): void {
+    // Gọi API để lấy sản phẩm theo sort "New"
+    this.productService.getProductsBySort('New').subscribe(
+      products => {
+        this.newProducts = products;
+      },
+      error => {
+        console.error("Error fetching new products", error);
+      }
+    );
+
+    // Gọi API để lấy sản phẩm theo sort "Popular"
+    this.productService.getProductsBySort('Popular').subscribe(
+      products => {
+        this.popularProducts = products;
+      },
+      error => {
+        console.error("Error fetching popular products", error);
+      }
+    );
+
+    // Khởi chạy countdown (nếu cần)
     const targetDate = new Date('2025-03-31');
     this.startCountdown(targetDate);
   }
@@ -102,7 +98,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
     }
   }
 
-  navigateToProductDetail(productId: number): void {
+  navigateToProductDetail(productId: string): void {
+    // Nếu backend dùng _id, bạn cần truyền đúng định dạng _id
     this.router.navigate(['/product-details', productId]);
   }
 
@@ -122,5 +119,4 @@ export class HomepageComponent implements OnInit, OnDestroy {
       }
     }, 1000);
   }
-  
 }

@@ -1,6 +1,6 @@
 <div class="container my-2 ps-0">
   <div class="row">
-    <!-- Sidebar Component -->
+    <!-- Sidebar -->
     <div class="col-md-3 px-4">
       <app-sidebar-blog (categorySelected)="onCategorySelected($event)"></app-sidebar-blog>
     </div>
@@ -9,29 +9,31 @@
     <div class="col-md-9 px-3">
       <h2 class="fw-bold text-uppercase text-secondary">{{ selectedCategory || 'All Blogs' }}</h2>
       <div class="blog-list">
-        <div *ngFor="let blog of filteredBlogs()" class="blog-item d-flex mb-4">
-          <img [src]="blog.img" alt="{{ blog.title }}" class="blog-img me-3">
+        <div *ngFor="let blog of filteredBlogs" class="blog-item d-flex mb-4">
+          <img [src]="blog.image" alt="{{ blog.title }}" class="blog-img me-3">
 
           <div>
             <h5 class="fw-bold">{{ blog.title }}</h5>
-            <p>{{ blog.description }}</p>
+            <!-- Hiển thị 1 đoạn trích content, hoặc summary, hoặc cắt bớt -->
+            <p [innerHTML]="getExcerpt(blog.content)"></p>
 
             <p class="blog-meta d-flex align-items-center">
-              <span class="d-flex align-items-center">
-                <img src="asset/admin-icon.png" alt="Admin" class="icon"> Admin
+              <span class="d-flex align-items-center me-3">
+                <img src="asset/admin-icon.png" alt="Admin" class="icon me-1"> 
+                {{ blog.author }}
               </span>
-              <span class="mx-2">|</span>
               <span class="d-flex align-items-center">
-                <img src="asset/calendar-icon.png" alt="Date" class="icon"> {{ blog.date }}
+                <img src="asset/calendar-icon.png" alt="Date" class="icon me-1"> 
+                {{ blog.createDate | date:'mediumDate' }}
               </span>
             </p>
 
-            <a [routerLink]="['/blog-detail', blog.title]" class="text-orange">Read more</a>
+            <!-- Điều hướng đến BlogDetailComponent bằng ID -->
+            <a [routerLink]="['/blog-detail', blog._id]" class="text-orange">Read more</a>
           </div>
         </div>
 
-        <!-- Optional: If no blogs -->
-        <p *ngIf="filteredBlogs().length === 0">No blogs found in this category.</p>
+        <p *ngIf="filteredBlogs.length === 0">No blogs found in this category.</p>
       </div>
     </div>
   </div>

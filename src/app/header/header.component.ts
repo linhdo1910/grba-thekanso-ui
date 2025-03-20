@@ -5,8 +5,16 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   standalone: false,
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  searchKeyword: string = '';
 
+  constructor(private router: Router) {}
+
+  onSearch(): void {
+    if(this.searchKeyword.trim()) {
+      this.router.navigate(['/products'], { queryParams: { keyword: this.searchKeyword.trim() } });
+    }
+  }
 }

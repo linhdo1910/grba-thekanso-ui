@@ -1,4 +1,7 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { BlogService } from '../blog.service';
+import { Blog } from '../interface/blog';
 
 @Component({
   selector: 'app-sidebar-blog',
@@ -6,28 +9,39 @@ import { Component, Output, EventEmitter } from '@angular/core';
   templateUrl: './sidebar-blog.component.html',
   styleUrls: ['./sidebar-blog.component.css']
 })
-export class SidebarBlogComponent {
+export class SidebarBlogComponent implements OnInit {
   categories = ['People', 'Tips', 'Inspiration'];
-
   @Output() categorySelected = new EventEmitter<string>();
-  @Output() recentPostSelected = new EventEmitter<string>(); // 👈 Add this!
+  @Output() recentPostSelected = new EventEmitter<Blog>();
 
   selectedCategory: string = '';
+  recentPosts: Blog[] = [];
 
-  recentPosts = [
-    { title: 'Going all-in with millennial design', date: '03 Aug 2022', img: 'asset/sofa-01.svg' },
-    { title: 'Exploring new ways of decorating', date: '03 Aug 2022', img: 'asset/sofa-02.svg' },
-    { title: 'Handmade pieces that took time to make', date: '03 Aug 2022', img: 'asset/sofa-03.svg' },
-    { title: 'Modern home in Milan Japan Japan', date: '03 Aug 2022', img: 'asset/sofa-04.svg'},
-    { title: 'Colorful office redesign Japan Japan', date: '03 Aug 2022', img:'asset/test.png' },
-  ];
+  constructor(private blogService: BlogService, private router: Router) {}
 
-  filterByCategory(category: string) {
+  ngOnInit(): void {
+    this.blogService.getAllBlogs().subscribe(
+      (data: Blog[]) => {
+        const sorted = data.sort((a, b) => {
+          const dateA = new Date(a.createDate || '').getTime();
+          const dateB = new Date(b.createDate || '').getTime();
+          return dateB - dateA;
+        });
+        this.recentPosts = sorted.slice(0, 5);
+      },
+      error => {
+        console.error('Error loading recent posts:', error);
+      }
+    );
+  }
+
+  filterByCategory(category: string): void {
     this.selectedCategory = category;
     this.categorySelected.emit(category);
   }
 
-  filterByRecentPost(post: any) {
-    this.recentPostSelected.emit(post.title); 
+  filterByRecentPost(post: Blog): void {
+    // Emit event để báo cho component cha (BlogDetailComponent) xử lý điều hướng
+    this.recentPostSelected.emit(post);
   }
 }

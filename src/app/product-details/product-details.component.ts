@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService, Product } from '../product.service';
+import { ProductService } from '../product.service';
+import { Product } from '../interface/product';
 
 @Component({
   selector: 'app-product-details',
@@ -11,62 +12,13 @@ import { ProductService, Product } from '../product.service';
 export class ProductDetailsComponent implements OnInit {
 
   product: Product | undefined;
+  productColors: string[] = []; 
   selectedColor: string = '';
   selectedSize: string = '';
   quantity: number = 1;
   currentMainImage: string = '';
-
-  Product = [
-    {
-      id: 1,
-      name: 'Wooden Chair',
-      price: 2999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.5,
-      reviews: 120
-    },
-    {
-      id: 2,
-      name: 'Modern Table',
-      price: 5999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.8,
-      reviews: 85
-    },
-    {
-      id: 3,
-      name: 'Modern Table',
-      price: 5999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.8,
-      reviews: 85
-    },
-    {
-      id: 4,
-      name: 'Modern Table',
-      price: 5999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.8,
-      reviews: 85
-    },
-    {
-      id: 5,
-      name: 'Modern Table',
-      price: 5999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.8,
-      reviews: 85
-    },
-    {
-      id: 6,
-      name: 'Modern Table',
-      price: 5999999,
-      image: 'asset/products/demo1.jpg',
-      rating: 4.8,
-      reviews: 85
-    }
-  ];
-
+  relatedProducts: Product[] = []; 
+  
   constructor(
     public productService: ProductService, 
     private route: ActivatedRoute,
@@ -77,18 +29,40 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        const productId = +id;
-        this.product = this.productService.getProductById(productId);
+        this.productService.getProductById(id).subscribe(
+          (product: Product) => {
+            this.product = product;
+            // Tách chuỗi màu thành mảng, ví dụ "Oak, Walnut"
+            if (this.product && this.product.color) {
+              this.productColors = this.product.color.split(',').map(c => c.trim());
+            }
+            if (this.product && this.product.images && this.product.images.length > 0) {
+              this.currentMainImage = this.product.images[0];
+            }
+            if (this.productColors.length > 0) {
+              this.selectedColor = this.productColors[0];
+            }
+            // Lấy kích thước từ sản phẩm
+            this.selectedSize = this.product.size;
 
-        if (this.product && this.product.image.length > 0) {
-          this.selectedColor = this.product.colors.length > 0 ? this.product.colors[0] : '';
-          this.selectedSize = this.product.sizes;
-
-          // Assuming the first image in the array is the default main image
-          this.currentMainImage = this.product.image[0];
-        } else {
-          console.error('Product not found with ID:', productId);
-        }
+            // Load các sản phẩm liên quan dựa trên productSubCategory
+            if (this.product && this.product.productSubCategory) {
+              this.productService.getProductsBySubCategory(this.product.productSubCategory)
+                .subscribe(
+                  (related: Product[]) => {
+                    // Loại trừ sản phẩm hiện tại nếu cần và chỉ lấy 4 sản phẩm đầu tiên
+                    this.relatedProducts = related.filter(p => p._id !== this.product?._id).slice(0, 4);
+                  },
+                  (error: any) => {
+                    console.error('Error loading related products', error);
+                  }
+                );
+            }
+          },
+          (error: any) => {
+            console.error('Error fetching product by ID:', error);
+          }
+        );
       } else {
         console.error('Product ID is missing in the route.');
       }
@@ -97,8 +71,6 @@ export class ProductDetailsComponent implements OnInit {
 
   onColorSelect(colorName: string): void {
     this.selectedColor = colorName;
-    const colorImg = this.productService.getImageUrlByColor(colorName);
-    this.currentMainImage = colorImg ? colorImg : (this.product && this.product.image.length > 0 ? this.product.image[0] : '');
   }
 
   onImageSelect(sideImage: string): void {
@@ -142,15 +114,15 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
+
   getDiscountedPrice(): number {
-    if (this.product && this.product.discount > 0) {
-      return this.product.price - (this.product.price * this.product.discount / 100);
+    if (this.product && this.product.discount && this.product.discount > 0) {
+      return this.product.productPrice - (this.product.productPrice * this.product.discount / 100);
     }
-    return 0;
+    return this.product ? this.product.productPrice : 0;
   }
 
-  navigateToProductDetail(productId: number): void {
+  navigateToProductDetail(productId: string): void {
     this.router.navigate(['/product-details', productId]);
   }
-  
 }
