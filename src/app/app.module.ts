@@ -21,7 +21,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ReviewComponent } from './review/review.component';
 import { RoomDimensionComponent } from './room-dimension/room-dimension.component';
 import { RoomShapeComponent } from './room-shape/room-shape.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignInComponent } from './login/logincomponent';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';

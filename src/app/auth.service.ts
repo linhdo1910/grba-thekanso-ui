@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LoginResponse, SignUpResponse, ForgotPasswordResponse, ResetPasswordResponse } from '../app/interface/user';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+export interface LoginResponse {
+  token?: string;
+  userId?: string;
+  role?: string;
+  message?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,25 +16,47 @@ import { LoginResponse, SignUpResponse, ForgotPasswordResponse, ResetPasswordRes
 export class AuthService {
   private apiUrl = 'http://localhost:4002/api/auth';
 
+  //Lưu trạng thái đăng nhập của người dùng
+  private authStatusSubject = new BehaviorSubject<boolean>(this.hasToken());
+  authStatus$ = this.authStatusSubject.asObservable();
+
   constructor(private http: HttpClient) {}
 
-  // Sign In API call
-  login(email: string, password: string, rememberMe: boolean): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password, rememberMe });
+  // Kiểm tra nếu đã có token trong localStorage
+  private hasToken(): boolean {
+    return !!localStorage.getItem('token');
   }
 
-  // Sign Up API call
-  signUp(userData: any): Observable<SignUpResponse> {
-    return this.http.post<SignUpResponse>(`${this.apiUrl}/signup`, userData);
+  // Đăng ký người dùng mới
+  signup(credentials: LoginResponse): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/signup`, credentials);
   }
 
-  // Forgot Password API call
-  forgotPassword(email: string): Observable<ForgotPasswordResponse> {
-    return this.http.post<ForgotPasswordResponse>(`${this.apiUrl}/forgot-password`, { email });
+  // Đăng nhập
+  login(credentials: LoginResponse): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      tap(response => {
+        // Lưu token vào localStorage
+        localStorage.setItem('token', response.token);
+        this.authStatusSubject.next(true);
+      })
+    );
   }
 
-  // Reset Password API call
-  resetPassword(resetData: any): Observable<ResetPasswordResponse> {
-    return this.http.post<ResetPasswordResponse>(`${this.apiUrl}/reset-password`, resetData);
+  // Đăng xuất: xóa token
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+  }
+  
+
+  // Quên mật khẩu
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  // Reset mật khẩu: Gửi userId và mật khẩu mới lên backend để cập nhật
+  resetPassword(userId: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reset-password`, { userId, password: newPassword });
   }
 }
