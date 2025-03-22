@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../interface/product'; 
 import { ProductService } from '../product.service';
+import { CartService } from '../cart.service';
+
 interface Review {
   id: number;
   name: string;
@@ -63,9 +65,14 @@ export class HomepageComponent implements OnInit, OnDestroy {
   seconds: number = 0;
   private timerInterval: any;
 
-  constructor(private router: Router, private productService: ProductService) {  
+  constructor(
+    private router: Router, 
+    private productService: ProductService,
+    private cartService: CartService
+  ) {  
     this.startCountdown(new Date('2025-03-31'));
   }
+  
   ngOnInit(): void {
     // Gọi API để lấy sản phẩm theo sort "New"
     this.productService.getProductsBySort('New').subscribe(
@@ -99,8 +106,11 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   navigateToProductDetail(productId: string): void {
-    // Nếu backend dùng _id, bạn cần truyền đúng định dạng _id
     this.router.navigate(['/product-details', productId]);
+  }
+
+  onAddToCart(product: Product, selectedSize: string = product.size, selectedColor: string = ''): void {
+    this.cartService.addToCart(product, selectedSize, selectedColor);
   }
 
   private startCountdown(targetDate: Date): void {

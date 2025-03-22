@@ -26,30 +26,36 @@
         </button>
     </div>
 </div>
-
+  <!-- New Products Section -->
 <div class="container my-4">
     <div class="row">
       <div class="col-12 d-flex justify-content-between align-items-center">
         <h3>New Products</h3>
         <a routerLink="/products?sort=New" class="text-decoration-none">View more</a>
       </div>
+    </div>
+  
+    <div class="row mt-3">
       <div class="col-md-3" *ngFor="let product of newProducts">
-        <div class="card product-card shadow-sm" [routerLink]="['/product-details', product._id]" style="cursor: pointer;">
-            <img [src]="product.coverImage" class="card-img-top p-2" [alt]="product.productName" style="max-height: 200px; object-fit: contain;">
+        <div class="card product-card shadow-sm" style="cursor: pointer;">
+          <img [src]="product.coverImage" class="card-img-top p-2" [alt]="product.productName"
+               style="max-height: 200px; object-fit: contain;"
+               (click)="navigateToProductDetail(product._id)">
           <div class="card-body">
             <h6 class="text-secondary">{{ product.productName }}</h6>
             <p class="fw-bold text-primary mb-2">{{ product.productPrice | number }} VND</p>
-            <div class="d-flex justify-content-between align-items-center">
-                <p class="rating mb-0">
-                    <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
-                      <span class="text-warning">&#9733;</span>
-                    </ng-container>
-                    <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
-                      <span class="text-muted">&#9734;</span>
-                    </ng-container>
-                    <span class="text-muted">({{ product.reviews }})</span>
-                  </p>
-              <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+              <div class="d-flex justify-content-between align-items-center">
+              <p class="rating mb-0">
+                <ng-container *ngFor="let star of [].constructor(product.rating); let i = index">
+                  <span class="text-warning">&#9733;</span>
+                </ng-container>
+                <ng-container *ngFor="let star of [].constructor(5 - product.rating); let i = index">
+                  <span class="text-muted">&#9734;</span>
+                </ng-container>
+                <span class="text-muted">({{ product.reviews }})</span>
+              </p>
+              <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer"
+                   (click)="onAddToCart(product, product.size, product.color); $event.stopPropagation()">
             </div>
           </div>
         </div>
@@ -80,7 +86,8 @@
                     </ng-container>
                     <span class="text-muted">({{ product.reviews }})</span>
                   </p>
-              <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+                  <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer"
+                  (click)="onAddToCart(product, product.size, product.color); $event.stopPropagation()">
             </div>
           </div>
         </div>

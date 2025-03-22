@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review',
-
+  standalone:true,
   imports: [CommonModule, FormsModule], 
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css']

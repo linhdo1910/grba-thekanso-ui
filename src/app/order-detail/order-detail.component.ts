@@ -1,82 +1,99 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderService, Order } from '../order.service';
+import { OrderService } from '../order.service';
+import { Order } from '../interface/order';
 
 @Component({
   selector: 'app-order-detail',
-standalone: false,
+  standalone: false,
   templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.css'],
+  styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
-  @Input() orderId!: number; // Receive the order ID from the parent component
-  @Output() close = new EventEmitter<void>(); // Emit an event to close the detail view
+  @Input() orderId!: string;
+  @Output() close = new EventEmitter<void>();
 
-  order!: Order | undefined; // Store the order details
+  // Khởi tạo order với giá trị mặc định (chứa mảng products rỗng và các trường billingAddress mặc định)
+  order: Order = {
+    billingAddress: {
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      streetAddress: '',
+      province: '',
+      district: '',
+      ward: ''
+    },
+    shippingMethod: '',
+    paymentMethod: '',
+    subtotal: 0,
+    discount: 0,
+    total: 0,
+    products: [],
+    status: ''
+  };
 
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
-    // Fetch the order details from the service
-    this.order = this.orderService.getOrderById(this.orderId);
-    if (!this.order) {
-      console.error(`Order with ID ${this.orderId} not found.`);
+    this.orderService.getOrderById(this.orderId).subscribe(
+      (order: Order) => {
+        this.order = order;
+      },
+      error => console.error(`Order with ID ${this.orderId} not found.`, error)
+    );
+  }
+
+  // Hàm chuyển đổi trạng thái (string) thành số (1-4)
+  parseStatus(status?: string): number {
+    if (!status) return 0;
+    switch (status) {
+      case 'Order received': return 1;
+      case 'Processing':     return 2;
+      case 'On the way':     return 3;
+      case 'Delivered':      return 4;
+      default:               return 0;
     }
   }
 
-  closeDetail(): void {
-    if (this.order) {
-      this.router.navigate(['/write-review', this.order.orderId]); // Navigate to the review component with the order ID
-    } else {
-      console.error('Order not found. Cannot navigate to the review page.');
+  // Tính phần trăm tiến trình dựa trên trạng thái đơn hàng
+  getDeliveryProgress(status?: string): number {
+    const s = this.parseStatus(status);
+    switch (s) {
+      case 1: return 25;
+      case 2: return 50;
+      case 3: return 75;
+      case 4: return 100;
+      default: return 0;
     }
   }
 
   cancelOrder(): void {
-    if (this.order && this.order.status < 4) {
-      this.orderService.cancelOrder(this.order.orderId);
-      console.log(`Order ${this.order.orderId} has been canceled.`);
+    if (!this.order || !this.order._id || !this.order.status) {
+      console.error('Order is undefined or missing required fields');
+      return;
+    }
+    const statusValue = this.parseStatus(this.order.status);
+    if (statusValue < 4) {
+      this.orderService.cancelOrder(this.order._id).subscribe(
+        () => console.log(`Order ${this.order._id} has been canceled.`),
+        error => console.error('Error canceling order', error)
+      );
     } else {
-      console.log(`Order ${this.order?.orderId} cannot be canceled.`);
+      console.log(`Order ${this.order._id} cannot be canceled.`);
     }
   }
 
   writeReview(): void {
-    if (this.order && this.order.status === 4) {
-      console.log(`Redirecting to the review page for order ${this.order.orderId}.`);
-      this.router.navigate(['review', this.order.orderId]);
+    if (this.order && this.order._id && this.order.status === 'Delivered') {
+      this.router.navigate(['review', this.order._id]);
     } else {
-      console.log(`Cannot write a review for order ${this.order?.orderId}.`);
+      console.log(`Cannot write review for order ${this.order?._id}.`);
     }
   }
 
-  getDeliveryProgress(status: number): number {
-    switch (status) {
-      case 1: // Order received
-        return 25;
-      case 2: // Processing
-        return 50;
-      case 3: // On the way
-        return 75;
-      case 4: // Delivered
-        return 100;
-      default:
-        return 0;
-    }
-  }
-
-  getDeliveryStatusText(status: number): string {
-    switch (status) {
-      case 1:
-        return 'Order Received';
-      case 2:
-        return 'Processing';
-      case 3:
-        return 'On the Way';
-      case 4:
-        return 'Delivered';
-      default:
-        return 'Unknown Status';
-    }
+  closeDetail(): void {
+    this.close.emit();
   }
 }

@@ -1,48 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderService, Order } from '../order.service';
+import { OrderService } from '../order.service';
+import { Order } from '../interface/order';
 
 @Component({
   selector: 'app-order',
   standalone: false,
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css'],
+  styleUrls: ['./order.component.css']
 })
-export class OrderComponent {
-  currentSection: string = 'order-history'; 
-  displayedOrders: Order[] = []; 
+export class OrderComponent implements OnInit {
+  // Thêm các thuộc tính cần thiết cho điều hướng giữa các phần
+  currentSection: string = 'order-history';
+  displayedOrders: Order[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
-  pages: number[] = [1];
+  pages: number[] = [];
 
-  showOrderDetail: boolean = false; 
-  selectedOrderId: number | null = null; 
+  showOrderDetail: boolean = false;
+  selectedOrderId: string | null = null;
 
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
-    this.displayedOrders = this.orderService.getOrders(); 
-    this.totalPages = Math.ceil(this.displayedOrders.length / 10); 
-    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    this.orderService.getOrders().subscribe(
+      (orders: Order[]) => {
+        this.displayedOrders = orders;
+        this.totalPages = Math.ceil(this.displayedOrders.length / 10);
+        this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      },
+      error => console.error('Error fetching orders', error)
+    );
   }
 
-  navigateTo(route: string) {
+  navigateTo(route: string): void {
     this.router.navigate([route]);
   }
 
   showSection(section: string): void {
     this.currentSection = section;
-    this.showOrderDetail = false; 
+    this.showOrderDetail = false;
   }
 
-  viewDetails(orderId: number): void {
-    this.selectedOrderId = orderId; 
-    this.showOrderDetail = true; 
+  viewDetails(orderId: string): void {
+    this.selectedOrderId = orderId;
+    this.showOrderDetail = true;
   }
 
   closeOrderDetail(): void {
-    this.showOrderDetail = false; // Hide the Order Detail component
-    this.selectedOrderId = 0; // Reset to a valid default number
+    this.showOrderDetail = false;
+    this.selectedOrderId = null;
   }
 
   previousPage(): void {

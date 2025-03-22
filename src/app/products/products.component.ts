@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { Product } from '../interface/product';
 import { ProductService } from '../product.service';
-
+import { CartService } from '../cart.service';
 @Component({
   selector: 'app-products',
   standalone: true, 
@@ -37,7 +37,7 @@ export class ProductsComponent implements OnInit {
   priceOrder: string = '';
   keyword: string = ''; 
 
-  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private productService: ProductService, private route: ActivatedRoute,private cartService: CartService) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
@@ -85,7 +85,9 @@ export class ProductsComponent implements OnInit {
       }
     );
   }
-
+  onAddToCart(product: Product, selectedSize: string = product.size, selectedColor: string = ''): void {
+    this.cartService.addToCart(product, selectedSize, selectedColor);
+  }
   extractFilterOptions(): void {
     const categorySet = new Set<string>();
     const subCategorySet = new Set<string>();

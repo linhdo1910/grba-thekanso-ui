@@ -31,8 +31,8 @@ export class CartService {
         productId: product._id,
         productName: product.productName,
         coverImage: product.coverImage,
-        price: product.productPrice,      // Giá hiện tại (có thể đã tính giảm giá)
-        originalPrice: product.productPrice, // Nếu có giá gốc riêng, bạn thay đổi lại
+        price: product.productPrice,      
+        originalPrice: product.productPrice, 
         discount: product.discount || 0,
         size: selectedSize,
         color: selectedColor,
@@ -60,7 +60,7 @@ export class CartService {
     this.cartCountSubject.next(totalQuantity);
   }
 
-  // Xóa giỏ hàng (ví dụ sau khi checkout)
+  // Xóa giỏ hàng(sau khi checkout)
   clearCart(): void {
     this.cartItems = [];
     this.cartCountSubject.next(0);

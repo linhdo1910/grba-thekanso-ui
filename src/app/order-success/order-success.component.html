@@ -1,15 +1,20 @@
 <div class="container my-2">
     <div class="row text-center">
-        <div class="col-12">
-            <div class="order-icon">
-                <img src="asset/order-success.png" alt="Order Icon">
-            </div>
+      <div class="col-12">
+        <div class="order-icon">
+          <img src="asset/order-success.png" alt="Order Icon">
         </div>
-        <div class="col-12">
-            <h2 class="text-secondary fw-bold mt-3">ORDER PLACED SUCCESSFULLY!</h2>
-            <p>Thank you for your order. An order confirmation has been sent to your email.</p>
-            <p class="order-id">Your order ID: #12352</p>
-            <button routerLink="/order" class="btn btn-primary fw-medium w-7">VIEW YOUR ORDER</button>
-        </div>
+      </div>
+      <div class="col-12">
+        <h2 class="text-secondary fw-bold mt-3">ORDER PLACED SUCCESSFULLY!</h2>
+        <p>Thank you for your order. An order confirmation has been sent to your email.</p>
+        <!-- Hiển thị ID đã lấy được từ URL -->
+        <p class="order-id">Your order ID: #{{ orderId }}</p>
+        
+        <button (click)="viewOrder()" class="btn btn-primary fw-medium w-7">
+          VIEW YOUR ORDER
+        </button>
+      </div>
     </div>
-</div>
+  </div>
+  

@@ -1,22 +1,25 @@
-<div class="container my-1">
+<div class="container my-2">
     <div class="row justify-content-center">
-        <div class="col-md-6 text-center">
-            <h3 class="text-secondary fw-bold text-center">QR Code Payment</h3>
-
-            <div class="payment-logo">
-                <img src="asset/qr-code.png" alt="QR Code">
-            </div>
-
-            <p class="text-primary text-center">
-                The Kanso Cooperation Joint Stock Company<br>
-                0071001203667
-            </p>
-
-            <p class="total-amount text-orange">
-                Total Amount: VND
-            </p>
-
-            <button routerLink="/order-success" class="btn btn-primary fw-medium w-7">PAYMENT SUCCESSFULLY</button>
+      <div class="col-md-6 text-center">
+        <h3 class="text-secondary fw-bold text-center">QR Code Payment</h3>
+        
+        <div class="payment-logo">
+          <img src="asset/qr-code.png" alt="QR Code">
         </div>
+        
+        <p class="text-primary text-center">
+          The Kanso Cooperation Joint Stock Company<br>
+          0071001203667
+        </p>
+        
+        <p class="total-amount text-orange">
+          Total Amount: {{ totalAmount | number }} VND
+        </p>
+        
+        <button (click)="onPaymentSuccess()" class="btn btn-primary fw-medium w-100">
+          PAYMENT SUCCESSFULLY
+        </button>
+      </div>
     </div>
-</div>
+  </div>
+  

@@ -2,7 +2,8 @@
   <div class="dang_ky">
     <h2 class="text-secondary text-center">Sign In</h2>
     <form (ngSubmit)="onSubmit()">
-      <!-- Email Field -->
+      <div *ngIf="signInError" class="alert alert-danger">{{ signInError }}</div>
+
       <div class="input-container">
         <input 
           type="email" 
@@ -10,18 +11,9 @@
           placeholder="Type your Email" 
           [(ngModel)]="email" 
           name="email"
-          (input)="validateEmail()"
-        >
-        <!-- Email Validation Note -->
-        <p 
-          class="ghi_chu text-danger" 
-          *ngIf="!isEmailValid"
-        >
-          Please enter a valid email address.
-        </p>
+          required>
       </div>
       
-      <!-- Password Field -->
       <div class="input-container">
         <input 
           type="password" 
@@ -29,52 +21,37 @@
           placeholder="Type your Password" 
           [(ngModel)]="password" 
           name="password"
-          (input)="checkPasswordLength()"
-        >
-        <!-- Password Validation Note -->
-        <p 
-          class="ghi_chu text-danger" 
-          *ngIf="!isPasswordValid"
-        >
-          Must be at least 8 characters.
-        </p>
+          required>
       </div>
 
-      <!-- Remember Me -->
       <div class="dong_dieu_khoan">
         <input 
           type="checkbox" 
           [(ngModel)]="rememberMe" 
-          name="rememberMe"
-        >
+          name="rememberMe">
         <span class="text-info">
-          Keep me signed in for 30 days (only use on trusted devices) 
+          Keep me signed in for 30 days (only use on trusted devices)
         </span>
       </div>
 
       <br>
       <p class="text-info text-center">
-        <a routerLink="/forgot-password">Forgot your password?</a>
-        <span class="mx-2">|</span>
-        <a routerLink="/sign-up">Create an account</a>
+        <a routerLink="/forgot-password" style="cursor: pointer;">Forgot your password?</a>
       </p>
 
-      <!-- Submit Button -->
-      <button 
-        type="submit" 
-        class="btn btn-primary" 
-        [disabled]="!isFormValid()"
-      >
-        Sign In
-      </button>
-      <hr>
-      <p class="text-info text-center">or do it via other accounts</p>
-
-      <div>
-        <a routerLink=" ">
-          <img src="asset/ggicon.png" alt="Google" class="google-icon">
-        </a>
-      </div>
+      <button type="submit" class="btn btn-primary btn-sm w-50 mb-3">Sign In</button>
     </form>
+
+    <p class="mb-3 text-center">Don't have an account? <a routerLink="/sign-up" style="cursor: pointer;">Sign up now</a></p>
+    
+    <div class="separator">Or</div>
+    <div class="social-buttons">
+      <button class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center social-button">
+        <img src="assets/fb.png" alt="Facebook" class="me-2" width="20" height="20"> Continue with Facebook
+      </button>
+      <button class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center social-button">
+        <img src="assets/google.png" alt="Google" class="me-2" width="20" height="20"> Continue with Google
+      </button>
+    </div>
   </div>
 </div>

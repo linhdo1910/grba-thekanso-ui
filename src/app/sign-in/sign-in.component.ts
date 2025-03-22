@@ -1,80 +1,41 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { LoginResponse } from '../interface/user';
 
 @Component({
   selector: 'app-sign-in',
-  standalone: false,
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
+  standalone: false
 })
 export class SignInComponent {
-  hienMatKhau: boolean = false;
-
-  name: string = '';
   email: string = '';
   password: string = '';
-  confirmPassword: string = '';
-  isPasswordValid: boolean = false;
-  isConfirmPasswordValid: boolean = true;
-  isEmailValid: boolean = false;
   rememberMe: boolean = false;
-  successMessage: string = '';
+  signInError: string | null = null;
 
-  constructor(private router: Router) {}
-
-  chuyenDoiMatKhau() {
-    this.hienMatKhau = !this.hienMatKhau;
-  }
-
-  onLogin() {
-    if (this.email && this.password) {
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
-      console.log('Remember Me:', this.rememberMe);
-      alert('Login successful!');
-
-      this.router.navigate(['/homepage']);
-    } else {
-      alert('Vui lòng nhập email và mật khẩu.');
-    }
-  }
-
-  onForgotPassword() {
-    this.router.navigate(['/forgot-password']);
-  }
-
-  onRegister() {
-    this.router.navigate(['/sign-up']);
-  }
-
-  checkPasswordLength(): void {
-    this.isPasswordValid = this.password.length >= 8;
-    this.validateConfirmPassword(); 
-  }
-
-  validateConfirmPassword(): void {
-    this.isConfirmPasswordValid = this.password === this.confirmPassword;
-  }
-
-  validateEmail(): void {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-    this.isEmailValid = emailPattern.test(this.email);
-  }
-
-  validatePassword(): void {
-    this.isPasswordValid = this.password.length >= 8; 
-  }
-
-  isFormValid(): boolean {
-    return this.isEmailValid && this.isPasswordValid;
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    if (this.isFormValid()) {
-      alert('Sign In successful!');
-      this.router.navigate(['/homepage']);
-    } else {
-      alert('Please enter valid credentials.');
+    if (!this.email || !this.password) {
+      this.signInError = 'Vui lòng nhập đầy đủ email và mật khẩu.';
+      return;
     }
+
+    this.authService.login(this.email, this.password, this.rememberMe).subscribe({
+      next: (response: LoginResponse) => {
+        this.signInError = null;
+        // Lưu token, userId, role nếu cần (có thể lưu vào localStorage)
+        localStorage.setItem('token', response.token || '');
+        localStorage.setItem('userId', response.userId);
+        // Chuyển hướng về trang chủ
+        this.router.navigate(['/homepage']);
+      },
+      error: (error: any) => {
+        console.error('Đăng nhập thất bại:', error);
+        this.signInError = error.error?.message || 'Đăng nhập thất bại, vui lòng thử lại.';
+      }
+    });
   }
 }

@@ -34,7 +34,8 @@
     <!-- Order History -->
     <ng-container *ngIf="currentSection === 'order-history' && !showOrderDetail">
       <div class="phieu_don_hang">
-        <h2 class="text-secondary">Order History</h2><hr>
+        <h2 class="text-secondary">Order History</h2>
+        <hr>
         <table class="bang_thong_tin">
           <thead>
             <tr>
@@ -47,14 +48,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let order of displayedOrders">
-              <td>{{ order.orderId }}</td>
-              <td>{{ order.date }}</td>
-              <td>{{ order.total }}</td>
+              <td>{{ order._id }}</td>
+              <td>{{ order.date ? (order.date | date:'mediumDate') : (order.createdAt | date:'mediumDate') }}</td>
+              <td>{{ order.total | currency:'VND' }}</td>
               <td>{{ order.status }}</td>
               <td>
-                <button class="nut_xem_chi_tiet" (click)="viewDetails(order.orderId)">
-                  View Details
-                </button>
+                <button (click)="viewDetails(order._id ?? '')">View Details</button>
               </td>
             </tr>
           </tbody>
@@ -62,23 +61,16 @@
 
         <div class="thanh_phan_trang">
           <button (click)="previousPage()" [disabled]="currentPage === 1">&lt;</button>
-
           <span *ngFor="let page of pages">
-            <button
-              (click)="goToPage(page)"
-              [class.active]="page === currentPage"
-            >
-              {{ page }}
-            </button>
+            <button (click)="goToPage(page)" [class.active]="page === currentPage">{{ page }}</button>
           </span>
-
           <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
         </div>
       </div>
     </ng-container>
 
     <!-- Order Detail -->
-    <ng-container *ngIf="showOrderDetail && selectedOrderId !== null">
+    <ng-container *ngIf="showOrderDetail && selectedOrderId">
       <app-order-detail [orderId]="selectedOrderId" (close)="closeOrderDetail()"></app-order-detail>
     </ng-container>
   </div>

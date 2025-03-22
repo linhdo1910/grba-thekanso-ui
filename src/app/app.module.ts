@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
 import { FooterComponent } from './footer/footer.component';
-import { ProductsComponent } from './products/products.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { PolicyComponent } from './policy/policy.component';
 import { HeaderComponent } from './header/header.component';
@@ -31,17 +34,7 @@ import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homep
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
-import { ProductService } from './product.service';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-
-const routes: Routes = [
-  { path: '', component: OrderComponent },
-  { path: 'order-history', component: OrderComponent },
-  { path: 'logout', component: OrderComponent }
-];
-
+import { ReactiveFormsModule } from '@angular/forms'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,30 +53,28 @@ const routes: Routes = [
     CartComponent,
     ProductDetailsComponent,
     ProductInfoComponent,
-    // Các component khác mà không có standalone: true
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    ProductsComponent,
-    OrderComponent, 
+    OrderComponent,
     OrderDetailComponent,
     PersonalIn4Component,
-    ObjectComponent,
+    ResetPasswordComponent,
     RoomDimensionComponent,
     RoomShapeComponent,
-    SuggestComponent,
+    SignInComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    ObjectComponent,
+    SuggestComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes), 
-    ReviewComponent,
+    RouterModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     FormsModule,
-    CommonModule,
+    CommonModule
   ],
-  providers: [ProductService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -70,7 +70,8 @@
                   </ng-container>
                   <span class="text-muted">({{ product.reviews }})</span>
                 </p>
-                <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer">
+                <img src="asset/addbasket-icon.png" alt="basket" class="cart-icon cursor-pointer" 
+                   (click)="onAddToCart(product, product.size, product.color); $event.stopPropagation()">
               </div>
             </div>
           </div>

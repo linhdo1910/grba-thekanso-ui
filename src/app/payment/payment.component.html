@@ -1,176 +1,148 @@
 <div class="container my-2">
-    <div class="row">
-
-        <!-- Billing Information -->
-        <div class=" billing-info col-md-7 px-4">
-            <h4 class="section-title">Billing Information</h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>First name</label>
-                    <input type="text" class="form-control" placeholder="Your first name">
-                </div>
-                <div class="col-md-6">
-                    <label>Last name</label>
-                    <input type="text" class="form-control" placeholder="Your last name">
-                </div>
-            </div>
-
-            <label>Company name (Optional)</label>
-            <input type="text" class="form-control" placeholder="Company name">
-
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Phone</label>
-                    <input type="text" class="form-control" placeholder="Phone number">
-                </div>
-                <div class="col-md-6">
-                    <label>Email</label>
-                    <input type="email" class="form-control" placeholder="Enter your email address">
-                </div>
-            </div>
-
-            <label>Street address</label>
-            <input type="text" class="form-control" placeholder="Address">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Province/City</label>
-                    <select class="form-select">
-                        <option>Select</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label>District</label>
-                    <select class="form-select">
-                        <option>Select</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label>Ward</label>
-                    <select class="form-select">
-                        <option>Select</option>
-                    </select>
-                </div>
-            </div>
-
-            <hr />
-
-            <h4 class="section-title mt-2">Additional Info</h4>
-            <label>Order notes (Optional)</label>
-            <textarea class="form-control"
-                placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
-
-            <hr />
-
-            <h4 class="section-title mt-2">Shipping methods</h4>
-
-            <div class="shipping-option form-check active">
-                <label class="form-check-label d-flex align-items-center w-100">
-                    <input class="form-check-input me-2" type="radio" name="shipping" checked>
-                    <div class="shipping-content">
-                        <strong>J&T Express</strong><br>
-                        <small>4-7 Business Days</small>
-                    </div>
-                </label>
-            </div>
-
-            <div class="shipping-option form-check">
-                <label class="form-check-label d-flex align-items-center w-100">
-                    <input class="form-check-input me-2" type="radio" name="shipping">
-                    <div class="shipping-content">
-                        <strong>GHN Express</strong><br>
-                        <small>3-5 Business Days</small>
-                    </div>
-                </label>
-            </div>
-
-
-            <hr />
-
-            <h4 class="section-title mt-2">Payment methods</h4>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="payment" id="bank-transfer" checked>
-                <label class="form-check-label" for="bank-transfer">
-                    Payment via bank transfer
-                </label>
-                <div class="payment-info">
-                    <p>Account name: The Kanso Cooperation Joint Stock Company</p>
-                    <p>Account number: 0071001203667</p>
-                    <p>Bank: Vietcombank - HCM City Branch</p>
-                    <p>Content: Name + Order phone number</p>
-                </div>
-            </div>
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="payment" id="momo-wallet">
-                <label class="form-check-label" for="momo-wallet">
-                    MoMo Wallet
-                </label>
-            </div>
-
-            <div class="text-end">
-               <button (click)="confirmOrder()" class="btn btn-primary fw-medium fs-7">CONFIRM ORDER</button>
-            </div>
-
+  <div class="row">
+    <!-- Billing Information -->
+    <div class="billing-info col-md-7 px-4">
+      <h4 class="section-title">Billing Information</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>First name</label>
+          <input type="text" class="form-control" placeholder="Your first name" [(ngModel)]="billingAddress.firstName" name="firstName">
         </div>
-
-        <!-- Cart Section -->
-        <div class="col-md-5 bg-light px-4">
-            <h5 class="section-title">Your Cart ({{cartProducts.length}} products)</h5>
-
-            <div *ngFor="let product of cartProducts; let i = index" class="cart-item d-flex align-items-center">
-                <img [src]="product.image" alt="{{product.name}}" class="cart-image me-3">
-                <div class="w-100">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <p><strong>{{ product.name }}</strong></p>
-                            <p class="text-orange">{{ product.discountPrice | number}} VND
-                                <del class="origin">{{ product.originalPrice | number}} VND</del> 
-                                <span class="badge bg-danger">{{ product.discountPercent }}%</span>
-                            </p>
-                            <p>Size: {{ product.size }} | Qty: {{ product.quantity }}</p>
-                        </div>
-                        <button class="btn btn-link text-dark align-self-start" (click)="removeProduct(i)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- Promo Code -->
-            <div class="input-group mb-3">
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Add promo code"
-                    [(ngModel)]="discountCode"
-                >
-                <button class="btn btn-secondary fw-medium" (click)="applyDiscountCode()">APPLY CODE</button>
-            </div>
-
-            <!-- Discount Information -->
-            <div *ngIf="discountAmount > 0" class="d-flex justify-content-between">
-                <p>Discount</p>
-                <p class="text-success">-{{ discountAmount | number }} VND</p>
-            </div>
-
-            <!-- Shipping Fee -->
-            <div class="d-flex justify-content-between">
-                <p>Shipping Fee</p>
-                <p>Free</p>
-            </div>
-
-            <!-- Total Amount -->
-            <div class="d-flex justify-content-between">
-                <p><strong>Total Amount</strong></p>
-                <p class="text-orange"><strong>{{ totalAfterDiscount | number }} VND</strong></p>
-            </div>
-
+        <div class="col-md-6">
+          <label>Last name</label>
+          <input type="text" class="form-control" placeholder="Your last name" [(ngModel)]="billingAddress.lastName" name="lastName">
         </div>
+      </div>
+      <label>Company name (Optional)</label>
+      <input type="text" class="form-control" placeholder="Company name" [(ngModel)]="billingAddress.companyName" name="companyName">
+      <div class="row">
+        <div class="col-md-6">
+          <label>Phone</label>
+          <input type="text" class="form-control" placeholder="Phone number" [(ngModel)]="billingAddress.phone" name="phone">
+        </div>
+        <div class="col-md-6">
+          <label>Email</label>
+          <input type="email" class="form-control" placeholder="Enter your email address" [(ngModel)]="billingAddress.email" name="email">
+        </div>
+      </div>
+      <label>Street address</label>
+      <input type="text" class="form-control" placeholder="Address" [(ngModel)]="billingAddress.streetAddress" name="streetAddress">
+      <div class="row">
+        <div class="col-md-4">
+          <label>Province/City</label>
+          <select class="form-select" [(ngModel)]="billingAddress.province" (change)="onProvinceChange(billingAddress.province)" name="province">
+            <option value="">Select</option>
+            <option *ngFor="let loc of locations" [value]="loc.name">
+              {{ loc.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>District</label>
+          <select class="form-select" [(ngModel)]="billingAddress.district" (change)="onDistrictChange(billingAddress.district)" name="district">
+            <option value="">Select</option>
+            <option *ngFor="let district of districts" [value]="district.name">
+              {{ district.name }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>Ward</label>
+          <select class="form-select" [(ngModel)]="billingAddress.ward" (change)="onWardChange(billingAddress.ward)" name="ward">
+            <option value="">Select</option>
+            <option *ngFor="let ward of wards" [value]="ward.name">
+              {{ ward.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <hr />
+      <h4 class="section-title mt-2">Additional Info</h4>
+      <label>Order notes (Optional)</label>
+      <textarea class="form-control" placeholder="Notes about your order, e.g. special notes for delivery" [(ngModel)]="orderNotes" name="orderNotes"></textarea>
+      <hr />
+      <h4 class="section-title mt-2">Shipping methods</h4>
+      <div class="shipping-option form-check active">
+        <label class="form-check-label d-flex align-items-center w-100">
+          <input class="form-check-input me-2" type="radio" name="shipping" [(ngModel)]="shippingMethod" value="J&T Express" checked>
+          <div class="shipping-content">
+            <strong>J&T Express</strong><br>
+            <small>4-7 Business Days</small>
+          </div>
+        </label>
+      </div>
+      <div class="shipping-option form-check">
+        <label class="form-check-label d-flex align-items-center w-100">
+          <input class="form-check-input me-2" type="radio" name="shipping" [(ngModel)]="shippingMethod" value="GHN Express">
+          <div class="shipping-content">
+            <strong>GHN Express</strong><br>
+            <small>3-5 Business Days</small>
+          </div>
+        </label>
+      </div>
+      <hr />
+      <h4 class="section-title mt-2">Payment methods</h4>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payment" [(ngModel)]="paymentMethod" value="bank-transfer" id="bank-transfer" checked>
+        <label class="form-check-label" for="bank-transfer">
+          Payment via bank transfer
+        </label>
+        <div class="payment-info">
+          <p>Account name: The Kanso Cooperation Joint Stock Company</p>
+          <p>Account number: 0071001203667</p>
+          <p>Bank: Vietcombank - HCM City Branch</p>
+          <p>Content: Name + Order phone number</p>
+        </div>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="payment" [(ngModel)]="paymentMethod" value="momo-wallet" id="momo-wallet">
+        <label class="form-check-label" for="momo-wallet">
+          MoMo Wallet
+        </label>
+      </div>
+      <div class="text-end">
+        <button (click)="confirmOrder()" class="btn btn-primary fw-medium fs-7">CONFIRM ORDER</button>
+      </div>
     </div>
+  
+    <!-- Cart Section -->
+    <div class="col-md-5 bg-light px-4">
+      <h5 class="section-title">Your Cart ({{ cartProducts.length }} products)</h5>
+      <div *ngFor="let product of cartProducts; let i = index" class="cart-item d-flex align-items-center">
+        <img [src]="product.coverImage" alt="{{ product.productName }}" class="cart-image me-3">
+        <div class="w-100">
+          <div class="d-flex justify-content-between">
+            <div>
+              <p><strong>{{ product.productName }}</strong></p>
+              <p class="text-orange">
+                {{ (product.originalPrice * (100 - product.discount) / 100) | number }} VND
+                <del class="origin">{{ product.originalPrice | number }} VND</del>
+                <span class="badge bg-danger">{{ product.discount }}%</span>
+              </p>
+              <p>Size: {{ product.size }} | Qty: {{ product.quantity }}</p>
+            </div>
+            <button class="btn btn-link text-dark align-self-start" (click)="removeProduct(i)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <!-- Promo Code -->
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Add promo code" [(ngModel)]="discountCode" name="discountCode">
+        <button class="btn btn-secondary fw-medium" (click)="applyDiscountCode()">APPLY CODE</button>
+      </div>
+      <!-- Discount Information -->
+      <div *ngIf="discountAmount > 0" class="d-flex justify-content-between">
+        <p>Discount</p>
+        <p class="text-success">-{{ discountAmount | number }} VND</p>
+      </div>
+      <!-- Total Amount -->
+      <div class="d-flex justify-content-between">
+        <p><strong>Total Amount</strong></p>
+        <p class="text-orange"><strong>{{ total | number }} VND</strong></p>
+      </div>
+    </div>
+  </div>
 </div>

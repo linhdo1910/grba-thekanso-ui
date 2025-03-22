@@ -1,85 +1,68 @@
 <div class="container" *ngIf="order">
   <!-- Header -->
   <div class="text-right">
-    <button class="btn btn-link" (click)="closeDetail()">Back to List</button>
+    <button class="btn btn-link" (click)="close.emit()">Back to List</button>
   </div>
   
   <!-- Order Details Section -->
   <h2 class="text-secondary">Order Details</h2>
-  <p class="text-info">{{ order.date }} · {{ order.products.length }} Products</p>
+  <p class="text-info" *ngIf="order?.products">
+    {{ order.date ? (order.date | date:'mediumDate') : (order.createdAt | date:'mediumDate') }} · {{ order.products?.length }} Products
+  </p>
   <hr>
 
+  <!-- Billing Address -->
   <div class="row mb-3">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="text-info">Billing Address</h5><hr>
-          <p><strong>{{ order.billingAddress.name }}</strong></p>
-          <p>{{ order.billingAddress.address }}</p>
-          <p>{{ order.billingAddress.email }}</p>
-          <p>{{ order.billingAddress.phone }}</p>
+          <h5 class="text-info">Billing Address</h5>
+          <hr>
+          <p>
+            <strong>{{ order?.billingAddress?.firstName }} {{ order?.billingAddress?.lastName }}</strong>
+          </p>
+          <p>
+            {{ order?.billingAddress?.streetAddress }}, 
+            {{ order?.billingAddress?.district }}, 
+            {{ order?.billingAddress?.province }}
+          </p>
+          <p>{{ order?.billingAddress?.email }}</p>
+          <p>{{ order?.billingAddress?.phone }}</p>
         </div>
       </div>
     </div>
 
+    <!-- Order Information -->
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="text-info">Order Info</h5><hr>
+          <h5 class="text-info">Order Information</h5>
+          <hr>
           <div class="d-flex justify-content-between">
-            <p><strong>Order ID:</strong> #{{ order.orderId }}</p>
-            <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
-          </div><hr>
-          <p><strong>Subtotal:</strong> {{ order.subtotal | currency:'VND' }}</p>
-          <p><strong>Discount:</strong> {{ order.discount }}%</p>
-          <p><strong>Shipping:</strong> {{ order.shipping }}</p>
-          <p><strong>Total:</strong> {{ order.total | currency:'VND' }}</p>
+            <p><strong>Order ID:</strong> #{{ order?._id?.slice(0, 5) }}</p>
+            <p><strong>Payment Method:</strong> {{ order?.paymentMethod }}</p>
+          </div>
+          <hr>
+          <p>
+                          <strong>Subtotal:</strong>
+                          {{ ((order?.total ?? 0) + (order?.discountPrice ?? 1)) | number:'1.0-2' }} VND
+                        </p>
+                              <p>
+                      <strong>Discount:</strong> 
+                      {{ ((order?.discountPrice ?? 0) / ((order?.total ?? 0) + (order?.discountPrice ?? 1))) | percent }}
+                    </p>
+                    <p><strong>Total:</strong> {{ order?.total }} VND</p>
         </div>
       </div>
     </div>
   </div>
-  <!-- Delivery Status Progress Bar -->
-  <div class="mb-4">
-    <h5 class="text-info">Delivery Status</h5>
-    <hr>
-  <!-- Delivery Status Progress Tracker -->
-  <div class="progress-tracker">
-    <div class="progress-step" [class.completed]="order.status > 1" [class.active]="order.status === 1">
-      <div class="progress-circle">1</div>
-      <div class="progress-text">Order Received</div>
-    </div>
-    <div class="progress-step" [class.completed]="order.status > 2" [class.active]="order.status === 2">
-      <div class="progress-circle">2</div>
-      <div class="progress-text">Processing</div>
-    </div>
-    <div class="progress-step" [class.completed]="order.status > 3" [class.active]="order.status === 3">
-      <div class="progress-circle">3</div>
-      <div class="progress-text">On the Way</div>
-    </div>
-    <div class="progress-step" [class.completed]="order.status === 4" [class.active]="order.status === 4">
-      <div class="progress-circle">4</div>
-      <div class="progress-text">Delivered</div>
-    </div>
-  </div>
-  <div class="progress">
-      <div
-        class="progress-bar"
-        role="progressbar"
-        [style.width]="getDeliveryProgress(order.status) + '%'"
-        [class.bg-success]="order.status === 4"
-        [class.bg-warning]="order.status < 4"
-        [attr.aria-valuenow]="getDeliveryProgress(order.status)"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-      </div>
-    </div>
-  </div>
+
   <!-- Products Table -->
-  <div class="card">
+  <div class="card" *ngIf="order?.products">
     <div class="card-body">
-      <h5 class="text-info">Products</h5><hr>
-      <table class="bang_thong_tin">
+      <h5 class="text-info">Products</h5>
+      <hr>
+      <table class="table">
         <thead>
           <tr>
             <th>Image</th>
@@ -90,14 +73,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of order.products">
+          <tr *ngFor="let products of order.products">
             <td>
-              <img [src]="product.image" alt="{{ product.name }}" class="product-image">
+              <img [src]="products.productImage" alt="{{ products.productName }}" class="img-fluid" style="width: 80px;">
             </td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price | currency:'VND' }}</td>
-            <td>x{{ product.quantity }}</td>
-            <td>{{ product.subtotal | currency:'VND' }}</td>
+            <td>{{products.productName }}</td>
+            <td>{{ products.price | currency:'VND' }}</td>
+            <td>{{ products.quantity }}</td>
+            <td>{{ (products.price * products.quantity) | currency:'VND' }}</td>
           </tr>
         </tbody>
       </table>
@@ -106,10 +89,10 @@
 
   <!-- Action Buttons -->
   <div class="card-footer">
-    <button class="btn btn-outline-secondary" (click)="cancelOrder()" [disabled]="order.status === 4">
-      Cancel
+    <button class="btn btn-outline-secondary" (click)="cancelOrder()" [disabled]="parseStatus(order?.status || '') === 4">
+      Cancel Order
     </button>
-    <button class="btn btn-primary" (click)="writeReview()" [disabled]="order.status !== 4">
+    <button class="btn btn-primary" (click)="writeReview()" [disabled]="parseStatus(order?.status || '') !== 4">
       Write Review
     </button>
   </div>
