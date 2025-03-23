@@ -5,6 +5,7 @@ import { CartService } from '../cart.service';
 import { Order, BillingAddress } from '../interface/order';
 import { CartItem } from '../interface/cart';
 import { LocationService } from '../location.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-payment',
@@ -13,7 +14,6 @@ import { LocationService } from '../location.service';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  // Sử dụng interface BillingAddress theo định nghĩa của bạn
   billingAddress: BillingAddress = {
     firstName: '',
     lastName: '',
@@ -21,7 +21,7 @@ export class PaymentComponent implements OnInit {
     phone: '',
     email: '',
     streetAddress: '',
-    province: '',  // Sử dụng province thay vì city
+    province: '',  
     district: '',
     ward: ''
   };
@@ -35,10 +35,7 @@ export class PaymentComponent implements OnInit {
   subtotal: number = 0;
   total: number = 0;
 
-  // Lấy dữ liệu giỏ hàng từ CartService
   cartProducts: CartItem[] = [];
-
-  // Dữ liệu cho location (tỉnh, huyện, xã)
   locations: any[] = [];
   districts: any[] = [];
   wards: any[] = [];
@@ -68,7 +65,7 @@ export class PaymentComponent implements OnInit {
       this.calculateTotals();
       return;
     }
-    // Ví dụ: nếu mã giảm là "J97" và subtotal >= 3.5 triệu thì giảm 10%
+
     if (this.discountCode.trim().toUpperCase() === 'J97' && this.subtotal >= 3500000) {
       this.discountAmount = Math.floor(this.subtotal * 0.1);
       this.calculateTotals();
@@ -86,7 +83,6 @@ export class PaymentComponent implements OnInit {
   }
 
   confirmOrder(): void {
-    // Kiểm tra các trường bắt buộc của billingAddress
     if (
       !this.billingAddress.province ||
       !this.billingAddress.district ||
@@ -98,9 +94,9 @@ export class PaymentComponent implements OnInit {
       alert('Please fill in all required billing address fields.');
       return;
     }
+    const fullName = `${this.billingAddress.firstName} ${this.billingAddress.lastName}`;
 
     const order: Order = {
-      // Giả sử userId rỗng cho Guest, bạn có thể cập nhật sau khi có thông tin đăng nhập
       billingAddress: this.billingAddress,
       shippingMethod: this.shippingMethod,
       paymentMethod: this.paymentMethod,
@@ -111,10 +107,36 @@ export class PaymentComponent implements OnInit {
       discount: this.discountAmount,
       total: this.total,
       date: new Date(),
-      status: 'Order received'
+      status: 'Order received',
+      shipTo: {
+        fullName: `${this.billingAddress.firstName} ${this.billingAddress.lastName}`,
+        phone: this.billingAddress.phone,
+        email: this.billingAddress.email,
+        streetAddress: this.billingAddress.streetAddress,
+        province: this.billingAddress.province,
+        district: this.billingAddress.district,
+        ward: this.billingAddress.ward,
+        city: this.billingAddress.province, 
+        address: this.billingAddress.streetAddress,  
+        note: this.orderNotes || ''  
+      }
+      
     };
+    
+    
+    
 
-    this.paymentService.createOrder(order).subscribe(
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('You must be logged in to complete your order.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.paymentService.createOrder(order, headers).subscribe(
       (createdOrder: Order) => {
         alert('Order successfully placed!');
         this.cartService.clearCart();
@@ -122,12 +144,11 @@ export class PaymentComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error creating order', error);
-        alert('An error occurred while placing your order.');
+        alert('Please sign in to complete your payment.');
       }
     );
   }
 
-  // Load danh sách địa phương từ API
   loadLocations(): void {
     this.locationService.getLocations().subscribe(
       data => { this.locations = data; },

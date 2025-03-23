@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { LocationService } from './location.service';
 import { FooterComponent } from './footer/footer.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { PolicyComponent } from './policy/policy.component';
@@ -21,7 +23,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ReviewComponent } from './review/review.component';
 import { RoomDimensionComponent } from './room-dimension/room-dimension.component';
 import { RoomShapeComponent } from './room-shape/room-shape.component';
-import { SignInComponent } from './login/logincomponent';
+import { LoginComponent } from './login/logincomponent';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
@@ -35,7 +37,9 @@ import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { AuthGuard } from './auth.guard';
 @NgModule({
+  
   declarations: [
     AppComponent,
     FooterComponent,
@@ -59,7 +63,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResetPasswordComponent,
     RoomDimensionComponent,
     RoomShapeComponent,
-    SignInComponent,
+    LoginComponent,
     SignUpComponent,
     ForgotPasswordComponent,
     ObjectComponent,
@@ -74,7 +78,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     CommonModule
   ],
-  providers: [],
+  providers: [
+    LocationService, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true, 
+    },[AuthGuard]
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

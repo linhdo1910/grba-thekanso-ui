@@ -16,18 +16,18 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="text-info">Billing Address</h5>
+          <h5 class="text-info">Shipping Address</h5>
           <hr>
           <p>
-            <strong>{{ order?.billingAddress?.firstName }} {{ order?.billingAddress?.lastName }}</strong>
+            <strong>{{ order?.shipTo?.fullName }}</strong>
           </p>
           <p>
-            {{ order?.billingAddress?.streetAddress }}, 
-            {{ order?.billingAddress?.district }}, 
-            {{ order?.billingAddress?.province }}
+            {{ order?.shipTo?.address }}, 
+            {{ order?.shipTo?.district }}, 
+            {{ order?.shipTo?.city }}
           </p>
-          <p>{{ order?.billingAddress?.email }}</p>
-          <p>{{ order?.billingAddress?.phone }}</p>
+          <p>{{ order?.shipTo?.email }}</p>
+          <p>{{ order?.shipTo?.phone }}</p>
         </div>
       </div>
     </div>
@@ -44,14 +44,14 @@
           </div>
           <hr>
           <p>
-                          <strong>Subtotal:</strong>
-                          {{ ((order?.total ?? 0) + (order?.discountPrice ?? 1)) | number:'1.0-2' }} VND
-                        </p>
-                              <p>
-                      <strong>Discount:</strong> 
-                      {{ ((order?.discountPrice ?? 0) / ((order?.total ?? 0) + (order?.discountPrice ?? 1))) | percent }}
-                    </p>
-                    <p><strong>Total:</strong> {{ order?.total }} VND</p>
+            <strong>Subtotal:</strong>
+            {{ ((order?.total ?? 0) + (order?.discountPrice ?? 1)) | number:'1.0-2' }} VND
+          </p>
+          <p>
+            <strong>Discount:</strong> 
+            {{ ((order?.discountPrice ?? 0) / ((order?.total ?? 0) + (order?.discountPrice ?? 1))) | percent }}
+          </p>
+          <p><strong>Total:</strong> {{ order?.total }} VND</p>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ReviewComponent } from './review/review.component';
 import { RoomDimensionComponent } from './room-dimension/room-dimension.component';
 import { RoomShapeComponent } from './room-shape/room-shape.component';
-import { SignInComponent } from './login/logincomponent';
+import { LoginComponent } from './login/logincomponent';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ObjectComponent } from './object/object.component';
@@ -25,7 +25,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homepage.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
   { path: 'homepage', component: HomepageComponent },
@@ -43,7 +43,7 @@ const routes: Routes = [
   { path: 'review', component: ReviewComponent },
   { path: 'room-dimension', component: RoomDimensionComponent },
   { path: 'room-shape', component: RoomShapeComponent },
-  { path: 'sign-in', component: SignInComponent },
+  { path: 'sign-in', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'object', component: ObjectComponent },
@@ -56,7 +56,11 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'product-details/:id', component: ProductDetailsComponent }, 
   { path: '**', redirectTo: 'homepage' }, 
-  
+  {
+    path: 'payment', 
+    component: PaymentComponent, 
+    canActivate: [AuthGuard]  
+  },
 ];
 
 @NgModule({

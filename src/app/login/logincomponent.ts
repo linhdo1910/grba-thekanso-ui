@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { LoginResponse } from '../interface/user';
+import { AuthService, LoginCredentials } from '../auth.service';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css'],
-  standalone: false
+  selector: 'app-login',
+  standalone:false,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class SignInComponent {
+export class LoginComponent {
   email: string = '';
   password: string = '';
   rememberMe: boolean = false;
@@ -18,23 +17,23 @@ export class SignInComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    if (!this.email || !this.password) {
-      this.signInError = 'Vui lòng nhập đầy đủ email và mật khẩu.';
-      return;
-    }
+    const credentials: LoginCredentials = {
+      email: this.email,
+      password: this.password,
+      rememberMe: this.rememberMe
+    };
 
-    this.authService.login(this.email, this.password, this.rememberMe).subscribe({
-      next: (response: LoginResponse) => {
-        this.signInError = null;
-        // Lưu token, userId, role nếu cần (có thể lưu vào localStorage)
-        localStorage.setItem('token', response.token || '');
-        localStorage.setItem('userId', response.userId);
-        // Chuyển hướng về trang chủ
-        this.router.navigate(['/homepage']);
+    this.authService.login(credentials).subscribe({
+      next: (response) => {
+        sessionStorage.setItem('token', response.token || '');
+      console.log('Token saved in sessionStorage:', sessionStorage.getItem('token'));  // Kiểm tra token đã lưu trong sessionStorage
+  
+        // Tiến hành điều hướng nếu đăng nhập thành công
+        this.router.navigate(['/Homepage']); 
       },
-      error: (error: any) => {
-        console.error('Đăng nhập thất bại:', error);
-        this.signInError = error.error?.message || 'Đăng nhập thất bại, vui lòng thử lại.';
+      error: (err) => {
+        console.error('Login error:', err);
+        this.signInError = 'Login failed. Please check your credentials.';
       }
     });
   }

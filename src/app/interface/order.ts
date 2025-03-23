@@ -1,21 +1,25 @@
 import { CartItem } from './cart';
 
-export interface BillingAddress {
-  firstName: string;
-  lastName: string;
-  companyName?: string;
-  phone: string;
-  email: string;
-  streetAddress: string;
-  province: string;
+export interface ShipTo {
+  fullName: string;
+  city: string;
   district: string;
   ward: string;
+  address: string;
+  streetAddress: string;
+  email: string;
+  phone: string;
+  note: string;
+  province:string;
 }
+
+
 
 export interface Order {
   _id?: string;
-  userId?: string; 
+  userId?: string;
   billingAddress: BillingAddress;
+  shipTo: ShipTo; 
   shippingMethod: string;
   paymentMethod: string;
   orderNotes?: string;
@@ -28,5 +32,16 @@ export interface Order {
   createdAt?: Date;
   updatedAt?: Date;
   date?: Date;
-  status?: string; // ví dụ: "Order received", "Processing", "On the way", "Delivered"
+  status?: string;
+}
+export interface BillingAddress {
+  firstName: string;
+  lastName: string;
+  companyName?: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  province: string;
+  district: string;
+  ward: string;
 }

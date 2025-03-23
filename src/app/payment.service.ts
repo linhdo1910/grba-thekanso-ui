@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from './interface/order';
 
@@ -11,7 +11,7 @@ export class PaymentService {
 
   constructor(private http: HttpClient) {}
 
-  createOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.apiUrl, order);
+  createOrder(order: Order, headers: HttpHeaders): Observable<Order> {
+    return this.http.post<Order>(this.apiUrl, order, { headers });
   }
 }

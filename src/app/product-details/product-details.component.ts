@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
+import { CartService } from '../cart.service'; 
 import { Product } from '../interface/product';
 
 @Component({
@@ -18,9 +19,10 @@ export class ProductDetailsComponent implements OnInit {
   quantity: number = 1;
   currentMainImage: string = '';
   relatedProducts: Product[] = []; 
-  
+
   constructor(
     public productService: ProductService, 
+    private cartService: CartService, 
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -32,7 +34,6 @@ export class ProductDetailsComponent implements OnInit {
         this.productService.getProductById(id).subscribe(
           (product: Product) => {
             this.product = product;
-            // Tách chuỗi màu thành mảng, ví dụ "Oak, Walnut"
             if (this.product && this.product.color) {
               this.productColors = this.product.color.split(',').map(c => c.trim());
             }
@@ -42,26 +43,19 @@ export class ProductDetailsComponent implements OnInit {
             if (this.productColors.length > 0) {
               this.selectedColor = this.productColors[0];
             }
-            // Lấy kích thước từ sản phẩm
             this.selectedSize = this.product.size;
 
-            // Load các sản phẩm liên quan dựa trên productSubCategory
             if (this.product && this.product.productSubCategory) {
               this.productService.getProductsBySubCategory(this.product.productSubCategory)
                 .subscribe(
                   (related: Product[]) => {
-                    // Loại trừ sản phẩm hiện tại nếu cần và chỉ lấy 4 sản phẩm đầu tiên
                     this.relatedProducts = related.filter(p => p._id !== this.product?._id).slice(0, 4);
                   },
-                  (error: any) => {
-                    console.error('Error loading related products', error);
-                  }
+                  (error: any) => console.error('Error loading related products', error)
                 );
             }
           },
-          (error: any) => {
-            console.error('Error fetching product by ID:', error);
-          }
+          (error: any) => console.error('Error fetching product by ID:', error)
         );
       } else {
         console.error('Product ID is missing in the route.');
@@ -84,12 +78,8 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart(): void {
     if (this.product) {
-      console.log('Added to cart:', {
-        product: this.product,
-        selectedColor: this.selectedColor,
-        selectedSize: this.selectedSize,
-        quantity: this.quantity
-      });
+      this.cartService.addToCart(this.product, this.selectedSize, this.selectedColor);
+      alert('Product added to cart!');
     }
   }
 

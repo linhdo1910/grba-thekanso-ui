@@ -13,7 +13,6 @@ export class OrderDetailComponent implements OnInit {
   @Input() orderId!: string;
   @Output() close = new EventEmitter<void>();
 
-  // Khởi tạo order với giá trị mặc định (chứa mảng products rỗng và các trường billingAddress mặc định)
   order: Order = {
     billingAddress: {
       firstName: '',
@@ -31,9 +30,21 @@ export class OrderDetailComponent implements OnInit {
     discount: 0,
     total: 0,
     products: [],
-    status: ''
-  };
-
+    status: '',
+    // Nếu cần thiết, thêm shipTo vào Order
+    shipTo: {
+      fullName: '',
+      phone: '',
+      email: '',
+      streetAddress: '',
+      province: '',
+      district: '',
+      ward: '',
+      city: '',
+      address: '',
+      note: ''
+    },};
+ 
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
@@ -45,7 +56,7 @@ export class OrderDetailComponent implements OnInit {
     );
   }
 
-  // Hàm chuyển đổi trạng thái (string) thành số (1-4)
+  // Các hàm khác, giữ nguyên như cũ
   parseStatus(status?: string): number {
     if (!status) return 0;
     switch (status) {
@@ -57,7 +68,6 @@ export class OrderDetailComponent implements OnInit {
     }
   }
 
-  // Tính phần trăm tiến trình dựa trên trạng thái đơn hàng
   getDeliveryProgress(status?: string): number {
     const s = this.parseStatus(status);
     switch (s) {
