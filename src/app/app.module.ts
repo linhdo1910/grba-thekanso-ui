@@ -20,7 +20,6 @@ import { OrderComponent } from './order/order.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { PersonalIn4Component } from './personal-in4/personal-in4.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ReviewComponent } from './review/review.component';
 import { RoomDimensionComponent } from './room-dimension/room-dimension.component';
 import { RoomShapeComponent } from './room-shape/room-shape.component';
 import { LoginComponent } from './login/logincomponent';
@@ -36,10 +35,12 @@ import { SuggestedHomepageComponent } from './suggested-homepage/suggested-homep
 import { CartComponent } from './cart/cart.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductInfoComponent } from './product-info/product-info.component';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
+import { NgClass } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @NgModule({
-  
   declarations: [
     AppComponent,
     FooterComponent,
@@ -76,7 +77,10 @@ import { AuthGuard } from './auth.guard';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgClass,
+    RouterLink,
+    RouterLinkActive
   ],
   providers: [
     LocationService, 
@@ -84,7 +88,8 @@ import { AuthGuard } from './auth.guard';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true, 
-    },[AuthGuard]
+    },
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

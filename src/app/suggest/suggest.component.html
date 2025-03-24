@@ -13,12 +13,13 @@
       <div *ngFor="let item of furnitureList" class="furniture-object" 
            draggable="true" 
            (dragstart)="onDragStart($event, item)">
-        <img [src]="item.imageUrl" [alt]="item.name">
+        <img [src]="item.coverImage" [alt]="item.productName">
 
-        <p>{{ item.name }}</p>
+        <p>{{ item.productName }}</p>
       </div>
     </div>
   </div>
+
 
   <!-- Khung phòng -->
   <div class="room-shape-section" 
@@ -43,7 +44,7 @@
                 href="#" alt="Region 2" 
                 (mouseover)="showTooltip($event, 'Ấn để xem chi tiết sản phẩm')" 
                 (mouseout)="hideTooltip()">
-      </map>
+        </map>
     
     
       <!-- Tooltip -->
@@ -54,13 +55,6 @@
       </div>
     </div>
 
-      <div class="dimension-label horizontal">
-        {{ length.toFixed(2) }} m
-      </div>
-
-      <div class="dimension-label vertical">
-        {{ width.toFixed(2) }} m
-      </div>
 
       <!-- Hiển thị các đồ nội thất đã được kéo vào phòng -->
       <div *ngFor="let obj of placedFurniture" 
@@ -71,7 +65,12 @@
       </div>
     
     </div>
-    <button class="generate-room" routerLink="homepage">GO TO SHOPPING</button>
+    <button class="generate-room" 
+        [routerLink]="['/cart']" 
+        [queryParams]="{ productIds: ['67d91a68b1de02f4b0e31efd', '67d91a68b1de02f4b0e31f1d','67d91a68b1de02f4b0e31ef6','67d91a68b1de02f4b0e31f00'] }">
+  GO TO SHOPPING
+</button>
+
   </div>
 
 

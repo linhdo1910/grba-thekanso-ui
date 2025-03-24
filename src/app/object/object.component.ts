@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../product.service';  
+import { Product } from '../interface/product';
 
 @Component({
   selector: 'app-object',
@@ -6,24 +8,60 @@ import { Component } from '@angular/core';
   templateUrl: './object.component.html',
   styleUrls: ['./object.component.css'],
 })
-export class ObjectComponent {
-  imageUrl: string = 'asset/room-shape/room4.png'; // Ảnh nền của phòng
+export class ObjectComponent implements OnInit {
+  imageUrl: string = 'asset/room-shape/room4.png'; 
   length: number = 10.00;
   width: number = 7.32;
 
-  // Danh sách nội thất lấy từ TypeScript thay vì viết trực tiếp trong HTML
-  furnitureList = [
-    
-    { name: 'Sofa', imageUrl: 'asset/sofa-01.svg' },
-    { name: 'Sofa', imageUrl: 'asset/sofa-02.svg' },
-    { name: 'Bench', imageUrl: 'asset/sofa-03.svg' },
-    { name: 'Table', imageUrl: 'asset/sofa-04.svg' }
-  ];
+  // Danh sách nội thất lấy từ backend
+  furnitureList: Product[] = [];
+  subcategories: string[] = ['All Categories', 'Living Room', 'Bedroom', 'Kitchen', 'Bathroom'];
+  selectedSubcategory: string = 'All Categories';
 
-  placedFurniture: any[] = []; // Danh sách các đồ nội thất đã được kéo vào phòng
-  selectedObject: any = null;  // Đối tượng đang được điều chỉnh
+  placedFurniture: any[] = []; 
+  selectedObject: any = null;  
   offsetX: number = 0;
   offsetY: number = 0;
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    // Lấy danh sách sản phẩm từ backend
+    this.productService.getAllProducts().subscribe(
+      (products) => {
+        this.furnitureList = products;
+        // Lấy danh sách subcategories duy nhất từ sản phẩm và sắp xếp theo thứ tự alphabet
+        const uniqueSubcategories = [...new Set(products.map(p => p.productSubCategory))].sort();
+        this.subcategories = ['All Categories', ...uniqueSubcategories];
+      },
+      (error) => {
+        console.error('Error loading products:', error);
+      }
+    );
+  }
+
+  // Tìm kiếm sản phẩm
+  searchProducts(query: string) {
+    if (!query) {
+      this.filterBySubcategory(this.selectedSubcategory);
+      return;
+    }
+    this.furnitureList = this.furnitureList.filter(item => 
+      item.productName.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+
+  // Lọc theo danh mục con
+  filterBySubcategory(category: string) {
+    this.selectedSubcategory = category;
+    if (category === 'All Categories') {
+      this.ngOnInit();
+      return;
+    }
+    this.furnitureList = this.furnitureList.filter(item => 
+      item.productSubCategory === category
+    );
+  }
 
   // Khi bắt đầu kéo một đồ nội thất
   onDragStart(event: DragEvent, item: any) {
@@ -76,5 +114,3 @@ export class ObjectComponent {
     document.removeEventListener('mouseup', this.stopDragging);
   };
 }
-
-

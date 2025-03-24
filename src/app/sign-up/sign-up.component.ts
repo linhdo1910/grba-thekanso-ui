@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,8 +18,9 @@ export class SignUpComponent {
   isEmailValid: boolean = false;
   isTermsAccepted: boolean = false;
   successMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   checkPasswordLength(): void {
     this.isPasswordValid = this.password.length >= 8;
@@ -39,17 +41,28 @@ export class SignUpComponent {
       this.name.trim() !== '' &&
       this.isEmailValid &&
       this.isPasswordValid &&
-      this.isTermsAccepted
+      this.isTermsAccepted &&
+      this.password === this.confirmPassword
     );
   }
 
   onSubmit(): void {
     if (this.isFormValid()) {
-      this.successMessage = 'Account created successfully! Redirecting to sign-in page...';
-      setTimeout(() => {
-        this.router.navigate(['/sign-in']); 
-      }, 2000);
+      this.authService.signUp(this.name, this.email, this.password).subscribe({
+        next: (response) => {
+          console.log('Sign-up successful:', response);
+          this.successMessage = 'Account created successfully! Redirecting to sign-in page...';
+          setTimeout(() => {
+            this.router.navigate(['/sign-in']);
+          }, 2000);
+        },
+        error: (error) => {
+          console.error('Sign-up error:', error);
+          this.errorMessage = error?.message || 'Sign-up failed. Please try again.';
+        }
+      });
+    } else {
+      this.errorMessage = 'Please fill in all required fields correctly.';
     }
   }
 }
-

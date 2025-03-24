@@ -6,6 +6,7 @@ import { Order, BillingAddress } from '../interface/order';
 import { CartItem } from '../interface/cart';
 import { LocationService } from '../location.service';
 import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-payment',
@@ -44,10 +45,18 @@ export class PaymentComponent implements OnInit {
     private router: Router,
     private paymentService: PaymentService,
     private cartService: CartService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Kiểm tra trạng thái đăng nhập khi khởi tạo
+    if (!this.authService.isLoggedIn()) {
+      alert('You must be logged in to access this page.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.cartProducts = this.cartService.getCartItems();
     this.calculateTotals();
     this.loadLocations();
@@ -94,8 +103,7 @@ export class PaymentComponent implements OnInit {
       alert('Please fill in all required billing address fields.');
       return;
     }
-    const fullName = `${this.billingAddress.firstName} ${this.billingAddress.lastName}`;
-
+  
     const order: Order = {
       billingAddress: this.billingAddress,
       shippingMethod: this.shippingMethod,
@@ -116,35 +124,35 @@ export class PaymentComponent implements OnInit {
         province: this.billingAddress.province,
         district: this.billingAddress.district,
         ward: this.billingAddress.ward,
-        city: this.billingAddress.province, 
-        address: this.billingAddress.streetAddress,  
-        note: this.orderNotes || ''  
+        city: this.billingAddress.province,
+        address: this.billingAddress.streetAddress,
+        note: this.orderNotes || ''
       }
-      
     };
-    
-    
-    
-
-    const token = localStorage.getItem('token');
+  
+    const token = this.authService.getToken();
+    console.log('Token before sending order:', token); // Log token để kiểm tra
     if (!token) {
       alert('You must be logged in to complete your order.');
+      this.router.navigate(['/login']);
       return;
     }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Tạo headers đúng cách
+    console.log('Headers before sending:', headers); // Log headers để kiểm tra
+  
+    console.log('Sending order:', JSON.stringify(order, null, 2));
+  
     this.paymentService.createOrder(order, headers).subscribe(
       (createdOrder: Order) => {
+        console.log('Order created successfully:', createdOrder);
         alert('Order successfully placed!');
         this.cartService.clearCart();
         this.router.navigate(['/qr-code'], { queryParams: { orderId: createdOrder._id } });
       },
       (error: any) => {
-        console.error('Error creating order', error);
-        alert('Please sign in to complete your payment.');
+        console.error('Full error details:', error);
+        alert('Error: ' + (error.error?.message || 'Server error') + '. Please try again.');
       }
     );
   }

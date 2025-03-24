@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
-import { CartService } from '../cart.service'; 
+import { CartService } from '../cart.service';
 import { Product } from '../interface/product';
+
+interface ColorOption {
+  name: string;
+  hex: string;
+}
 
 @Component({
   selector: 'app-product-details',
@@ -13,7 +18,7 @@ import { Product } from '../interface/product';
 export class ProductDetailsComponent implements OnInit {
 
   product: Product | undefined;
-  productColors: string[] = []; 
+  productColors: ColorOption[] = []; 
   selectedColor: string = '';
   selectedSize: string = '';
   quantity: number = 1;
@@ -35,13 +40,17 @@ export class ProductDetailsComponent implements OnInit {
           (product: Product) => {
             this.product = product;
             if (this.product && this.product.color) {
-              this.productColors = this.product.color.split(',').map(c => c.trim());
+              const colors = this.product.color.split(',').map(c => c.trim());
+              this.productColors = colors.map(color => ({
+                name: color,
+                hex: this.getColorHex(color)
+              }));
             }
             if (this.product && this.product.images && this.product.images.length > 0) {
               this.currentMainImage = this.product.images[0];
             }
             if (this.productColors.length > 0) {
-              this.selectedColor = this.productColors[0];
+              this.selectedColor = this.productColors[0].name;
             }
             this.selectedSize = this.product.size;
 
@@ -85,12 +94,9 @@ export class ProductDetailsComponent implements OnInit {
 
   quickBuy(): void {
     if (this.product) {
-      console.log('Quick buy:', {
-        product: this.product,
-        selectedColor: this.selectedColor,
-        selectedSize: this.selectedSize,
-        quantity: this.quantity
-      });
+      this.cartService.addToCart(this.product, this.selectedSize, this.selectedColor);
+      this.router.navigate(['/cart']);
+      alert('Product added to cart! Redirecting to cart...');
     }
   }
   
@@ -114,5 +120,20 @@ export class ProductDetailsComponent implements OnInit {
 
   navigateToProductDetail(productId: string): void {
     this.router.navigate(['/product-details', productId]);
+  }
+
+  // Thêm hàm getColorHex để chuyển đổi tên màu thành mã hex
+  getColorHex(colorName: string): string {
+    const colors: { [key: string]: string } = {
+      ash: '#B2BEB5',
+      bashwood: '#D7D0C1',
+      birch: '#D2C5B0',
+      cedar: '#AF9B60',
+      'marble-oil': '#CBCBC1',
+      oak: '#9B7E3A',
+      walnut: '#5D3A1A',
+      white: '#FFFFFF'
+    };
+    return colors[colorName.toLowerCase()] || '#FFFFFF';
   }
 }

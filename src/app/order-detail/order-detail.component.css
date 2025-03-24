@@ -123,44 +123,61 @@ th, td {
 .progress-tracker {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
+  align-items: flex-start; /* Thay đổi từ 'center' thành 'flex-start' */
+  margin: 40px 0; /* Tăng margin */
   position: relative;
 }
+
 .progress-step {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1; /* Giúp các step chiếm đều không gian */
 }
 
 .progress-circle {
-  width: 30px;
-  height: 30px;
+  width: 40px; /* Tăng kích thước circle */
+  height: 40px;
   border-radius: 50%;
   background-color: #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #fff;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
+  border: 3px solid white; /* Thêm viền để tách biệt với line */
 }
 
-.progress-step.active .progress-circle {
-  background-color: #DAA86D; /* Active step color */
-}
-
-.progress-step.completed .progress-circle {
-  background-color: #e1c9a7; /* Completed step color */
+.progress-line {
+  position: absolute;
+  top: 20px; /* Căn giữa theo chiều dọc */
+  left: 50%;
+  width: calc(100% - 100px); /* Điều chỉnh chiều dài line */
+  height: 4px; /* Tăng độ dày */
+  background: #ddd;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .progress-text {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #333;
-  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* Thêm hiệu ứng hoàn thành */
+.progress-step.completed .progress-circle {
+  background-color: #DAA86D;
+  transform: scale(1.1);
+}
+
+.progress-step.active .progress-circle {
+  background-color: #DAA86D;
+  box-shadow: 0 0 0 3px #e1c9a7;
 }

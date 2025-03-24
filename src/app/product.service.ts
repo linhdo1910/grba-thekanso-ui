@@ -25,6 +25,7 @@ export class ProductService {
       map(res => res.data)
     );
   }
+  
 
   // Lấy danh sách mã giảm giá
   getDiscountCodes(): Observable<DiscountCode[]> {
@@ -32,7 +33,11 @@ export class ProductService {
       map(res => res.data)
     );
   }
-
+  getProductsByIds(productIds: string[]): Observable<Product[]> {
+    return this.http.post<any>(`${this.apiUrl}/products/multiple`, { productIds }).pipe(
+      map(res => res.data)
+    );
+  }
   // Áp dụng mã giảm giá cho sản phẩm cụ thể
   applyDiscountCode(code: string, total: number): Observable<number> {
     return this.http.post<any>(`${this.apiUrl}/apply-discount`, { code, total }).pipe(

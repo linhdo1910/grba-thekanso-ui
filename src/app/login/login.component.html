@@ -1,61 +1,46 @@
-<div class="center-container">
-  <div class="dang_ky">
-    <h2 class="text-secondary text-center">Sign In</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div *ngIf="signInError" class="alert alert-danger">{{ signInError }}</div>
+<div class="background"
+    style="background-image: url('../../assets/.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="login-container col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            <h2 class="text-secondary fw-bold mb-3">LOGIN</h2>
+            <p class="text-primary">Enhance your shopping experience with <b> The Kanso</b></p>
 
-      <div class="input-container">
-        <input 
-          type="email" 
-          class="khung_nhap" 
-          placeholder="Type your Email" 
-          [(ngModel)]="email" 
-          name="email"
-          required>
-      </div>
-      
-      <div class="input-container">
-        <input 
-          type="password" 
-          class="khung_nhap" 
-          placeholder="Type your Password" 
-          [(ngModel)]="password" 
-          name="password"
-          required>
-      </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div *ngIf="loginError" class="alert alert-danger">{{ loginError }}</div>
 
-      <div class="dong_dieu_khoan">
-        <input 
-          type="checkbox" 
-          [(ngModel)]="rememberMe" 
-          name="rememberMe">
-        <span class="text-info">
-          Keep me signed in for 30 days (only use on trusted devices)
-        </span>
-      </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" formControlName="email"
+                        placeholder="Enter your email or username" required aria-label="Email or Username"
+                        autocomplete="email">
+                </div>
 
-      <br>
-      <p class="text-info text-center">
-        <a routerLink="/forgot-password">Forgot your password?</a>
-        <span class="mx-2">|</span>
-        <a routerLink="/sign-up">Create an account</a>
-      </p>
+                <div class="mb-3">
+                    <input type="password" class="form-control" formControlName="password" placeholder="Enter password"
+                        required aria-label="Password" autocomplete="current-password">
+                </div>
 
-      <!-- Submit Button -->
-      <button 
-        type="submit" 
-        class="btn btn-primary"
-      >
-        Sign In
-      </button>
-      <hr>
-      <p class="text-info text-center">or do it via other accounts</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <label><input type="checkbox" formControlName="rememberMe"> Remember me</label>
+                    <a routerLink="/forgot-password" class="text-primary no-underline" style="cursor: pointer;">Forgot password?</a>
+                </div>
 
-      <div>
-        <a routerLink=" ">
-          <img src="asset/ggicon.png" alt="Google" class="google-icon">
-        </a>
-      </div>
-    </form>
-  </div>
+                <button type="submit" class="btn btn-primary btn-sm w-50 mb-3">Login</button>
+            </form>
+
+            <p class="mb-3">Don't have an account? <a (click)="goToSignUp()" class="text-primary no-underline" style="cursor: pointer;">Sign up now</a></p>
+
+            <div class="separator">Or</div>
+
+            <div class="social-buttons">
+                <button
+                    class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center social-button">
+                    <img src="/asset/fb.png" alt="Facebook" class="me-2" width="20" height="20"> Continue with Facebook
+                </button>
+                <button
+                    class="btn btn-secondary w-100 mb-2 d-flex align-items-center justify-content-center social-button">
+                    <img src="/asset/google.png" alt="Google" class="me-2" width="20" height="20"> Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -21,20 +21,26 @@ export class QrCodeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Lấy orderId từ query parameters (ví dụ: ?orderId=12345)
     this.orderId = this.route.snapshot.queryParamMap.get('orderId') || '';
     if (this.orderId) {
-      // Gọi API lấy đơn hàng dựa trên orderId
+      console.log('Fetching order with ID:', this.orderId);
       this.orderService.getOrderById(this.orderId).subscribe(
         (order: Order) => {
           this.order = order;
-          // Giả sử trong Order, tổng tiền được lưu trong trường total
-          this.totalAmount = order.total;
+          this.totalAmount = order.total || 0; // Gán 0 nếu total không tồn tại
+          console.log('Order fetched successfully:', order);
+          console.log('Total Amount:', this.totalAmount);
         },
         error => {
           console.error('Error fetching order:', error);
+          if (error.status === 401) {
+            alert('Session expired. Please log in again.');
+            this.router.navigate(['/login']);
+          }
         }
       );
+    } else {
+      console.warn('No orderId provided in query params');
     }
   }
 
@@ -43,15 +49,30 @@ export class QrCodeComponent implements OnInit {
       alert('No order found.');
       return;
     }
+
+    const token = localStorage.getItem('token')|| sessionStorage.getItem('token');
+    console.log('Token in onPaymentSuccess:', token);
+    if (!token) {
+      alert('Please log in to continue.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    console.log('Updating order status for ID:', this.orderId);
     this.orderService.updateOrderStatus(this.orderId, { status: 'Processing' }).subscribe(
       (updatedOrder: Order) => {
+        console.log('Order status updated:', updatedOrder);
         alert('Payment confirmed! Your order is now processing.');
-        // Điều hướng sang trang Order Success (hoặc trang khác theo logic của bạn)
         this.router.navigate(['/order-success'], { queryParams: { orderId: updatedOrder._id } });
       },
       error => {
         console.error('Error updating order status:', error);
-        alert('An error occurred while confirming payment.');
+        if (error.status === 401) {
+          alert('Session expired. Please log in again.');
+          this.router.navigate(['/login']);
+        } else {
+          alert('An error occurred: ' + (error.error?.message || 'Unknown error'));
+        }
       }
     );
   }

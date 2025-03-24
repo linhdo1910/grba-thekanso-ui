@@ -1,15 +1,4 @@
-export interface LoginCredentials {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
 
-export interface LoginResponse {
-  token?: string;
-  userId?: string;
-  role?: string;
-  message?: string;
-}
   
   export interface ForgotPasswordResponse {
     message: string;
@@ -25,6 +14,14 @@ export interface LoginResponse {
   export interface SignUpResponse {
     message: string;
     userId: string;
+  }
+
+  export interface LoginResponse {
+    userId: string;
+    role: 'user' | 'admin';
+    action?: 'edit all' | 'account ctrl' | 'sales ctrl' | 'just view';
+    token?: string;
+    message?: string;
   }
   
   export interface User {

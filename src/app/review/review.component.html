@@ -1,46 +1,75 @@
-<div class="review-container">
-    <h2 class="text-secondary text-center"><strong>Write Your Experience</strong></h2>
-    <hr>
-
-    <!-- Textarea for review content -->
-    <textarea 
-        placeholder="Write here" 
-        [(ngModel)]="reviewText" 
-        class="review-textarea">
-    </textarea>
-
-    <!-- Rating Section -->
-    <div class="rating-section">
-        <label class="rating-label"><strong>Rating (1-5):</strong></label>
-        <input 
-            type="number" 
-            [(ngModel)]="rating" 
-            min="1" 
-            max="5" 
-            class="rating-input"
-            (input)="updateStars()">
-        
-        <div class="stars">
-            <span 
-                *ngFor="let star of stars; let i = index" 
-                class="star" 
-                [class.filled]="i < rating">
-                ★
-            </span>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="text-center">Write a Review</h3>
+            <p class="text-center text-muted">Reviewing as: {{ username }}</p>
+          </div>
+          <div class="card-body">
+            <!-- Loading State -->
+            <div *ngIf="isLoading" class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+  
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+              {{ errorMessage }}
+            </div>
+  
+            <!-- Review Form -->
+            <form *ngIf="!isLoading" (ngSubmit)="submitReview()">
+              <!-- Rating -->
+              <div class="form-group mb-4">
+                <label class="form-label">Rating</label>
+                <div class="rating">
+                  <div class="stars">
+                    <i *ngFor="let star of [1,2,3,4,5]" 
+                       class="fas fa-star" 
+                       [class.text-warning]="star <= rating"
+                       (click)="rating = star"
+                       style="cursor: pointer; font-size: 24px;"></i>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Comment -->
+              <div class="form-group mb-4">
+                <label for="comment" class="form-label">Your Review</label>
+                <textarea 
+                  class="form-control" 
+                  id="comment" 
+                  rows="4" 
+                  [(ngModel)]="comment" 
+                  name="comment"
+                  required></textarea>
+              </div>
+  
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                  {{ isLoading ? 'Submitting...' : 'Submit Review' }}
+                </button>
+              </div>
+            </form>
+  
+            <!-- Success Message -->
+            <div *ngIf="showSuccessMessage" class="alert alert-success mt-3" role="alert">
+              Review submitted successfully! Redirecting...
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- Submit and Cancel Buttons -->
-    <div class="button-group">
-        <button class="btn btn-outline-secondary" (click)="cancelReview()">Cancel</button>
-        <button class="btn btn-primary" (click)="submitReview()">Submit</button>
-    </div>
-</div>
-
-<!-- Success Modal -->
-<div *ngIf="showSuccessMessage" class="modal">
-    <div class="modal-content">
-        <p>Your review has been submitted successfully!</p>
-        <button class="btn" (click)="closeModal()">Close</button>
-    </div>
-</div>
-
+  </div>
+  
+  <!-- Success Modal -->
+  <div *ngIf="showSuccessMessage" class="modal">
+      <div class="modal-content">
+          <p>Your review has been submitted successfully!</p>
+          <button class="btn" (click)="closeModal()">Close</button>
+      </div>
+  </div>
+  

@@ -63,18 +63,17 @@
         <hr>
 
         <!-- Product Options -->
-        <div class="product-options mt-3">
-          <label for="color">Color</label>
-          <div class="color-options mt-3">
-            <a 
-              *ngFor="let colorName of productColors"
-              class="color-option"
-              [ngClass]="{ 'selected': selectedColor === colorName }"
-              (click)="onColorSelect(colorName)"
-              [title]="colorName">
-              <span class="hover-info">{{ colorName }}</span>
-            </a>
-          </div>
+        <div class="color-options mt-3">
+          <a 
+            *ngFor="let color of productColors"
+            class="color-option"
+            [ngClass]="{ 'selected': selectedColor === color.name }"
+            (click)="onColorSelect(color.name)"
+            [title]="color.name"
+            [style.background-color]="color.hex">
+            <span class="hover-info">{{ color.name }}</span>
+          </a>
+        </div>
 
           <label for="size" class="mt-4">Size</label>
           <div class="size-options mt-3">

@@ -15,11 +15,11 @@ export class PersonalIn4Component {
   profileImage: string = 'asset/banners/anp.png';
 
   personalInfo = {
-    firstName: 'An',
-    lastName: 'Pham',
-    email: 'anptt22411ca@st.uel.edu.vn',
+    firstName: 'Linh',
+    lastName: 'Do',
+    email: 'linhdk22411ca@st.uel.edu.vn',
     phoneNumber: '0913854054',
-    imageUrl: 'asset/banners/anp.png'  
+    imageUrl: 'asset/banners/linh.jpg'  
   };
 
   constructor(private router: Router) {}

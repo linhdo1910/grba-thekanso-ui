@@ -1,40 +1,75 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { AuthService, LoginCredentials } from '../auth.service';
+import { LoginResponse } from '../interface/user';
 
 @Component({
   selector: 'app-login',
-  standalone:false,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: false
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  rememberMe: boolean = false;
-  signInError: string | null = null;
+  loginForm: FormGroup;
+  loginError: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
+    });
+  }
 
-  onSubmit(): void {
-    const credentials: LoginCredentials = {
-      email: this.email,
-      password: this.password,
-      rememberMe: this.rememberMe
-    };
-
-    this.authService.login(credentials).subscribe({
-      next: (response) => {
-        sessionStorage.setItem('token', response.token || '');
-      console.log('Token saved in sessionStorage:', sessionStorage.getItem('token'));  // Kiểm tra token đã lưu trong sessionStorage
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      this.loginError = 'Please fill in all required fields correctly.';
+      return;
+    }
   
-        // Tiến hành điều hướng nếu đăng nhập thành công
-        this.router.navigate(['/Homepage']); 
+    const { email, password, rememberMe } = this.loginForm.value;
+  
+    this.authService.login(email, password, rememberMe).subscribe({
+      next: (response: LoginResponse) => {
+        this.loginError = null;
+        console.log('Login response:', response);
+        console.log('Token received:', response.token);
+        // Kiểm tra token trong storage ngay sau khi đăng nhập
+        const storedToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!storedToken) {
+          console.error('Token was not stored after login!');
+          this.loginError = 'Login succeeded but token was not stored.';
+          return;
+        }
+        console.log('Stored token:', storedToken);
+  
+        if (this.authService.isAdmin()) {
+          console.log('Navigating to admin homepage');
+          this.router.navigate(['/homepage']);
+        } else {
+          console.log('Navigating to user homepage');
+          this.router.navigate(['/homepage']);
+        }
       },
-      error: (err) => {
-        console.error('Login error:', err);
-        this.signInError = 'Login failed. Please check your credentials.';
+      error: (error: any) => {
+        console.error('Login failed:', error);
+        this.loginError = error.message || 'An unknown error occurred';
       }
     });
   }
+  goToSignUp() {
+    this.router.navigate(['/sign-up']);
+  }
+  showSignupNotAvailable() {
+    this.loginError = 'Sign up feature is not available yet.';
+  }
+  goToForgotPassword() {
+    this.router.navigate(['/forgot-password']);
+  }
+
 }

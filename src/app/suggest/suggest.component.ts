@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../product.service'; 
 
 @Component({
   selector: 'app-suggest',
@@ -6,24 +7,37 @@ import { Component } from '@angular/core';
   templateUrl: './suggest.component.html',
   styleUrls: ['./suggest.component.css']
 })
-export class SuggestComponent {
-  imageUrl: string = 'asset/suggestdemo.svg'; // Ảnh nền của phòng
+export class SuggestComponent implements OnInit {
+  imageUrl: string = 'asset/suggestdemo.svg'; 
   length: number = 10.00;
   width: number = 7.32;
 
-  // Danh sách nội thất lấy từ TypeScript thay vì viết trực tiếp trong HTML
-  furnitureList = [
-    
-    { name: 'Sofa', imageUrl: 'asset/sofa-01.svg' },
-    { name: 'Sofa', imageUrl: 'asset/sofa-02.svg' },
-    { name: 'Bench', imageUrl: 'asset/sofa-03.svg' },
-    { name: 'Table', imageUrl: 'asset/sofa-04.svg' }
-  ];
+  // Danh sách sản phẩm lấy từ backend
+  furnitureList: any[] = [];
 
-  placedFurniture: any[] = []; // Danh sách các đồ nội thất đã được kéo vào phòng
-  selectedObject: any = null;  // Đối tượng đang được điều chỉnh
+  placedFurniture: any[] = []; 
+  selectedObject: any = null;  
   offsetX: number = 0;
   offsetY: number = 0;
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    // Lấy danh sách sản phẩm từ backend
+    this.productService.getAllProducts().subscribe(
+      (products) => {
+        this.furnitureList = products.map(product => ({
+          _id: product._id,
+          productName: product.productName, 
+          coverImage: product.coverImage,   
+          imageUrl: product.coverImage      
+        }));
+      },
+      (error) => {
+        console.error('Error loading products:', error);
+      }
+    );
+  }
 
   // Khi bắt đầu kéo một đồ nội thất
   onDragStart(event: DragEvent, item: any) {
@@ -75,12 +89,11 @@ export class SuggestComponent {
     document.removeEventListener('mousemove', this.onDragging);
     document.removeEventListener('mouseup', this.stopDragging);
   };
+
   tooltipText: string = '';
   tooltipVisible: boolean = false;
   tooltipX: number = 0;
   tooltipY: number = 0;
-
-
 
   showTooltip(event: MouseEvent, text: string) {
     this.tooltipText = text;
@@ -93,4 +106,3 @@ export class SuggestComponent {
     this.tooltipVisible = false;
   }
 }
-
